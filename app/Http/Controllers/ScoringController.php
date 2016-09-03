@@ -29,10 +29,11 @@ class ScoringController extends Controller
      */
     public function updatescoring()
     {
-        $liveScore = new LiveScore();
-        return view('pages.update-scores')->with([
-            'LiveScore' => $liveScore
-            ]);
+        //$liveScore = new LiveScore();
+        // return view('pages.update-scores')->with([
+        //     'LiveScore' => $liveScore
+        //     ]);
+        return view('pages.update-scores');
 
     }
 }
