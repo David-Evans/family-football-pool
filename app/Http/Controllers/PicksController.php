@@ -1,0 +1,180 @@
+<?php
+
+namespace App\Http\Controllers;
+
+//use Illuminate\Http\Request;
+use Request;
+
+use App\Http\Requests;
+
+use Auth;
+
+use App\Game;
+
+use App\Pick;
+
+use \Validator;
+
+class PicksController extends Controller
+{
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the picks for a given week.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function makePicks() {
+        $user = Auth::user();
+        $game = new Game();
+        $currDate = FALSE;
+        $week = $game->getCurrentWeek();
+        $picks = $game->showPicks($week);
+
+        $myPicks = Pick::where([
+            'user_id' => $user->id
+            ])
+            ->join('games','game_id', '=', 'games.id')
+            ->select('picks.id','game_id','user_id','pick')
+            ->get();
+
+        
+/**
+    Options for passing variables to a view:
+        One big array:
+            $data[];
+            $data['first'] => 'Jalapeno';
+            $data['last'] => 'Dave';
+
+            return view('pages.make-picks', $data);
+
+        Compact:
+            $first = 'Jalapeno';
+            $last = 'Dave';
+
+            return view('pages.make-picks', compact('first','last'));
+
+**/
+
+        return view('pages.make-picks')->with([
+            'user' => $user,
+            'picks'=> $picks,
+            'currDate' => $currDate,
+            'week' => $week,
+            'mypicks' => $myPicks
+        ]);
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store()
+    {
+        $input = Request::all();
+        $userId = $input['user_id'];
+
+        try {
+            foreach ($input as $name=>$value) {
+                if (substr($name,0,4) == "pick" && $value != "") {
+                    $gameId = str_replace("pick-","",$name);
+                    // Check if a pick already exists
+                    $existingPick = Pick::where([
+                        'game_id' => $gameId,
+                        'user_id' => $userId
+                        ])
+                        ->select('id','game_id','user_id','pick')
+                        ->get();
+                    if ($existingPick->count()) {
+                        echo '<p>Update Pick: '.$existingPick[0]->pick.'</p>';
+                        // Update existing pick
+                        $id = $existingPick[0]->id;
+                        $result = Pick::where ('id', $id)->update([
+                            'pick' => $value
+                            ]);
+                    } else {
+                        echo '<p>New Pick: '.$value.'</p>';
+                        // Insert new pick
+                        $result = Pick::insert([
+                            'game_id' => $gameId,
+                            'user_id' => $userId,
+                            'pick' => $value,
+                            'created_at' => date('Y-m-d h:i:s')
+                            ]);
+                    }
+                }
+            }
+            return redirect('picks')->with('status', 'Great! Your picks are now updated');
+        } catch (Exception $e) {
+            return redirect('picks')->withInput('status', 'Oops: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}
