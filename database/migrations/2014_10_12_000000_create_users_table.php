@@ -20,12 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
 
-            $table->string('nickname',50);
+            $table->string('username',50);
             $table->string('display_name',50);
             $table->string('sms_number',20);
             $table->string('role');
             $table->string('avatar',100);
-            $table->tinyInteger('active')->default(0);
+            $table->tinyInteger('active')->default(1);
             $table->string('timezone',20);
 
             $table->rememberToken();
