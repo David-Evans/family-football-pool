@@ -82,6 +82,7 @@ $i = 0;
 						$lockStatus = isGameStarted($pick->game_datetime); $lockStatus = "unlocked";
 						if ($i < 2) { $lockStatus = "locked"; } 
 					?>
+
 					<table class="table picks {{ $lockStatus }}">
 						<tbody>
 						@if ($lockStatus != "locked")
@@ -92,7 +93,7 @@ $i = 0;
 								<div class="team-name">
 									<span class="city">{{ $pick->visitor_city }}</span><br />
 									<span class="team">{{ $pick->visitor_team }}</span>
-								<div>
+								</div>
 							</td>
 							<td class="game-{{ $pick->id }} visitor">
 								<div style="position:relative">
@@ -131,11 +132,12 @@ $i = 0;
 								<div class="team-name">
 									<span class="city">{{ $pick->home_city }}</span><br />
 									<span class="team">{{ $pick->home_team }}</span>
-								<div>
+								</div>
 							</td>
 						</tr>
 						</tbody>
 					</table>
+
 					@if ($i < count($group))
 					<hr />
 					@endif
