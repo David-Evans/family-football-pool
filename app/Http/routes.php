@@ -24,8 +24,6 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/dwe', 'HomeController@index');
-
 Route::group(['prefix' => ''], function(){
     Route::resource('games','GamesController');
 });

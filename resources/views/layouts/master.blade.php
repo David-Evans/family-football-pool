@@ -46,10 +46,19 @@
 
     <div id="wrapper">
 
+    @if(\Request::path() == "/" || \Request::path() == "login")
+        @include('layouts.partials._welcome')
+    @else
         @include('layouts.partials._navigation')
+    @endif
+
         @include('layouts.partials._header')
     
+    @if(\Request::path() == "/" || \Request::path() == "login")
+        <div id="welcome-wrapper">
+    @else
         <div id="page-wrapper">
+    @endif
 
         @yield('content')
 
