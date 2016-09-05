@@ -1,6 +1,6 @@
 <?php 
 
-	require '../tropo.class.php';
+	require 'tropo.class.php';
 
 	$session = new Session(); 
 	$to = "+1".$session->getParameters("numbertodial"); 
@@ -11,6 +11,6 @@
 	$tropo->call($to, array('network'=>'SMS')); 
 	$tropo->say($msg); 
 
-	return $tropo->RenderJson(); 
+	echo $tropo->RenderJson(); 
 
 ?> 
