@@ -1,16 +1,17 @@
 <?php 
 
+//use Illuminate\Http\Request;
+
 echo 'inside sendSMS...<br />';
 
 	require 'tropo.class.php';
 
 echo 'post require...<br />';
 
-	$session = new Session(); 
 echo 'got session...<br />';
 
-	$to = "+1".$session->getParameters("numbertodial"); 
-	$msg = $session->getParameters("msg"); 
+	$to = isset($_GET['numbertodial']) ? "+1".$session->getParameters("numbertodial") : FALSE;
+	$msg = isset($_GET['msg']) ? rawurlencode($_GET['msg']) : FALSE; 
 	    
 	$tropo = new Tropo(); 
 	    
