@@ -56,4 +56,6 @@ Route::get('/scoring/live', 'ScoringController@updatescoring');
 
 Route::get('/admin', 'AdminController@index');
 
+Route::get('/tropo/sendmsg', 'TropoController@sendmessage');
+
 Route::auth();
