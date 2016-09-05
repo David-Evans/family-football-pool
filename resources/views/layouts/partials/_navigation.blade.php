@@ -11,9 +11,9 @@
                     <span class="icon-bar"></span>
                 </button>
 @if (Auth::check())
-                <a class="navbar-brand" href="\home" title="{{ $appName }}"><img class="header-logo" src="/images/banner-white-letters.png" /></a>
+                <a class="navbar-brand" href="\home" title="{{ $appName }}"><img class="header-logo" src="/images/ffp-banner.png" /></a>
 @else
-				<a class="navbar-brand" href="\" title="{{ $appName }}"><img class="header-logo" src="/images/banner-white-letters.png" /></a>
+				<a class="navbar-brand" href="\" title="{{ $appName }}"><img class="header-logo" src="/images/ffp-banner.png" /></a>
 @endif
             </div>
 @if (Auth::check() && FALSE == TRUE)
