@@ -68,12 +68,12 @@ background-color:#34495E
 ul.nav>li>a {
     color:#FFF;
 }
-ul.nav>li>a.active {
+ul.nav>li>a:active {
     background-color:#27AE60;
 }
 ul.nav>li>a:hover, .navbar-toggle:hover .navbar-togger:focus {
     /* background-color:rgba(0,0,0,.5) !important; */
-    background-color:#E67E22;
+    background-color:#E67E22 !important;
 }
 .sidebar ul li a.active {background-color:#27AE60;}
 .header-logo {
@@ -484,6 +484,7 @@ table.picks td.visitor-name { text-align:right }
 table.picks td.home-name { text-align:left }
 table.picks div.team-name span.city { font-weight: bold; font-size: 140% }
 table.picks div.team-name span.team { font-weight: bold; font-size: 110% }
+table.picks td.visitor-name, table.picks td.home-name {width:0px;}
 table.picks div.team-name { display:none }
 table.picks.locked div.lock {
     position:absolute;
@@ -499,6 +500,7 @@ table.picks td i.fa-lock {
 }
 @media only screen and (min-width : 768px) {
     table.picks div.team-name { display:block }
+    table.picks td.visitor-name, table.picks td.home-name {width:20%;}
 }
 
 
