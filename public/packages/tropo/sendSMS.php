@@ -1,11 +1,9 @@
 <?php 
 
-//use Illuminate\Http\Request;
-
 	require 'tropo.class.php';
 
 	$to = isset($_GET['numbertodial']) ? "+1".$_GET['numbertodial'] : FALSE;
-	$msg = isset($_GET['msg']) ? rawurlencode($_GET['msg']) : FALSE; 
+	$msg = isset($_GET['msg']) ? $_GET['msg'] : FALSE; 
 	    
 	$tropo = new Tropo(); 
 	    

@@ -32,29 +32,17 @@ class TropoController extends Controller
     		$result['success'] = 'false';
     	}
 
-    	$this->sendTropoSMS(rawurlencode($request['msg']), $request['numbertodial']);
-
-        return view('pages.send-message')->with([
-            'result' => $result
-        ]);
-
-    }
-
-    function sendTropoSMS($message='testing',$recipient='4802053478') {
-    	$token = env("TROPO_KEY", "NULL");
-        $message = rawurlencode($message);
-
-		$smsNumber = $recipient;
-		$url = 'https://api.tropo.com/1.0/sessions?action=create&token='.$token.'&numbertodial='.$smsNumber.'&msg='.$message;
+		$url = 'https://api.tropo.com/1.0/sessions?action=create&token='.$result['token'].'&numbertodial='.$result['numbertodial'].'&msg='.rawurlencode($result['msg']);
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL,$url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)');
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		$result = curl_exec($ch);
+		$result['curl-response'] = curl_exec($ch);
 		curl_close($ch);
+
+        return view('pages.send-message')->with([
+            'result' => $result
+        ]);
     }
-
-
-
 }
