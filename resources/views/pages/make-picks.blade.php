@@ -2,7 +2,9 @@
 
 @section("content")        
 
-<section id="pickform">
+<?php
+$tropo->sendSMS();
+?><section id="pickform">
 
 <?php /**
 Referencing passed variables:
@@ -89,12 +91,14 @@ $i = 0;
 						<input name="pick-{{ $pick->id }}" type="hidden" value="{{ $pickedTeam }}" />
 						@endif
 						<tr>
+<!--
 							<td class="visitor-name">
 								<div class="team-name">
 									<span class="city">{{ $pick->visitor_city }}</span><br />
 									<span class="team">{{ $pick->visitor_team }}</span>
 								</div>
 							</td>
+-->
 							<td class="game-{{ $pick->id }} visitor">
 								<div style="position:relative">
 									@if ($pick->visitor_team == $pickedTeam)
@@ -125,15 +129,14 @@ $i = 0;
 									@endif
 								</div>
 							</td>
-
-
-
+<!--
 							<td class="home-name">
 								<div class="team-name">
 									<span class="city">{{ $pick->home_city }}</span><br />
 									<span class="team">{{ $pick->home_team }}</span>
 								</div>
 							</td>
+-->
 						</tr>
 						</tbody>
 					</table>

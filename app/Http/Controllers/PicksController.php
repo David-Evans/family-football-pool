@@ -15,6 +15,8 @@ use App\Pick;
 
 use \Validator;
 
+use App\Tropo;
+
 class PicksController extends Controller
 {
     public function __construct() {
@@ -42,6 +44,7 @@ class PicksController extends Controller
         $currDate = FALSE;
         $week = $game->getCurrentWeek();
         $picks = $game->showPicks($week);
+        $tropo = new Tropo();
 
         $myPicks = Pick::where([
             'user_id' => $user->id
@@ -73,7 +76,8 @@ class PicksController extends Controller
             'picks'=> $picks,
             'currDate' => $currDate,
             'week' => $week,
-            'mypicks' => $myPicks
+            'mypicks' => $myPicks,
+            'tropo' => $tropo
         ]);
     }
     /**
