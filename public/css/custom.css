@@ -477,6 +477,10 @@ table.picks td {
     width:20%;
 }
 
+div.team-name span.city { font-weight: bold; font-size: 140% }
+div.team-name span.team { font-weight: bold; font-size: 110% }
+
+
 table.picks td i.fa { font-size: 200% }
 table.picks td.visitor { text-align:right }
 table.picks td.home { text-align:left }
@@ -506,3 +510,8 @@ table.picks td i.fa-lock {
 
 .gameday-group h4.game-day { float:left }
 .gameday-group h4.game-date { float: right }
+
+.homepage-icons {
+    color:#fff;
+    font-size:84px;
+}
