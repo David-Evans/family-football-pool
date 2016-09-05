@@ -18,7 +18,6 @@ class TropoController extends Controller
 
     	// Validate required parameters are available
     	if ($token == '' || is_null($token)) { $validRequest = FALSE; }
-    	$token = '062c2492bf2ce44c88dc558bc892824725712a4dceaf8228aceea3c2ee6d889d042e63b95b64629eeb706c8b';
     	if ($request->input('msg') == '') { $validRequest = FALSE; }
     	if ($request->input('numbertodial') == '') { $validRequest = FALSE; }
 
