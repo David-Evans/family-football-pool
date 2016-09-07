@@ -40,18 +40,12 @@ class Game extends Model
 	}
 
 	public function getStandings() {
-//SELECT p.user_id, u.username, SUM(p.result) AS wins
-//FROM picks p INNER JOIN users u ON (p.user_id = u.id)
-//GROUP BY u.id
-//ORDER BY wins DESC;
 		$result = DB::table('picks')
 				->join('users', 'picks.user_id', '=', 'users.id')
-				->select(DB::raw('picks.user_id, users.username, sum(picks.result) as wins'))
+				->select(DB::raw('picks.user_id, users.nickname, sum(picks.result) as wins'))
 				->groupBy('users.id')
 				->orderBy('wins', 'desc')
 				->get();
 		return $result;
-
-
 	}
 }
