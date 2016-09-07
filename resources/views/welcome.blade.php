@@ -29,7 +29,7 @@
             <i class="fa fa-calendar fa-stack-1x fa-inverse"></i>
         </span>
         <h4 class="service-heading">Full NFL Season</h4>
-        <p class="text-muted" style="color:#000">The entire 17-week NFL schedule is wrapped up in the competition.  Winner has the most overall wins and the losers have to suck it!</p>
+        <p class="text-muted" style="color:#000">An entire 17-week NFL schedule is wrapped up in the competition.  The overall winner will have the most wins.  The losers just have to suck it!</p>
     </div>
     <div class="col-md-4">
         <span class="fa-stack fa-4x">
@@ -37,7 +37,7 @@
             <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
         </span>
         <h4 class="service-heading">Responsive Design</h4>
-        <p class="text-muted" style="color:#000">The football pool has re-built from the ground up to be used primarily from your mobile device.  Works best on phones and tablets.</p>
+        <p class="text-muted" style="color:#000">The family football pool has re-built from the ground up to be used primarily from your mobile device.  Works best on phones and tablets. Enjoy!</p>
     </div>
     <div class="col-md-4">
         <span class="fa-stack fa-4x">
@@ -45,7 +45,7 @@
             <i class="fa fa-cogs fa-stack-1x fa-inverse"></i>
         </span>
         <h4 class="service-heading">Automation</h4>
-        <p class="text-muted" style="color:#000">New improved automation is now part of the game!  All picks are now lock right at game time.  Miss your pick?  Tough shit!  You get a loss for that bud.</p>
+        <p class="text-muted" style="color:#000">New improved automation is now part of the game!  All picks are now locked right at game time.  Miss your pick?  Tough shit!  You'll now get a loss for that bud.</p>
     </div>
 </div>
 @endsection
