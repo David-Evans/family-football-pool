@@ -23,17 +23,49 @@ class ScoringController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the raw scoring from the NFL feed.
      *
-     * @return \Illuminate\Http\Response
      */
     public function updatescoring()
     {
-        //$liveScore = new LiveScore();
-        // return view('pages.update-scores')->with([
-        //     'LiveScore' => $liveScore
-        //     ]);
-        return view('pages.update-scores');
 
+        $url = env("NFL_URL", "http://www.nfl.com/liveupdate/scorestrip/ss.json");
+        $url = 'http://football.app/nfl-data';
+
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        $output = curl_exec($ch); 
+        curl_close($ch);      
+        $games = json_decode($output);
+
+        return view('pages.update-scores')->with([
+            'games' => $games
+            ]);
+    }
+
+    /**
+     * Show the raw scoring from the NFL feed.
+     *
+     */
+    public function updateGameDetails()
+    {
+        /**
+        [ ] DWE TODO: Read current scoring detail from NFL feed
+            [ ] 
+        **/
+        $url = env("NFL_URL", "http://www.nfl.com/liveupdate/scorestrip/ss.json");
+        $url = 'http://football.app/nfl-data';
+
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        $output = curl_exec($ch); 
+        curl_close($ch);      
+        $games = json_decode($output);
+
+        return view('pages.update-gamedetails')->with([
+            'games' => $games
+            ]);
     }
 }

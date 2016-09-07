@@ -5,11 +5,9 @@
     $week = $games->w;
     $games = $games->gms;
 
-    print '<h1>Live Scores for Week '.$week.'</h1>';
+    print '<h1>Update Scores for Week '.$week.'</h1>';
     foreach ($games as $game) {
     	// stdClass Object ( [hs] => 0 [d] => Thu [gsis] => 56866 [vs] => 17 [eid] => 2016081851 [h] => PIT [ga] => [rz] => -1 [v] => PHI [vnn] => Eagles [t] => 7:00 [q] => F [hnn] => Steelers )
-    	// [X] DWE TODO: Find each game in the FFP `games` table (to get the unique record id)
-    	// [ ] DWE TODO: Insert or Update the `live_scores` table
     	// [ ] DWE TODO: Skip scores where a final action has taken place
     	// [ ] DWE TODO: If a winner is declared, update other tables (games, picks, teams)
     	$homeCity = $game->h;
@@ -21,8 +19,18 @@
     	$gameDay = $game->d;
     	$gameDate = $game->eid;
     	$gameTime = $game->t;
+
+    	// [ ] DWE TODO: Is there a game today?
+    	date_default_timezone_set('America/New_York');
+    	$now = date('Ymd');
+    	$gameDate = substr($gameDate,0,8);
+    	$doSomething = ($gameDate == $now) ? TRUE : FALSE;
     	$gameStatus = getGameInProgressDesc($game->q);
 		$gameDetails = findFFPGameDetails($week, $visitorTeam, $homeTeam);
+
+    	if ($doSomething) {
+			$dbResult = insertOrUpdate($gameDetails, $game);
+    	}
 ?>
 		<h3>Matchup: {{ $visitorTeam }} at {{ $homeTeam }}</h3>
 		<blockquote>
@@ -31,6 +39,7 @@
 			Game Time: {{ $gameDetails->game_datetime }}<br />
 			Game Status: {{ $gameStatus }}<br />
 			{{ $gameStatus }} score: {{ $visitorScore }} - {{ $homeScore }}<br />
+			Compare Dates: Now={{ $now }}, GameDate={{ $gameDate }}<br />
 		</blockquote>
 		<hr />
 <?php
@@ -83,5 +92,64 @@ function getGameInProgressDesc($gameStatus) {
 		default:
 	}
 	return $result;
+}
+
+function insertOrUpdate($gameDetails, $game) {
+	$result = DB::table('live_scores')
+			->where([
+				['game_id','=',$gameDetails->id]
+			])
+			->select('id')
+			->get();
+	$gameStatus = getGameInProgressDesc($game->q);
+	date_default_timezone_set('America/New_York');
+	$now = date('Y-m-d H:i:s');
+	$winner = determineWinner($game);
+
+	if (count($result) == 0) {
+		// Insert new row into database
+		DB::table('live_scores')
+			->insert([
+				'game_id' => $gameDetails->id,
+				'visitor_team' => $game->vnn,
+				'home_team' => $game->hnn,
+				'visitor_score' => $game->vs,
+				'home_score' => $game->hs,
+				'game_status' => $gameStatus,
+				'game_date' => $gameDetails->game_datetime,
+				'winner' => $winner,
+				'last_updated' => $now
+			]);
+		return "insert";
+	} else {
+		// Update existing row in database
+		DB::table('live_scores')
+			->where('game_id', $gameDetails->id)
+			->update([
+				'visitor_score' => $game->vs,
+				'home_score' => $game->hs,
+				'game_status' => $gameStatus,
+				'winner' => $winner,
+				'last_updated' => $now
+			]);
+		return "update";
+	}
+}
+
+function determineWinner($game) {
+	$gameStatus = getGameInProgressDesc($game->q);
+	if ($gameStatus == "Final" || $gameStatus == "Final OT") {
+		// Game is over, declare a winner!
+		if (intval($game->vs) > intval($game->hs)) {
+			// Visiting team won
+			return $game->vnn;
+		} else {
+			// Home team won
+			return $game->hnn;
+		}
+	} else {
+		// Game is still in progess, return blank
+		return "";
+	}
 }
 ?>
