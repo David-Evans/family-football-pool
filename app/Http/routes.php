@@ -42,6 +42,9 @@ Route::post('/chat', 'ChatsController@store');
 Route::get('/whats-new', 'PagesController@rules');
 
 Route::get('/nfl-season', 'PagesController@nflSeason');
+Route::get('/nfl-data', function() {
+	return view('pages.nfl-data');
+});
 
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
@@ -51,6 +54,7 @@ Route::get('/clear-cache', function() {
 Route::post('/chat/new', 'ChatsController@store');
 
 Route::get('/scoring/live', 'ScoringController@updatescoring');
+Route::get('/scoring/update', 'ScoringController@updategamedetails');
 
 Route::get('/admin', 'AdminController@index');
 
