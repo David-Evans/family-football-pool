@@ -507,6 +507,14 @@ table.picks td i.fa-lock {
     table.picks td.visitor-name, table.picks td.home-name {width:20%;}
 }
 
+@media only screen and (max-width:320px) {
+    #pickform .panel-success .panel-body {
+        padding: 0px !important;
+    }
+    #pickform .team-picker {
+        border-width:5px !important;
+    }
+}
 
 .gameday-group h4.game-day { float:left }
 .gameday-group h4.game-date { float: right }
