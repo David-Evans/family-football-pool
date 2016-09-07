@@ -3,7 +3,7 @@
 @section("content")        
 
 <?php
-$tropo->sendSMS();
+//$tropo->sendSMS();
 ?><section id="pickform">
 
 <?php /**
@@ -82,7 +82,7 @@ $i = 0;
 						//$picked = ($pickedTeam) ? "picked" : "";
 						$gameTime = getGameTime($pick->game_datetime,$user);
 						$lockStatus = isGameStarted($pick->game_datetime); $lockStatus = "unlocked";
-						if ($i < 2) { $lockStatus = "locked"; } 
+						//if ($i < 2) { $lockStatus = "locked"; } 
 					?>
 
 					<table class="table picks {{ $lockStatus }}">
@@ -189,29 +189,38 @@ $i = 0;
             }
         });
     });
-
-    //animate bootstrap notification boxes
-    window.setTimeout(function () {
-        jQuery(".alert").fadeTo(500, 0).slideUp(1000, function () {
-            jQuery(this).remove();
-        });
-    }, 3000);
-
 </script>
 
 @endsection
 
 <?php
 	function getGameTime($gameDateTime, $user) {
-		// [ ] DWE TODO: Get user preference of timezone?
-		// Calculate for daylight saving difference (Arizona only)
 		date_default_timezone_set('America/New_York');
-		$dayLightSavingsEndDate = strtotime("November 6, 2016 02:00 AM");
+		$dayLightSavingsEndDate = env("END_DST", "NULL");
+		$dayLightSavingsEndDate = strtotime($dayLightSavingsEndDate);
 		$rightNow = strtotime("now");
 		$timezone = $user->timezone;
 
-		$diff = ($rightNow < $dayLightSavingsEndDate) ? 3 : 2;
-		$diff = 2;
+		// Determine timezone offset
+		switch ($timezone) {
+			case "Pacific":
+				$diff = 3;
+				break;
+			case "Arizona":
+				$diff = ($rightNow < $dayLightSavingsEndDate) ? 3 : 2;
+				break;
+			case "Mountain":
+				$diff = 2;
+				break;
+			case "Central":
+				$diff = 1;
+				break;
+			case "Eastern":
+				$diff = 0;
+				break;
+			default:
+				$diff = 0;
+		}
 
 		$result = strtotime("-".$diff." hours", strtotime($gameDateTime));
 		$gameTime = date("h:i A", $result);
