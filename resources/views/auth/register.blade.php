@@ -1,6 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
+<div class="row">
+    <div class="col-lg-12">
+        <div class="jumbotron" style="background-image:url('/images/football-background.jpg');background-repeat:no-repeat;background-size:cover">
+            <div class="row">
+                <div class="col-md-12" style="text-align:center">
+                    <img src="/images/ffp-banner.png" style="width:80%"><br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -14,7 +27,7 @@
                             <label for="name" class="col-md-4 control-label">Name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Enter your real name">
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -24,15 +37,50 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
+                            <label for="nickname" class="col-md-4 control-label">Nickname</label>
+
+                            <div class="col-md-6">
+                                <input id="nickname" type="text" class="form-control" name="nickname" value="{{ old('nickname') }}" placeholder="Enter your nickname (max 12 char)" maxlength="12">
+
+                                @if ($errors->has('nickname'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('nickname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="yourname@domain.com">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('timezone') ? ' has-error' : '' }}">
+                            <label for="timezone" class="col-md-4 control-label">Timezone</label>
+
+                            <div class="col-md-6">
+                                <select id="timezone" class="form-control" name="timezone">
+                                    <option value="Pacific">Pacific</option>
+                                    <option value="Arizona">Arizona</option>
+                                    <option value="Mountain">Mountain</option>
+                                    <option value="Central">Central</option>
+                                    <option value="Eastern" selected>Eastern</option>
+                                </select>
+<!--                                <input id="timezone" type="text" class="form-control" name="timezone" value="{{ old('timezone') }}" placeholder="Enter your timezone (max 12 char)" maxlength="12"> -->
+
+                                @if ($errors->has('timezone'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('timezone') }}</strong>
                                     </span>
                                 @endif
                             </div>

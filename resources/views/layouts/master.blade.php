@@ -46,7 +46,7 @@
 
     <div id="wrapper">
 
-    @if(\Request::path() == "/" || \Request::path() == "login")
+    @if(\Request::path() == "/" || \Request::path() == "login" || \Request::path() == 'register')
         @include('layouts.partials._welcome')
     @else
         @include('layouts.partials._navigation')
@@ -54,7 +54,7 @@
 
         @include('layouts.partials._header')
     
-    @if(\Request::path() == "/" || \Request::path() == "login")
+    @if(\Request::path() == "/" || \Request::path() == "login" || \Request::path() == 'register')
         <div id="welcome-wrapper">
     @else
         <div id="page-wrapper">
