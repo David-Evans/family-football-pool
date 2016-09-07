@@ -31,7 +31,7 @@
 </div>
                     @endif
             <div class="panel panel-default">
-                <div class="panel-heading">Lay down some smack</div>
+                <div class="panel-heading">Lay down some smack, {{ $user->nickname }}!</div>
 
                 <div class="panel-body">
                     {!! Form::open(array('action' => array('ChatsController@store'))) !!}
@@ -67,13 +67,12 @@
                                 <div class="message-head clearfix">
                                     <div class="avatar pull-left"><img src="/images/{{ $image }}"></div>
                                     <div class="user-detail">
-                                        <h5 class="handle">{{ $chat->name }}</h5>
+                                        <h5 class="handle">{{ $chat->nickname }}</h5>
                                         <div class="post-meta">
                                             <div class="asker-meta">
                                                 <span class="qa-message-what"></span>
                                                 <span class="qa-message-when">
                                                     <span class="qa-message-when-data">{{ $ago }}</span>
-                                                    <span>{{ $chat->created_at }}</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -102,17 +101,6 @@
     </div>
 -->
 
-@endsection
-
-@section("scripts")
-<script>
-    //animate bootstrap notification boxes
-    window.setTimeout(function () {
-        jQuery(".alert").fadeTo(500, 0).slideUp(1000, function () {
-            jQuery(this).remove();
-        });
-    }, 3000);
-</script>
 @endsection
 
 <?php
