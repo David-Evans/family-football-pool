@@ -30,7 +30,7 @@ class ChatsController extends Controller
         $user = Auth::user();
         $chats = Chat::latest('chats.created_at')
                 ->join('users', 'user_id', '=', 'users.id')
-                ->select('users.name', 'users.avatar', 'chats.message', 'chats.created_at')
+                ->select('users.nickname', 'users.avatar', 'chats.message', 'chats.created_at')
                 ->get();
 
         return view('chat.index')->with([
