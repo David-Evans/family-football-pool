@@ -30,7 +30,7 @@ class ScoringController extends Controller
     {
 
         $url = env("NFL_URL", "http://www.nfl.com/liveupdate/scorestrip/ss.json");
-        $url = 'http://football.app/nfl-data';
+//        $url = 'http://football.app/nfl-data';
 
         $ch = curl_init(); 
         curl_setopt($ch, CURLOPT_URL, $url); 
@@ -55,7 +55,7 @@ class ScoringController extends Controller
             [ ] 
         **/
         $url = env("NFL_URL", "http://www.nfl.com/liveupdate/scorestrip/ss.json");
-        $url = 'http://football.app/nfl-data';
+//        $url = 'http://football.app/nfl-data';
 
         $ch = curl_init(); 
         curl_setopt($ch, CURLOPT_URL, $url); 
