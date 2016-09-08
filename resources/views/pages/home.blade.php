@@ -7,8 +7,6 @@ $rightNow = getRightNow($user);
 
 @section("content")        
 
-<p>Created: {{ $user->created_at }}, Buffer: {{ $buffer }}</p>
-
 @if(strtotime($user->created_at) > strtotime($buffer))
 	<div class="row">
 		<div class="col-lg-12">
@@ -123,4 +121,4 @@ function getRightNow($user) {
 	$result = date('M jS - g:i A', strtotime("-".$diff." hours"));
 	return $result;
 }
-?>
+?> 
