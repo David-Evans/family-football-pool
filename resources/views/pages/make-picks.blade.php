@@ -79,10 +79,8 @@ $i = 0;
 					<?php 
 						$i++;
 						$pickedTeam = isAlreadyPicked($pick->id, $mypicks);
-						//$picked = ($pickedTeam) ? "picked" : "";
 						$gameTime = getGameTime($pick->game_datetime,$user);
-						$lockStatus = isGameStarted($pick->game_datetime); $lockStatus = "unlocked";
-						//if ($i < 2) { $lockStatus = "locked"; } 
+						$lockStatus = isGameStarted($pick->game_datetime);
 					?>
 
 					<table class="table picks {{ $lockStatus }}">
@@ -91,14 +89,6 @@ $i = 0;
 						<input name="pick-{{ $pick->id }}" type="hidden" value="{{ $pickedTeam }}" />
 						@endif
 						<tr>
-<!--
-							<td class="visitor-name">
-								<div class="team-name">
-									<span class="city">{{ $pick->visitor_city }}</span><br />
-									<span class="team">{{ $pick->visitor_team }}</span>
-								</div>
-							</td>
--->
 							<td class="game-{{ $pick->id }} visitor">
 								<div style="position:relative">
 									@if ($pick->visitor_team == $pickedTeam)
@@ -129,14 +119,6 @@ $i = 0;
 									@endif
 								</div>
 							</td>
-<!--
-							<td class="home-name">
-								<div class="team-name">
-									<span class="city">{{ $pick->home_city }}</span><br />
-									<span class="team">{{ $pick->home_team }}</span>
-								</div>
-							</td>
--->
 						</tr>
 						</tbody>
 					</table>
