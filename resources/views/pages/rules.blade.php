@@ -31,6 +31,11 @@
                         <li>For example, if you miss the Thursday game, you take a one game loss, but you still have time to pick the Sunday games</li>
                         <li>The season-long winner will have racked up the most wins</li>
                     </ul>
+                    <h4>September 11, 2016</strong></h4>
+                    <ul>
+                        <li>Added link to PayPal on the home page</li>
+                        <li>Find out who's who, click on their nickname on home page</li>
+                    </ul>
                 </div>
             </div>
         </div>
