@@ -62,19 +62,22 @@ $rightNow = getRightNow($user);
                 		</td>
                 	</tr>
                 	</tbody></table>
-                	<div class="container">
-                	<div class="row">
-                		<div class="col-md-8">
-                		</div>
-                		<div class="col-md-4">
-                			
-                		</div>
-                	</div>
-                	</div>
 				</div>
 			</div>
 		</div>
 	</div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-warning">
+                <div class="panel-heading">View everyone's picks</div>
+                <div class="panel-body">
+                	<h4>Check out what everyone has picked this week</h4>
+					<p><a href="/view-picks" role="button" class="btn btn-primary">View all picks</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
 @endif
 
 @if (count($standings))
