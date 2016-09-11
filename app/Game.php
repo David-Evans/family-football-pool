@@ -48,4 +48,34 @@ class Game extends Model
 				->get();
 		return $result;
 	}
+
+	public function showAllPicks($week) {
+		$result = DB::table('picks')
+				->join('users', 'picks.user_id', '=', 'users.id')
+				->join('games', 'picks.game_id', '=', 'games.id')
+				->select(DB::raw('picks.game_id, picks.user_id, users.nickname, users.display_name, users.avatar, picks.pick'))
+				->where('games.week_id','=',$week)
+				->orderBy('picks.user_id')
+				->orderBy('game_id')
+				->get();
+		return $result;
+	}
+	public function getGameCount($week) {
+		$result = DB::table('games')
+				->select(DB::raw(COUNT('id')))
+				->where('week_id','=',$week)
+				->orderBy('id')
+				->get();
+		$count = count($result);
+		return $count;		
+	}
+
+	public function getGames($week) {
+		$result = DB::table('games')
+				->select(DB::raw('id'))
+				->where('week_id','=',$week)
+				->orderBy('id')
+				->get();
+		return $result;
+	}
 }

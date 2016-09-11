@@ -524,3 +524,15 @@ table.picks td i.fa-lock {
     color:#fff;
     font-size:84px;
 }
+#view-picks th, #view-picks td { text-align: center; vertical-align: top }
+#view-picks td {
+    padding:.25em;
+    border:1px solid #eee;
+}
+#view-picks td img {
+    border-radius:10px;
+    width:100%;
+}
+#view-picks td img.avatar {
+    width:60% !important;
+}

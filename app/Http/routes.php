@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/picks', 'PicksController@makepicks');
 	Route::post('picks/submit', 'PicksController@store');
+	Route::get('/view-picks', 'PicksController@viewpicks');
 
 	Route::get('/chat', 'ChatsController@index');
 	Route::get('/chat/create', 'ChatsController@create');
@@ -67,4 +68,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/admin', 'AdminController@index');
 
 	Route::get('/tropo/sendmsg', 'TropoController@sendmessage');
+
+	Route::get('/account', 'AccountController@index');
+
 

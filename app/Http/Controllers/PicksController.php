@@ -9,6 +9,8 @@ use App\Http\Requests;
 
 use Auth;
 
+use DB;
+
 use App\Game;
 
 use App\Pick;
@@ -80,6 +82,28 @@ class PicksController extends Controller
             'tropo' => $tropo
         ]);
     }
+
+    public function viewPicks() {
+        $user = Auth::user();
+        $users = DB::table('users')->get();
+        $game = new Game();
+        $currDate = FALSE;
+        $week = $game->getCurrentWeek();
+        $picks = $game->showAllPicks($week);
+        $games = $game->getGames($week);
+        $gameCount = count($games);
+
+//dd($users);
+        return view('pages.view-picks')->with([
+            'user' => $user,
+            'users' => $users,
+            'week'=> $week,
+            'picks' => $picks,
+            'games' => $games,
+            'gameCount' =>$gameCount
+            ]);
+    }    
+
     /**
      * Show the form for creating a new resource.
      *
