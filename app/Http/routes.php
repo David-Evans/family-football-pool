@@ -18,46 +18,53 @@ IDEAS:
   [ ] Look back at my historical picks
 
 **/
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['middleware' => ['web']], function () {
+	Route::auth();
+	Route::get('/', function () {
+		if(Auth::check()) {
+			return redirect('home');
+		} else {
+		    return view('welcome');
+		}
+	});
 });
 
-Route::get('/home', 'HomeController@index');
+	Route::get('/home', 'HomeController@index');
 
-Route::group(['prefix' => ''], function(){
-    Route::resource('games','GamesController');
-});
+	Route::group(['prefix' => ''], function(){
+	    Route::resource('games','GamesController');
+	});
 
-Route::group(['prefix' => 'api/v1'], function(){
-    Route::resource('teams','TeamsController');
-});
+	Route::group(['prefix' => 'api/v1'], function(){
+	    Route::resource('teams','TeamsController');
+	});
 
-Route::get('/picks', 'PicksController@makepicks');
-Route::post('picks/submit', 'PicksController@store');
+	Route::get('/picks', 'PicksController@makepicks');
+	Route::post('picks/submit', 'PicksController@store');
 
-Route::get('/chat', 'ChatsController@index');
-Route::get('/chat/create', 'ChatsController@create');
-Route::post('/chat', 'ChatsController@store');
+	Route::get('/chat', 'ChatsController@index');
+	Route::get('/chat/create', 'ChatsController@create');
+	Route::post('/chat', 'ChatsController@store');
 
-Route::get('/whats-new', 'PagesController@rules');
+	Route::get('/whats-new', 'PagesController@rules');
 
-Route::get('/nfl-season', 'PagesController@nflSeason');
-Route::get('/nfl-data', function() {
-	return view('pages.nfl-data');
-});
+	Route::get('/nfl-season', 'PagesController@nflSeason');
+	Route::get('/nfl-data', function() {
+		return view('pages.nfl-data');
+	});
 
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('cache:clear');
-    // return what you want
-});
+	Route::get('/clear-cache', function() {
+	    $exitCode = Artisan::call('cache:clear');
+	    // return what you want
+	});
 
-Route::post('/chat/new', 'ChatsController@store');
+	Route::post('/chat/new', 'ChatsController@store');
 
-Route::get('/scoring/live', 'ScoringController@updatescoring');
-Route::get('/scoring/update', 'ScoringController@updategamedetails');
+	Route::get('/scoring/live', 'ScoringController@updatescoring');
+	Route::get('/scoring/update', 'ScoringController@updategamedetails');
 
-Route::get('/admin', 'AdminController@index');
+	Route::get('/admin', 'AdminController@index');
 
-Route::get('/tropo/sendmsg', 'TropoController@sendmessage');
+	Route::get('/tropo/sendmsg', 'TropoController@sendmessage');
 
-Route::auth();

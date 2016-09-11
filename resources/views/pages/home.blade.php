@@ -48,6 +48,33 @@ $rightNow = getRightNow($user);
             </h1>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">Care to make it interesting?</div>
+                <div class="panel-body">
+                	<table><tbody>
+                	<tr>
+                		<td style="width:30%"><a href="https://www.paypal.me/jalapenodave/20"><img src="/images/andrew-jackson.jpg" style="width:70%"></a></td>
+                		<td style="width:70%">
+                		<p>Let's go for realz this time around!  Everyone <a href="https://www.paypal.me/jalapenodave/20">throw in $20</a> and we'll pay that out to the winner (or possible 1st, 2nd, 3rd).  Let's discuss.</p>
+						<p><a href="https://www.paypal.me/jalapenodave/20" role="button" class="btn btn-primary">Put in some dough</a></p>
+                		</td>
+                	</tr>
+                	</tbody></table>
+                	<div class="container">
+                	<div class="row">
+                		<div class="col-md-8">
+                		</div>
+                		<div class="col-md-4">
+                			
+                		</div>
+                	</div>
+                	</div>
+				</div>
+			</div>
+		</div>
+	</div>
 @endif
 
 @if (count($standings))
@@ -55,7 +82,6 @@ $rightNow = getRightNow($user);
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Standings as of {{ $rightNow }}</div>
-
                 <div class="panel-body">
 <table class="table">
 	<tbody>
@@ -68,7 +94,7 @@ $rightNow = getRightNow($user);
 ?>
 	<tr>
 		<td>{{ $i }}</td>
-		<td>{{ $ranking->nickname }}</td>
+		<td><a class="myModal" data-toggle="modal" data-target="#modal" data-user="{{ $ranking->nickname }}" data-displayname="{{ $ranking->display_name}}" data-avatar="{{ $ranking->avatar }}">{{ $ranking->nickname }}</a></td>
 		<td>{{ $ranking->wins }}</td>
 		<td></td>
 		<td></td>
@@ -83,10 +109,52 @@ $rightNow = getRightNow($user);
     </div>
 @endif
 
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" id="userInfo">
+      	<table><tbody>
+      		<tr>
+	      		<td class="avatar" style="width:20%"></td>
+	      		<td class="about" style="padding:1em;width:80%">
+	      			<p class="displayName" style="font-weight:bold"></p>
+	      			<p class="aka"></p>
+	      		</td>
+      		</tr>
+      	</tbody></table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section("scripts")
 <script>
+//	$('#modal').on('show.bs.modal', function (e) {
+//	  console.log('Modal is shown');
+//	  user = $(this).attr('data-user');
+//	  $("#myModalLabel").html(user);
+//	})
+	$(".myModal").click(function(){
+		console.log('Modal is shown');
+		user = $(this).attr('data-user');
+		displayName = $(this).attr('data-displayname');
+		avatar = $(this).attr('data-avatar');
+		console.log(user);
+		$("#myModalLabel").text("Who is "+user+"?");
+		$("#userInfo .avatar").html('<img src="/images/avatars/' + avatar + '">');
+		$("#userInfo .about .displayName").html(displayName);
+		$("#userInfo .about .aka").html('a.k.a. "' + user + '"');
+	});
 </script>
 @endsection
 <?php
