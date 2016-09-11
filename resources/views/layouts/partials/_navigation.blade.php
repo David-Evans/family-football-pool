@@ -120,6 +120,9 @@
                         <li>
                             <a href="/whats-new"><i class="fa fa-refresh fa-fw"></i> What's New?</a>
                         </li>
+                        <li>
+                            <a href="/account"><i class="fa fa-cog fa-fw"></i> My Account</a>
+                        </li>
 @if ($user->role == 'admin')
                         <li>
                             <a href="/admin"><i class="fa fa-cog fa-fw"></i> Admin</a>
