@@ -60,19 +60,9 @@ class Game extends Model
 				->get();
 		return $result;
 	}
-	public function getGameCount($week) {
-		$result = DB::table('games')
-				->select(DB::raw(COUNT('id')))
-				->where('week_id','=',$week)
-				->orderBy('id')
-				->get();
-		$count = count($result);
-		return $count;		
-	}
-
+	
 	public function getGames($week) {
 		$result = DB::table('games')
-				->select(DB::raw('id'))
 				->where('week_id','=',$week)
 				->orderBy('id')
 				->get();
