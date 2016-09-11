@@ -21,7 +21,6 @@
     <!-- /.col-lg-12 -->
 </div>
 
-
 <div class="row text-center">
     <div class="col-md-4">
         <span class="fa-stack fa-4x">
