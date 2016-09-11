@@ -42,7 +42,7 @@ class Game extends Model
 	public function getStandings() {
 		$result = DB::table('picks')
 				->join('users', 'picks.user_id', '=', 'users.id')
-				->select(DB::raw('picks.user_id, users.nickname, sum(picks.result) as wins'))
+				->select(DB::raw('picks.user_id, users.nickname, users.display_name, users.avatar, sum(picks.result) as wins'))
 				->groupBy('users.id')
 				->orderBy('wins', 'desc')
 				->get();
