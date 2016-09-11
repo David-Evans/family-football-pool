@@ -65,7 +65,7 @@
                         <div class="message-item" id="m16">
                             <div class="message-inner">
                                 <div class="message-head clearfix">
-                                    <div class="avatar pull-left"><img src="/images/{{ $image }}"></div>
+                                    <div class="avatar pull-left"><img src="/images/avatars/{{ $image }}"></div>
                                     <div class="user-detail">
                                         <h5 class="handle">{{ $chat->nickname }}</h5>
                                         <div class="post-meta">
