@@ -12,8 +12,8 @@ use DB;
 
 class PagesController extends Controller
 {
-    public function home() {
-    	return 'pooness';
+    public function __construct() {
+        $this->middleware('auth');
     }
 
     public function rules() {
