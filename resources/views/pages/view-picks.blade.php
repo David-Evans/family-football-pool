@@ -1,7 +1,7 @@
 @extends("layouts.master")
 
 @section("content")        
-
+<?php date_default_timezone_set('America/New_York'); ?>
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">
@@ -29,8 +29,15 @@
         <td><img src="/images/avatars/{{ strtolower($user->avatar) }}" class="avatar" /></td>
     @foreach ($games as $game)
         <?php 
-            $myPick = userPick($game->id, $user->id, $picks); 
-            echo '<td>'.$myPick.'</td>';
+            $now = date('Y-m-d H:i:s');
+            $gameDate = $game->game_datetime;
+            if ($gameDate <= $now) {
+                $myPick = userPick($game->id, $user->id, $picks); 
+                echo '<td>'.$myPick.'</td>';
+            } else {
+                echo '<td><img src="/images/logos/not-started.png" /></td>';
+            }
+
         ?>
     @endforeach
     </tr>
@@ -46,7 +53,7 @@
 <?php
     function userPick ($gameId, $userId, $picks) {
         $result = "";
-        // cache-bustersss
+        // cache-buster
         foreach ($picks as $pick) {
             if ($pick->game_id == $gameId && $pick->user_id == $userId) {
                 return '<img src="/images/logos/'.strtolower($pick->pick).'.png" />';
