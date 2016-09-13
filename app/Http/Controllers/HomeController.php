@@ -29,9 +29,11 @@ class HomeController extends Controller
         $user = Auth::user();
         $game = new Game();
         $standings = $game->getStandings();
+        $completedGames = $game->getCompletedGameCount();
         return view('pages.home')->with([
             'user' => $user,
-            'standings' => $standings
+            'standings' => $standings,
+            'completedGames' => $completedGames
         ]);
 
     }

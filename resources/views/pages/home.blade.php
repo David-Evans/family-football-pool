@@ -99,8 +99,8 @@ $rightNow = getRightNow($user);
 		<td>{{ $i }}</td>
 		<td><a class="myModal" data-toggle="modal" data-target="#modal" data-user="{{ $ranking->nickname }}" data-displayname="{{ $ranking->display_name}}" data-avatar="{{ $ranking->avatar }}">{{ $ranking->nickname }}</a></td>
 		<td>{{ $ranking->wins }}</td>
-		<td></td>
-		<td></td>
+		<td>{{ intval($completedGames) - intval($ranking->wins) }}</td>
+		<td>{{ number_format(intval($ranking->wins) / intval($completedGames),3) }} </td>
 		<td>{{ intval($ranking->wins) - intval($mostWins) }}</td>
 	</tr>
 @endforeach                    
