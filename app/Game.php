@@ -22,8 +22,8 @@ class Game extends Model
 	];
 
 	public function getCurrentWeek() {
-		$today = date('Y-m-d', strtotime('2016-12-14'));
-		$today = date('Y-m-d');
+		date_default_timezone_set('America/New_York');
+		$today = date('Y-m-d H:i:s');
 		$result = DB::table('games')
 				->select(DB::raw('min(week_id) as week'))
 				->where('game_datetime', '>=', $today)
@@ -67,5 +67,12 @@ class Game extends Model
 				->orderBy('id')
 				->get();
 		return $result;
+	}
+
+	public function getCompletedGameCount() {
+		$result = DB::table('games')
+				->where('winner','!=',"")
+				->get();
+		return count($result);
 	}
 }
