@@ -68,6 +68,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/admin', 'AdminController@index');
 
 	Route::get('/tropo/sendmsg', 'TropoController@sendmessage');
+	Route::get('/tropo/sendgroupmsg', 'TropoController@sendgroupmessage');
 
 	Route::get('/account', 'AccountController@index');
 

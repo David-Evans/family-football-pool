@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use DB;
+
 use Auth;
 
 class AdminController extends Controller
@@ -28,8 +30,10 @@ class AdminController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $users = DB::table('users')->orderBy('nickname')->get();
         return view('admin.index')->with([
             'user' => $user,
+            'users' => $users
         ]);
 
     }
