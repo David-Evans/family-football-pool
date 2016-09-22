@@ -34,13 +34,16 @@
                 <div class="panel-heading">Lay down some smack, {{ $user->nickname }}!</div>
 
                 <div class="panel-body">
-                    {!! Form::open(array('action' => array('ChatsController@store'))) !!}
-                    <div class="input-group">
+                    {!! Form::open(array('action' => array('ChatsController@store'),'files' => true)) !!}
+                    <div class="input-group" style="margin-bottom:10px">
                         {{ Form::hidden('user_id', $user->id) }}
                         {{ Form::text('message', null, array('class'=>'form-control input-sm', 'placeholder'=>'Lay your smack here...','required' => 'required')) }}
                         <span class="input-group-btn">
                         {{ Form::submit('Post', array('class' => 'btn btn-primary btn-sm', 'style' => '')) }}
                         </span>
+                    </div>
+                    <div class="input-group">
+                        {!! Form::file('image', null) !!}
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -65,7 +68,7 @@
                         <div class="message-item" id="m16">
                             <div class="message-inner">
                                 <div class="message-head clearfix">
-                                    <div class="avatar pull-left"><img src="/images/avatars/{{ $image }}"></div>
+                                    <div class="avatar pull-left"><img class="avatar" src="/images/avatars/{{ $image }}"></div>
                                     <div class="user-detail">
                                         <h5 class="handle">{{ $chat->nickname }}</h5>
                                         <div class="post-meta">
@@ -80,6 +83,9 @@
                                 </div>
                                 <div class="qa-message-content">
                                     {{ $chat->message }}
+                                @if($chat->image != "")
+                                    <br /><img src="/images/smack/{{ $chat->image }}" class="smack"/>
+                                @endif
                                 </div>
                             </div>
                         </div>

@@ -30,7 +30,7 @@ class ChatsController extends Controller
         $user = Auth::user();
         $chats = Chat::latest('chats.created_at')
                 ->join('users', 'user_id', '=', 'users.id')
-                ->select('users.nickname', 'users.avatar', 'chats.message', 'chats.created_at')
+                ->select('users.nickname', 'users.avatar', 'chats.message', 'chats.image', 'chats.created_at')
                 ->get();
 
         return view('chat.index')->with([
@@ -67,6 +67,7 @@ class ChatsController extends Controller
         // $request = Request::all();
         $validator = Validator::make(Request::all(), [
             'message' => 'required|min:2',
+            'photo' => 'mimes:jpeg,jpg,gif,bmp,png'
         ]);
 
         // $this->validate(Request::all(), [
@@ -76,11 +77,17 @@ class ChatsController extends Controller
         if ($validator->passes()) {
             try {
                 $input = Request::all();
-
                 //Chat::create($input);
                 $chat = new Chat();
                 $chat->user_id = $input['user_id'];
                 $chat->message = $input['message'];
+                if (array_key_exists('image', $input)) {
+                    $uuid = uniqid('ffp',TRUE);
+                    $imageName = $uuid.".".$input['image']->getClientOriginalExtension();
+                    $input['image']->move(base_path() . '/public/images/smack/', $imageName);
+                    $chat->image = $imageName;
+                }
+
                 $chat->save();
 
                 //return redirect('chat');

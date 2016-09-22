@@ -456,9 +456,12 @@ color: #777;
 font-size: 12px;
 line-height: 22px;
 }
-.message-item img {
+.message-item img.avatar {
  min-height: 40px;
  max-height: 40px;
+}
+.message-item img.smack {
+    width:50%;
 }
 
 .login .navbar-toggle {display:none;}
