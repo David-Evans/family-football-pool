@@ -65,6 +65,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/scoring/live', 'ScoringController@updatescoring');
 	Route::get('/scoring/update', 'ScoringController@updategamedetails');
 
+	Route::get('/send-reminders', 'RemindersController@sendreminders');
+
 	Route::get('/admin', 'AdminController@index');
 
 	Route::get('/tropo/sendmsg', 'TropoController@sendmessage');

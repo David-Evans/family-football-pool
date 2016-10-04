@@ -31,6 +31,11 @@
                         <li>For example, if you miss the Thursday game, you take a one game loss, but you still have time to pick the Sunday games</li>
                         <li>The season-long winner will have racked up the most wins</li>
                     </ul>
+                    <h4>October 3, 2016</strong></h4>
+                    <ul>
+                        <li>Send SMS reminders before games start</li>
+                        <li>Fix issue where current week ends <i>after</i> Monday, so picks can be seen</li>
+                    </ul>
                     <h4>September 21, 2016</strong></h4>
                     <ul>
                         <li>SMS Capabilities added</li>
