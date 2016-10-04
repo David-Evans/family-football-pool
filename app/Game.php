@@ -23,10 +23,13 @@ class Game extends Model
 
 	public function getCurrentWeek() {
 		date_default_timezone_set('America/New_York');
-		$today = date('Y-m-d H:i:s');
+		$rightNow = date("Y-m-d H:i:s");
+		$sixHoursAgo = strtotime("-6 hours", strtotime($rightNow));
+		$gameTime = date("Y-m-d H:i:s", $sixHoursAgo);
+
 		$result = DB::table('games')
 				->select(DB::raw('min(week_id) as week'))
-				->where('game_datetime', '>=', $today)
+				->where('game_datetime', '>=', $gameTime)
 				->get();
 
 		return $result[0]->week;
