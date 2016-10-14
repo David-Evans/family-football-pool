@@ -32,8 +32,10 @@
             $now = date('Y-m-d H:i:s');
             $gameDate = $game->game_datetime;
             if ($gameDate <= $now) {
-                $myPick = userPick($game->id, $user->id, $picks); 
-                echo '<td>'.$myPick.'</td>';
+                $myPick = userPick($game->id, $user->id, $picks);
+                $class = '';
+                if ($myPick == $game->winner) { $class="won"; }
+                echo '<td class="'.$class.'"><img src="/images/logos/'.strtolower($myPick).'.png" /></td>';
             } else {
                 echo '<td><img src="/images/logos/not-started.png" /></td>';
             }
@@ -56,7 +58,7 @@
         // cache-buster
         foreach ($picks as $pick) {
             if ($pick->game_id == $gameId && $pick->user_id == $userId) {
-                return '<img src="/images/logos/'.strtolower($pick->pick).'.png" />';
+                return $pick->pick;
             }
         }
         return $result;

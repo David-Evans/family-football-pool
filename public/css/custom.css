@@ -539,3 +539,7 @@ table.picks td i.fa-lock {
 #view-picks td img.avatar {
     width:60% !important;
 }
+
+#view-picks td.won {
+    background-color: #2ECC71;
+}

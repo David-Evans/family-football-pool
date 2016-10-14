@@ -56,7 +56,7 @@ class Game extends Model
 		$result = DB::table('picks')
 				->join('users', 'picks.user_id', '=', 'users.id')
 				->join('games', 'picks.game_id', '=', 'games.id')
-				->select(DB::raw('picks.game_id, picks.user_id, users.nickname, users.display_name, users.avatar, picks.pick'))
+				->select(DB::raw('picks.game_id, picks.user_id, users.nickname, users.display_name, users.avatar, picks.pick, games.winner'))
 				->where('games.week_id','=',$week)
 				->orderBy('picks.user_id')
 				->orderBy('game_id')
