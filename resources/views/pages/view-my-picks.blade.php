@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">
-                <i class="fa fa-cog fa-fw"></i> Week {{ $week }} Picks
+                <i class="fa fa-cog fa-fw"></i> My Week {{ $week }} Picks
             </h1>
         </div>
     </div>
@@ -13,20 +13,13 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Picks for week {{ $week }}</div>
+                <div class="panel-heading">My picks for week {{ $week }}</div>
 
                 <div class="panel-body">
 <table id="view-picks"><tbody>
-<tr>
-    <th>Player</th>
-@for($i=1;$i<=$gameCount;$i++)
-    <th><strong>{{ $i }}</strong></th>
-@endfor
-</tr>
-
-<tr>
-    <td><img src="/images/avatars/{{ strtolower($user->avatar) }}" class="avatar" /></td>
 @foreach ($games as $game)
+<tr>
+    <td style="text-align:center">{{$game->visitor_team}}<br />@<br />{{$game->home_team}}</td>
     <?php 
         $now = date('Y-m-d H:i:s');
         $gameDate = $game->game_datetime;
@@ -41,8 +34,8 @@
         }
 
     ?>
-@endforeach
 </tr>
+@endforeach
 
 </tbody></table>
 				</div>
