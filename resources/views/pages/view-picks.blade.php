@@ -35,7 +35,8 @@
                 $myPick = userPick($game->id, $user->id, $picks);
                 $class = '';
                 if ($myPick == $game->winner) { $class="won"; }
-                echo '<td class="'.$class.'"><img src="/images/logos/'.strtolower($myPick).'.png" /></td>';
+                $img = ($myPick == "") ? "" : '<img src="/images/logos/'.strtolower($myPick).'.png" />'; 
+                echo '<td class="'.$class.'">'.$img.'</td>';
             } else {
                 echo '<td><img src="/images/logos/not-started.png" /></td>';
             }
