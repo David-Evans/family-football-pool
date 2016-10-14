@@ -17,6 +17,7 @@
 
                 <div class="panel-body">
 <table id="view-picks"><tbody>
+<tr><th>Match Up</th><th>Pick</th><th>Status</th></tr>
 @foreach ($games as $game)
 <tr>
     <td style="text-align:center">{{$game->visitor_team}}<br />@<br />{{$game->home_team}}</td>
@@ -32,8 +33,8 @@
         } else {
             echo '<td><img src="/images/logos/not-started.png" /></td>';
         }
-
     ?>
+    <td></td>
 </tr>
 @endforeach
 
