@@ -69,19 +69,19 @@ class ScoringController extends Controller
             $gameDate = substr($score->eid,0,8);
             $doSomething = ($gameDate == $now) ? TRUE : FALSE;
             $gameDetails = $this->findFFPGameDetails($nflScores->w, $score->vnn, $score->hnn);
-            array_push($games,(object) array(
-                'home_team' => $score->hnn,
-                'visitor_team' => $score->vnn,
-                'home_score' => $score->hs,
-                'visitor_score' => $score->vs,
-                'status' => $this->getGameInProgressDesc($score->q),
-                'game_id' => $gameDetails->id,
-                'day_of_week' => $gameDetails->day_of_week,
-                'game_datetime' => $gameDetails->game_datetime
-            ));
-            // if ($doSomething) {
+            if ($gameDetails) {
+                array_push($games,(object) array(
+                    'home_team' => $score->hnn,
+                    'visitor_team' => $score->vnn,
+                    'home_score' => $score->hs,
+                    'visitor_score' => $score->vs,
+                    'status' => $this->getGameInProgressDesc($score->q),
+                    'game_id' => $gameDetails->id,
+                    'day_of_week' => $gameDetails->day_of_week,
+                    'game_datetime' => $gameDetails->game_datetime
+                ));
                 $dbResult = $this->insertOrUpdate($gameDetails, $score);
-            // }
+            }
         }
 
         // Record any wins
