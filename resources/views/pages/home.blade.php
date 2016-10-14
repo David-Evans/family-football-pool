@@ -69,10 +69,13 @@ $rightNow = getRightNow($user);
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-warning">
-                <div class="panel-heading">View everyone's picks</div>
+                <div class="panel-heading">View picks</div>
                 <div class="panel-body">
-                	<h4>Check out what everyone has picked this week</h4>
-					<p><a href="/view-picks" role="button" class="btn btn-primary">View all picks</a></p>
+                	<h4>Check out picks for this week</h4>
+					<p>
+					<a href="/view-picks" role="button" class="btn btn-primary">View everyone's picks</a>
+					<a href="/view-my-picks" role="button" class="btn btn-primary">View my picks</a>
+					</p>
 				</div>
 			</div>
 		</div>
