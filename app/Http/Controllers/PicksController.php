@@ -45,7 +45,7 @@ class PicksController extends Controller
         $game = new Game();
         $currDate = FALSE;
         $week = $game->getCurrentWeek();
-        $picks = $game->showPicks($week);
+        $picks = $game->showPicksReverse($week);
         $tropo = new Tropo();
 
         $myPicks = Pick::where([
