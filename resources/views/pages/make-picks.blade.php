@@ -49,10 +49,6 @@ $groupHead = FALSE;
 $groupGames = array();
 $i = 0;
 ?>
-<?php
-dd($picks);
-?>
-
 	@foreach ($picks as $pick)
 		@if ($groupHead != $pick->day_of_week)
 		<?php 
