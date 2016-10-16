@@ -46,7 +46,7 @@ class Game extends Model
 	public function showPicksReverse($week) {
 		$result = DB::table('v$_games')
 				->where('week_id','=',$week)
-				->orderBy('game_datetime DESC', 'id DESC')
+				->orderBy('game_datetime', 'DESC')
 				->get();
 		return $result;
 	}
