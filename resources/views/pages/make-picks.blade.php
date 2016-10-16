@@ -65,9 +65,6 @@ $i = 0;
 	@endforeach
 
 <?php
-usort($groups, function($a, $b) {
-    return $a['game_datetime'] - $b['game_datetime'];
-});
 ?>
 
 	@foreach ($groups as $group)
