@@ -64,9 +64,6 @@ $i = 0;
 		?>
 	@endforeach
 
-<?php
-?>
-
 	@foreach ($groups as $group)
 	<div class="row">
 		<div class="col-md-12">
