@@ -49,6 +49,10 @@ $groupHead = FALSE;
 $groupGames = array();
 $i = 0;
 ?>
+<?php
+dd($picks);
+?>
+
 	@foreach ($picks as $pick)
 		@if ($groupHead != $pick->day_of_week)
 		<?php 
@@ -64,9 +68,6 @@ $i = 0;
 		?>
 	@endforeach
 
-<?php
-dd($groups);
-?>
 	@foreach ($groups as $group)
 	<div class="row">
 		<div class="col-md-12">
