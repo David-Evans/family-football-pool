@@ -38,6 +38,7 @@ class Game extends Model
 	public function showPicks($week) {
 		$result = DB::table('v$_games')
 				->where('week_id','=',$week)
+				->orderBy('game_datetime', 'id')
 				->get();
 		return $result;
 	}
