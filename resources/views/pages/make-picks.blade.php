@@ -92,9 +92,9 @@ $i = 0;
 							<td class="game-{{ $pick->id }} visitor">
 								<div style="position:relative">
 									@if ($pick->visitor_team == $pickedTeam)
-									<img src="/images/logos/{{ strtolower($pick->visitor_team) }}.png" class="team-picker picked" data-game="{{ $pick->id }}" data-team="{{ $pick->visitor_team }}" />
+									<img src="/images/logos/{{ strtolower(trim($pick->visitor_team)) }}.png" class="team-picker picked" data-game="{{ $pick->id }}" data-team="{{ trim($pick->visitor_team) }}" />
 									@else
-									<img src="/images/logos/{{ strtolower($pick->visitor_team) }}.png" class="team-picker" data-game="{{ $pick->id }}" data-team="{{ $pick->visitor_team }}" />
+									<img src="/images/logos/{{ strtolower(trim($pick->visitor_team)) }}.png" class="team-picker" data-game="{{ $pick->id }}" data-team="{{ trim($pick->visitor_team) }}" />
 									@endif
 									@if ($lockStatus == "locked")
 									<div class="lock"><i class="fa fa-lock"></i></div>
@@ -110,9 +110,9 @@ $i = 0;
 							<td class="game-{{ $pick->id }} home">
 								<div style="position:relative">
 									@if ($pick->home_team == $pickedTeam)
-									<img src="/images/logos/{{ strtolower($pick->home_team) }}.png" class="team-picker picked" data-game="{{ $pick->id }}" data-team="{{ $pick->home_team }}" />
+									<img src="/images/logos/{{ strtolower(trim($pick->home_team)) }}.png" class="team-picker picked" data-game="{{ $pick->id }}" data-team="{{ trim($pick->home_team) }}" />
 									@else
-									<img src="/images/logos/{{ strtolower($pick->home_team) }}.png" class="team-picker" data-game="{{ $pick->id }}" data-team="{{ $pick->home_team }}" />
+									<img src="/images/logos/{{ strtolower(trim($pick->home_team)) }}.png" class="team-picker" data-game="{{ $pick->id }}" data-team="{{ trim($pick->home_team) }}" />
 									@endif
 									@if ($lockStatus == "locked")
 									<div class="lock"><i class="fa fa-lock"></i></div>
