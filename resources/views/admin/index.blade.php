@@ -28,6 +28,17 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">
+                <div class="panel-heading">Send Reminders</div>
+                <div class="panel-body">
+                    <p><a href="/send-reminders" class="btn btn-primary">Send Reminders</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
                 <div class="panel-heading">Send a single text message</div>
                 <div class="panel-body">
                     {!! Form::open(['url' => 'tropo/sendmsg', 'method' => 'get']) !!}
@@ -45,9 +56,6 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Send a text to the entire group</div>
@@ -57,28 +65,6 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
                     {{ Form::text('msg', null, array('class'=>'form-control input-sm', 'placeholder'=>'Enter text message here...','required' => 'required')) }}</p>
                     <p>{{ Form::submit('Send SMS', array('class' => 'btn btn-primary btn-sm', 'style' => '')) }}</p>
                     {!! Form::close() !!}
-                    <hr />
-                    <a href="/admin/sms-test">Send group text</a></p>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Top secret things only the admin can do</div>
-                <div class="panel-body">
-                    <p><a href="/scoring/update">Update Scoring</a></p>
-                    <hr />
-                    {!! Form::open(['url' => 'tropo/sendmsg', 'method' => 'get']) !!}
-                    <p>Text Number:<br />
-                    {{ Form::text('numbertodial', null, array('class'=>'form-control input-sm', 'placeholder'=>'8005551212','required' => 'required')) }}</p>
-                    <p>Message:<br />
-                    {{ Form::text('msg', null, array('class'=>'form-control input-sm', 'placeholder'=>'Enter text message here...','required' => 'required')) }}</p>
-                    <p>{{ Form::submit('Send SMS', array('class' => 'btn btn-primary btn-sm', 'style' => '')) }}</p>
-                    {!! Form::close() !!}
-                    <hr />
-                    <a href="/admin/sms-test">Send a text</a></p>
-                    </p>
                 </div>
             </div>
         </div>

@@ -543,3 +543,9 @@ table.picks td i.fa-lock {
 #view-picks td.won {
     background-color: #2ECC71;
 }
+#view-picks.my-picks {
+    width:100%;
+}
+#view-picks.my-picks td {
+    width:33%;
+}
