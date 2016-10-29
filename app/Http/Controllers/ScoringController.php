@@ -187,6 +187,9 @@ class ScoringController extends Controller
             if (intval($game->vs) > intval($game->hs)) {
                 // Visiting team won
                 return $game->vnn;
+            } elseif (intval($game->vs) == intval($game->hs)) {
+                // Game ended in tie (boo!)
+                return "Tie";
             } else {
                 // Home team won
                 return $game->hnn;
@@ -219,6 +222,9 @@ WHERE p.user_id = 1 AND game_status IN ('Final','Final OT');
             if ($win->winner == $win->pick) {
                 $result = 1;
                 $reason = "Good Pick";
+            } elseif ($win->winner == "Tie") {
+                $result = 1;
+                $reason = "Tie";
             } else {
                 $result = 0;
                 $reason = "Bad Pick";

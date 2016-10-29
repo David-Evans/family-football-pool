@@ -48,6 +48,9 @@ $rightNow = getRightNow($user);
             </h1>
         </div>
     </div>
+
+	<iframe src="/scoring/update" style="display:none"></iframe>
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-success">
