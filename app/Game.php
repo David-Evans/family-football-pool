@@ -81,6 +81,16 @@ class Game extends Model
 		return $result;
 	}
 
+	public function getMyPicks($week) {
+        $result = DB::table('picks')
+            ->join('live_scores','picks.game_id','=','live_scores.game_id')
+            ->join('games','picks.game_id','=','games.id')
+            ->select(DB::raw('picks.id, picks.game_id, picks.user_id, picks.pick, games.visitor_team, games.home_team, games.day_of_week, games.game_datetime, live_scores.winner, live_scores.game_status, live_scores.visitor_score, live_scores.home_score'))
+            ->where('games.week_id','=',$week)
+            ->get();
+		return $result;
+	}
+
 	public function getCompletedGameCount() {
 		$result = DB::table('games')
 				->where('winner','!=',"")

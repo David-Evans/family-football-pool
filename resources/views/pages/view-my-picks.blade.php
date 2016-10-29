@@ -16,25 +16,40 @@
                 <div class="panel-heading">My picks for week {{ $week }}</div>
 
                 <div class="panel-body">
-<table id="view-picks"><tbody>
+<table id="view-picks" class="my-picks"><tbody>
 <tr><th>Match Up</th><th>Pick</th><th>Status</th></tr>
-@foreach ($games as $game)
+@foreach ($picks as $pick)
 <tr>
-    <td style="text-align:center">{{$game->visitor_team}}<br />@<br />{{$game->home_team}}</td>
+    <td style="text-align:center;vertical-align:middle">{{$pick->visitor_team}}<br />@<br />{{$pick->home_team}}</td>
     <?php 
         $now = date('Y-m-d H:i:s');
-        $gameDate = $game->game_datetime;
-        if ($gameDate <= $now) {
-            $myPick = userPick($game->id, $user->id, $picks);
+        $gameDate = $pick->game_datetime;
+        //if ($gameDate <= $now) {
+            $myPick = $pick->pick;
             $class = '';
-            if ($myPick == $game->winner) { $class="won"; }
+            if ($myPick == $pick->winner) { $class="won"; }
             $img = ($myPick == "") ? "" : '<img src="/images/logos/'.strtolower($myPick).'.png" />'; 
             echo '<td class="'.$class.'">'.$img.'</td>';
+        //} else {
+        //    echo '<td><img src="/images/logos/not-started.png" /></td>';
+        //}
+    ?>
+    <td style="text-align:center;vertical-align:middle">
+    <?php
+        $gameStatus = $pick->game_status;
+        if ($gameStatus == "Final" || $gameStatus == "Final OT") {
+            echo "Final<br />".$pick->visitor_score."-".$pick->home_score;
         } else {
-            echo '<td><img src="/images/logos/not-started.png" /></td>';
+            $gameDay = $pick->day_of_week;
+            $gameTime = date('g:iA', strtotime($pick->game_datetime));
+            if ($gameStatus != "Pregame") {
+                echo $gameStatus.'<br />'.$pick->visitor_score."-".$pick->home_score; 
+            } else {
+                echo $gameDay.'<br />'.$gameTime.' (ET)';
+            }
         }
     ?>
-    <td></td>
+    </td>
 </tr>
 @endforeach
 
@@ -48,7 +63,6 @@
 <?php
     function userPick ($gameId, $userId, $picks) {
         $result = "";
-        // cache-buster
         foreach ($picks as $pick) {
             if ($pick->game_id == $gameId && $pick->user_id == $userId) {
                 return $pick->pick;
