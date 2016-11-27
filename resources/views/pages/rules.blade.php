@@ -31,6 +31,10 @@
                         <li>For example, if you miss the Thursday game, you take a one game loss, but you still have time to pick the Sunday games</li>
                         <li>The season-long winner will have racked up the most wins</li>
                     </ul>
+                    <h4>November 27, 2016</strong></h4>
+                    <ul>
+                        <li>Fix issue with "view-my-picks" page</li>
+                    </ul>
                     <h4>October 3, 2016</strong></h4>
                     <ul>
                         <li>Send SMS reminders before games start</li>
