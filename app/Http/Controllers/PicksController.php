@@ -109,7 +109,7 @@ class PicksController extends Controller
         $game = new Game();
         $currDate = FALSE;
         $week = $game->getCurrentWeek();
-        $picks = $game->getMyPicks($week);
+        $picks = $game->getMyPicks($week, $user);
         $gameCount = count($picks);
 
         return view('pages.view-my-picks')->with([
