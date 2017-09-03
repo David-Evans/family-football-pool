@@ -55,7 +55,11 @@ DWE TODO: There are 17 weeks in the season, go through the results 17 times
         $gameDate = date_format($date, "M jS").'<br />'.date_format($date, "h:i A"); 
     ?>
     <tr>
-        <td>{{ $game->visitor_team }} at {{ $game->home_team }}</td>
+        <td>{{ $game->visitor_team }} at {{ $game->home_team }}
+        @if ($game->alt_location != '')
+        <br>({{ $game->alt_location}})
+        @endif
+        </td>
         <td>{{ $game->day_of_week }}</td>
         <td>{!! $gameDate !!}</td>
         <td>{{ $game->visitor_score }} - {{ $game->home_score }} </td>
