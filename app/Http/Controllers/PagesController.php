@@ -23,7 +23,7 @@ class PagesController extends Controller
     public function nflSeason() {
 
 		$games = DB::table('games')
-				->select('week_id', 'day_of_week', 'game_datetime', 'visitor_team', 'home_team', 'winner', 'visitor_score', 'home_score')
+				->select('week_id', 'day_of_week', 'game_datetime', 'alt_location', 'visitor_team', 'home_team', 'winner', 'visitor_score', 'home_score')
 				->orderBy('id')
 				->get();
     	return view('pages.nfl-season')->with([
