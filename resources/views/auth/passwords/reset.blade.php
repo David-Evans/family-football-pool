@@ -2,6 +2,19 @@
 
 @section('content')
 <div class="row">
+    <div class="col-lg-12">
+        <div class="jumbotron" style="background-image:url('/images/football-background.jpg');background-repeat:no-repeat;background-size:cover">
+            <div class="row">
+                <div class="col-md-12" style="text-align:center">
+                    <img src="/images/ffp-banner.png" style="width:80%"><br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <div class="panel-heading">Reset Password</div>
