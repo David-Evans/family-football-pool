@@ -76,3 +76,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/account', 'AccountController@index');
 
 
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
