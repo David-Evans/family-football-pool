@@ -43,14 +43,15 @@ Referencing passed variables:
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-danger">
-                <div class="panel-heading">Looks like you haven't made all of your picks for this week!</div>
-                <div class="panel-body">
-                <h4>Missing Picks</h4>
+                <div class="panel-heading"><i class="fa fa-warning"></i> Missing Picks!</div>
+                <div class="panel-body text-danger">
+				<h5>Looks like you haven't made all of your picks for this week!</h5>
                 <ul>
                 @foreach ($issues as $issue)
                     <li>{{$issue->visitor_team}} @ {{$issue->home_team}}</li>
                 @endforeach
                 </ul>
+                <p>Make sure to make all of your selections before games begin (and <strong>SAVE</strong> them)</p>
                 </div>
             </div>
         </div>
