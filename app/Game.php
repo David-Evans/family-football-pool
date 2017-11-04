@@ -98,7 +98,7 @@ class Game extends Model
 		$result = DB::select("SELECT G.week_id, user_id, nickname, display_name, SUM(result) wins, G2.games-SUM(result) losses, SUM(result)/G2.games pct, G2.games
 			FROM `picks` P INNER JOIN `users` U ON (P.user_id = U.id) INNER JOIN `games` G ON (G.id = P.game_id)
 			INNER JOIN (SELECT week_id, COUNT(id) games FROM `games` GROUP BY week_id) G2 ON (G.week_id = G2.week_id) 
-			WHERE user_id = $user
+			WHERE user_id = $user->id
 			GROUP BY user_id, week_id
 			ORDER BY week_id, user_id");
 		return $result;
