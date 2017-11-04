@@ -78,6 +78,7 @@ $rightNow = getRightNow($user);
 					<p>
 					<a href="/view-picks" role="button" class="btn btn-primary">View everyone's picks</a>
 					<a href="/view-my-picks" role="button" class="btn btn-primary">View my picks</a>
+					<a href="/view-my-season-summary" role="button" class="btn btn-primary">View my season summary</a>
 					</p>
 				</div>
 			</div>
