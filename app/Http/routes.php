@@ -44,6 +44,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('picks/submit', 'PicksController@store');
 	Route::get('/view-picks', 'PicksController@viewpicks');
 	Route::get('/view-my-picks', 'PicksController@viewmypicks');
+	Route::get('/view-my-season-summary', 'PicksController@viewmysummary');
 
 	Route::get('/chat', 'ChatsController@index');
 	Route::get('/chat/create', 'ChatsController@create');

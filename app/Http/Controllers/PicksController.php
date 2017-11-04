@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
@@ -119,6 +118,21 @@ class PicksController extends Controller
             'gameCount' =>$gameCount
         ]);
     }    
+
+    public function viewMySummary() {
+        $user = Auth::user();        
+        $game = new Game();
+        $currDate = FALSE;
+        $week = $game->getCurrentWeek();
+        $picks = $game->getMySummary($user);
+
+        return view('pages.view-my-season-summary')->with([
+            'user' => $user,
+            'week'=> $week,
+            'picks' => $picks,
+        ]);
+
+    }
 
     /**
      * Show the form for creating a new resource.
