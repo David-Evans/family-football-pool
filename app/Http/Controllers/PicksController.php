@@ -110,12 +110,14 @@ class PicksController extends Controller
         $week = $game->getCurrentWeek();
         $picks = $game->getMyPicks($week, $user);
         $gameCount = count($picks);
+        $issues = $game->getMyPickIssues($week, $user);
 
         return view('pages.view-my-picks')->with([
             'user' => $user,
             'week'=> $week,
             'picks' => $picks,
-            'gameCount' =>$gameCount
+            'gameCount' =>$gameCount,
+            'issues' => $issues
         ]);
     }    
 
@@ -129,7 +131,7 @@ class PicksController extends Controller
         return view('pages.view-my-season-summary')->with([
             'user' => $user,
             'week'=> $week,
-            'picks' => $picks,
+            'picks' => $picks
         ]);
 
     }

@@ -94,6 +94,14 @@ class Game extends Model
 		return $result;
 	}
 
+	public function getMyPickIssues($week, $user) {
+		$result = DB::select("SELECT id, visitor_team, home_team
+			FROM `games` 
+			WHERE id NOT IN (SELECT game_id FROM `picks` WHERE week_id = $week and user_id = $user->id)
+			AND week_id = $week");
+		return $result;
+	}
+
 	public function getMySummary($user) {
 		$result = DB::select("SELECT G.week_id, user_id, nickname, display_name, SUM(result) wins, G2.games-SUM(result) losses, SUM(result)/G2.games pct, G2.games
 			FROM `picks` P INNER JOIN `users` U ON (P.user_id = U.id) INNER JOIN `games` G ON (G.id = P.game_id)

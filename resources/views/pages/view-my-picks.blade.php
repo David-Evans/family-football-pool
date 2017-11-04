@@ -10,12 +10,28 @@
         </div>
     </div>
 
+@if ($issues)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Looks like you haven't made all of your picks for this week!</div>
+                @foreach ($issues as $issue)
+                    <p>{{$issue->visitor_team}} @ {{$issue->home_team}}</p>
+                @endforeach
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">My picks for week {{ $week }}</div>
 
                 <div class="panel-body">
+}
 <table id="view-picks" class="my-picks"><tbody>
 <tr><th>Match Up</th><th>Pick</th><th>Status</th></tr>
 @foreach ($picks as $pick)
