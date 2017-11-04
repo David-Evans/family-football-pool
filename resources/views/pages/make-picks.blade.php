@@ -39,6 +39,21 @@ Referencing passed variables:
     </div>
 </div>
 
+@if (count($issues))
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Looks like you haven't made all of your picks for this week!</div>
+                @foreach ($issues as $issue)
+                    <p>{{$issue->visitor_team}} @ {{$issue->home_team}}</p>
+                @endforeach
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 
 @if (count($picks))
 	{!! Form::open(array('action' => array('PicksController@store'))) !!}

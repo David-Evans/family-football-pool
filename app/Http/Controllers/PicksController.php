@@ -54,6 +54,7 @@ class PicksController extends Controller
             ->select('picks.id','game_id','user_id','pick')
             ->get();
 
+        $issues = $game->getMyPickIssues($week, $user);
         
 /**
     Options for passing variables to a view:
@@ -78,7 +79,8 @@ class PicksController extends Controller
             'currDate' => $currDate,
             'week' => $week,
             'mypicks' => $myPicks,
-            'tropo' => $tropo
+            'tropo' => $tropo,
+            'issues' => $issues
         ]);
     }
 
@@ -110,14 +112,12 @@ class PicksController extends Controller
         $week = $game->getCurrentWeek();
         $picks = $game->getMyPicks($week, $user);
         $gameCount = count($picks);
-        $issues = $game->getMyPickIssues($week, $user);
 
         return view('pages.view-my-picks')->with([
             'user' => $user,
             'week'=> $week,
             'picks' => $picks,
-            'gameCount' =>$gameCount,
-            'issues' => $issues
+            'gameCount' =>$gameCount
         ]);
     }    
 
