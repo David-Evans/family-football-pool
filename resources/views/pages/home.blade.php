@@ -75,11 +75,11 @@ $rightNow = getRightNow($user);
                 <div class="panel-heading">View picks</div>
                 <div class="panel-body">
                 	<h4>Check out picks for this week</h4>
-					<p>
-					<a href="/view-picks" role="button" class="btn btn-primary">View everyone's picks</a>
-					<a href="/view-my-picks" role="button" class="btn btn-primary">View my picks</a>
-					<a href="/view-my-season-summary" role="button" class="btn btn-primary">View my season summary</a>
-					</p>
+					<div class="row">
+						<div class="col-md-4 text-center" style="padding:.5em"><a href="/view-picks" role="button" class="btn btn-primary">View everyone's picks</a></div>
+						<div class="col-md-4 text-center" style="padding:.5em"><a href="/view-my-picks" role="button" class="btn btn-primary">View my picks</a></div>
+						<div class="col-md-4 text-center" style="padding:.5em"><a href="/view-my-season-summary" role="button" class="btn btn-primary">View my season summary</a></div>
+					</div>
 				</div>
 			</div>
 		</div>
