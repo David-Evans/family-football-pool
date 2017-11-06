@@ -20,12 +20,12 @@
     $finishedGameCount = $gameCount - $openGameCount;
 ?>
 <h5>With {{ $openGameCount }} games remaining, here is the current leaderboard for week {{ $week }}</h5>
-<table><tbody>
+<table class="leaderboard"><tbody>
 <tr><th>Player</th><th>Wins</th></tr>
 @foreach ($leaders as $leader)
     <tr>
         <td><img src="/images/avatars/{{ strtolower($leader->avatar) }}" class="avatar" /></td>
-        <td>{{ $leader->wins }}</td>
+        <td class="wins">{{ $leader->wins }}</td>
     </tr>
 @endforeach
 <?php

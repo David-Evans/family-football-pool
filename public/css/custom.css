@@ -527,19 +527,18 @@ table.picks td i.fa-lock {
     color:#fff;
     font-size:84px;
 }
-#view-picks th, #view-picks td { text-align: center; vertical-align: top }
-#view-picks td {
+#view-picks th, #view-picks td, .leaderboard th, .leaderboard td { text-align: center; vertical-align: top }
+#view-picks td, .leaderboard td {
     padding:.25em;
     border:1px solid #eee;
 }
-#view-picks td img {
+#view-picks td img, .leaderboard td img {
     border-radius:10px;
     width:100%;
 }
-#view-picks td img.avatar {
+#view-picks td img.avatar, .leaderboard td img.avatar {
     width:60% !important;
 }
-
 #view-picks td.won {
     background-color: #2ECC71;
 }
@@ -548,4 +547,8 @@ table.picks td i.fa-lock {
 }
 #view-picks.my-picks td {
     width:33%;
+}
+.leaderboard td.wins {
+    font-size: 200%;
+    vertical-align: middle;
 }
