@@ -93,7 +93,7 @@ class PicksController extends Controller
         $picks = $game->showAllPicks($week);
         $games = $game->getGames($week);
         $gameCount = count($games);
-        $leaders = $game=>getLeaders($week);
+        $leaders = $game->getLeaders($week);
         $gamesInProgress = $game->getGamesInProgress($week);
 
 //dd($users);
