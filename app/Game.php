@@ -74,15 +74,11 @@ class Game extends Model
 	}
 
 	public function getLeaders($week) {
-		$result = DB::table('picks')
-				->join('users', 'picks.user_id', '=', 'users.id')
-				->join('games', 'picks.game_id', '=', 'games.id')
-				->join('live_scores', 'picks.game_id', '=', 'live_scores.game_id')
-				->select(DB::raw('picks.game_id, picks.user_id, users.nickname, users.display_name, users.avatar, picks.pick, games.winner'))
-				->where('games.week_id','=',$week)
-				->orderBy('picks.user_id')
-				->orderBy('game_id')
-				->get();
+		$result = DB::select("SELECT P.user_id, U.nickname, U.avatar, SUM(P.result) wins
+			FROM `picks` P INNER JOIN `users` U ON (P.user_id = U.id) INNER JOIN `games` G ON (P.game_id = G.id)
+			WHERE G.week_id = $week
+			GROUP BY P.user_id
+			ORDER BY wins DESC, P.user_id");
 		return $result;
 	}
 	
