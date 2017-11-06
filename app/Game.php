@@ -72,11 +72,36 @@ class Game extends Model
 				->get();
 		return $result;
 	}
+
+	public function getLeaders($week) {
+		$result = DB::table('picks')
+				->join('users', 'picks.user_id', '=', 'users.id')
+				->join('games', 'picks.game_id', '=', 'games.id')
+				->join('live_scores', 'picks.game_id', '=', 'live_scores.game_id')
+				->select(DB::raw('picks.game_id, picks.user_id, users.nickname, users.display_name, users.avatar, picks.pick, games.winner'))
+				->where('games.week_id','=',$week)
+				->orderBy('picks.user_id')
+				->orderBy('game_id')
+				->get();
+		return $result;
+	}
 	
 	public function getGames($week) {
 		$result = DB::table('games')
 				->where('week_id','=',$week)
 				->orderBy('id')
+				->get();
+		return $result;
+	}
+
+	public function getGamesInProgress($week) {
+		$result = DB::table('live_scores')
+				->join('games', 'live_scores.game_id','=','games.id')
+				->select(DB::raw('live_scores.game_id,live_scores.visitor_team, live_scores.home_team, live_scores.visitor_score, live_scores.home_score, live_scores.game_status'))
+				->where([
+					['games.week_id','=',$week],
+					['live_scores.games_status','!=','Final']])
+				->orderBy('game_id')
 				->get();
 		return $result;
 	}

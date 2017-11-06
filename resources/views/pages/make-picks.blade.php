@@ -123,7 +123,7 @@ $i = 0;
 							<td class="at">
 								<i class="fa fa-at"></i><br />{{ $gameTime }}
 								@if ($lockStatus == "locked")
-								<br /><span style="color:red">Locked</span>
+								<div class="alert alert-danger">Locked</div>
 								@endif
 							</td>
 							<td class="game-{{ $pick->id }} home">

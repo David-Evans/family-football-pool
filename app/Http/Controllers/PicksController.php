@@ -93,6 +93,8 @@ class PicksController extends Controller
         $picks = $game->showAllPicks($week);
         $games = $game->getGames($week);
         $gameCount = count($games);
+        $leaders = $game=>getLeaders($week);
+        $gamesInProgress = $game->getGamesInProgress($week);
 
 //dd($users);
         return view('pages.view-picks')->with([
@@ -101,7 +103,9 @@ class PicksController extends Controller
             'week'=> $week,
             'picks' => $picks,
             'games' => $games,
-            'gameCount' =>$gameCount
+            'gameCount' => $gameCount,
+            'leaders' => $leaders,
+            'gamesInProgress' => $gamesInProgress
         ]);
     }
 
