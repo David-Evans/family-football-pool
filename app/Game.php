@@ -100,7 +100,7 @@ class Game extends Model
 				->select(DB::raw('live_scores.game_id,live_scores.visitor_team, live_scores.home_team, live_scores.visitor_score, live_scores.home_score, live_scores.game_status'))
 				->where([
 					['games.week_id','=',$week],
-					['live_scores.games_status','!=','Final']])
+					['live_scores.game_status','!=','Final']])
 				->orderBy('game_id')
 				->get();
 		return $result;
