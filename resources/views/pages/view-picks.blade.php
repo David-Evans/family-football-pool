@@ -15,18 +15,22 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Leaderboard for week {{ $week }}</div>
                 <div class="panel-body">
+<?php
+    $openGameCount = count($gamesInProgress);
+    $finishedGameCount = $gameCount - $openGameCount;
+?>
+<h5>With {{ $openGameCount }} games remaining, here is the current leaderboard for week {{ $week }}</h5>
 <table><tbody>
-<tr><th>Player</th><th>Wins</th><th>Losses</th></tr>
+<tr><th>Player</th><th>Wins</th></tr>
 @foreach ($leaders as $leader)
     <tr>
         <td><img src="/images/avatars/{{ strtolower($leader->avatar) }}" class="avatar" /></td>
-        <td></td>
-        <td></td>
+        <td>{{ $leader->wins }}</td>
     </tr>
 @endforeach
 <?php
-print_r($leaders);
-print_r($gamesInProgress);
+//print_r($leaders);
+//print_r($gamesInProgress);
 ?>
 </tbody></table>
                 </div>
