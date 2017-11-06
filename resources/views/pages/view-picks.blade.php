@@ -15,6 +15,20 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Leaderboard for week {{ $week }}</div>
                 <div class="panel-body">
+<table><tbody>
+<tr><th>Player</th><th>Wins</th><th>Losses</th></tr>
+@foreach ($leaders as $leader)
+    <tr>
+        <td><img src="/images/avatars/{{ strtolower($leader->avatar) }}" class="avatar" /></td>
+        <td></td>
+        <td></td>
+    </tr>
+@endforeach
+<?php
+print_r($leaders);
+print_r($gamesInProgress);
+?>
+</tbody></table>
                 </div>
             </div>
         </div>
