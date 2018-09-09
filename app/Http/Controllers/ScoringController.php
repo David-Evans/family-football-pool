@@ -144,14 +144,13 @@ class ScoringController extends Controller
             $visitor = $this->getTeamName($value->away->abbr);
             $home = $this->getTeamName($value->home->abbr);
             $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
-dd($gameDetails);
             if ($gameDetails) {
                 array_push($games,(object) array(
-                    'home_team' => $score->hnn,
-                    'visitor_team' => $score->vnn,
-                    'home_score' => $score->hs,
-                    'visitor_score' => $score->vs,
-                    'status' => $this->getGameInProgressDesc($score->q),
+                    'home_team' => $home,
+                    'visitor_team' => $visitor,
+                    'home_score' => $value->home->score->T,
+                    'visitor_score' => $value->visitor->score->T,
+                    'status' => $this->getGameInProgressDesc($value->qtr),
                     'game_id' => $gameDetails->id,
                     'day_of_week' => $gameDetails->day_of_week,
                     'game_datetime' => $gameDetails->game_datetime
@@ -168,11 +167,20 @@ dd($gameDetails);
             case "P":
                 $result = "Pregame";
                 break;
+            case "Pregame"
+                $result = "Pregame";
+                break;
             case "F":
+                $result = "Final";
+                break;
+            case "Final":
                 $result = "Final";
                 break;
             case "FO":
                 $result = "Final OT";
+                break;
+            case "Overtime":
+                $result = "Overtime";
                 break;
             case "1":
                 $result = "1st Qtr";
@@ -188,6 +196,9 @@ dd($gameDetails);
                 break;
             case "H":
                 $result = "Halftime";
+                break;
+            case "Suspended":
+                $result = "Suspended";
                 break;
             default:
         }
