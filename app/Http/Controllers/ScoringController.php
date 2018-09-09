@@ -143,14 +143,18 @@ class ScoringController extends Controller
             $week = $this->getWeekFromGameDate($gameDate);
             $visitor = $this->getTeamName($value->away->abbr);
             $home = $this->getTeamName($value->home->abbr);
+            $visitorScore = 0;
+            $homeScore = 0;
+            if ($value->away->score->T != 'null') { $visitorScore = $value->away->score->T; }
+            if ($value->home->score->T != 'null') { $homeScore = $value->home->score->T; }
             $status = $this->getGameInProgressDesc($value->qtr);
             $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
             if ($gameDetails) {
                 array_push($games,(object) array(
                     'home_team' => $home,
                     'visitor_team' => $visitor,
-                    'home_score' => $value->home->score->T,
-                    'visitor_score' => $value->away->score->T,
+                    'home_score' => $homeScore,
+                    'visitor_score' => $visitorScore,
                     'status' => $status,
                     'game_id' => $gameDetails->id,
                     'day_of_week' => $gameDetails->day_of_week,
@@ -159,8 +163,8 @@ class ScoringController extends Controller
                 $score = (object) array(
                     'vnn'=>$visitor,
                     'hnn'=>$home,
-                    'vs'=>$value->away->score->T,
-                    'hs'=>$value->home->score->T,
+                    'vs'=>$visitorScore,
+                    'hs'=>$homeScore,
                     'status'=>$status,
                     'q'=>$value->qtr
                     );
@@ -210,6 +214,7 @@ class ScoringController extends Controller
                 $result = "Suspended";
                 break;
             default:
+                $result = "Pregame";
         }
         return $result;
     }
