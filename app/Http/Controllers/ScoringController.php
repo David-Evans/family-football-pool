@@ -134,8 +134,8 @@ class ScoringController extends Controller
         curl_close($ch);      
         $nflScores = json_decode($output);
         $games = array();
-        foreach ($nflScores as $score) {
-dd($score[0]);
+        foreach ($nflScores as $key=>$value) {
+dd($key);
             $now = date('Ymd');
             $gameDate = substr($score->eid,0,8);
             $doSomething = ($gameDate == $now) ? TRUE : FALSE;
