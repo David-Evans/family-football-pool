@@ -203,6 +203,7 @@ dd($gameDetails);
                 ])
                 ->select('id','day_of_week','game_datetime')
                 ->get();
+dd($result);
         if (count($result) == 0) { return FALSE; }
         return $result[0];
     }
