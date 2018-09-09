@@ -214,7 +214,7 @@ exit();
             ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
             ->select('week_id')
             ->first();
-dd($result[0]);
+dd($result['week_id']);
         return $result;
     }
 
