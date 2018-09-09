@@ -149,7 +149,7 @@ class ScoringController extends Controller
                     'home_team' => $home,
                     'visitor_team' => $visitor,
                     'home_score' => $value->home->score->T,
-                    'visitor_score' => $value->visitor->score->T,
+                    'visitor_score' => $value->away->score->T,
                     'status' => $this->getGameInProgressDesc($value->qtr),
                     'game_id' => $gameDetails->id,
                     'day_of_week' => $gameDetails->day_of_week,
