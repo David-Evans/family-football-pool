@@ -207,8 +207,8 @@ exit();
 
     function getWeekFromGameDate($gameDate) {
         $year = substr($gameDate,0,4);
-        $month = substr($gameDate,5,2);
-        $day = substr($gameDate,7,2);
+        $month = substr($gameDate,4,2);
+        $day = substr($gameDate,6,2);
         $gameDate = $year.'-'.$month.'-'.$day;
 dd($gameDate);
         $result = DB::table('games')
