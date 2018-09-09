@@ -203,7 +203,6 @@ dd($gameDetails);
                 ])
                 ->select('id','day_of_week','game_datetime')
                 ->get();
-dd($result);
         if (count($result) == 0) { return FALSE; }
         return $result[0];
     }
@@ -213,6 +212,7 @@ dd($result);
             ->where('team_name_short','=',$abbr)
             ->select('team_name')
             ->get();
+dd($result);
         return $result[0];
     }
 
