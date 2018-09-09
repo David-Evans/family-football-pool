@@ -141,8 +141,8 @@ class ScoringController extends Controller
             $gameDate = substr($key,0,8);
             $doSomething = ($gameDate == $now) ? TRUE : FALSE;
             $week = $this->getWeekFromGameDate($gameDate);
-            $visitor = $this->getTeamName($value->away->score->abbr);
-            $home = $this->getTeamName($value->home->score->abbr);
+            $visitor = $this->getTeamName($value->away->abbr);
+            $home = $this->getTeamName($value->home->abbr);
             $gameDetails = $this->findFFPGameDetails($week, $visitorScore, $homeScore);
 dd($gameDetails);
             if ($gameDetails) {
