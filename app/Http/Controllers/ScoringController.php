@@ -200,6 +200,9 @@ class ScoringController extends Controller
             case "FO":
                 $result = "Final OT";
                 break;
+            case "final overtime":
+                $result = "Final OT";
+                break;  
             case "Overtime":
                 $result = "Overtime";
                 break;
@@ -216,6 +219,9 @@ class ScoringController extends Controller
                 $result = "4th Qtr";
                 break;
             case "H":
+                $result = "Halftime";
+                break;
+            case "Halftime":
                 $result = "Halftime";
                 break;
             case "Suspended":
