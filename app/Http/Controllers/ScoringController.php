@@ -172,6 +172,14 @@ class ScoringController extends Controller
             }
         }
 
+        // Record any wins
+        $wins = $this->recordWins();
+
+        return view('pages.update-scores')->with([
+            'games' => $games,
+            'week' => $week,
+            'wins' => $wins
+            ]);
     }        
 
     function getGameInProgressDesc($gameStatus) {
