@@ -135,11 +135,14 @@ class ScoringController extends Controller
         $nflScores = json_decode($output);
         $games = array();
         foreach ($nflScores as $key=>$value) {
-dd($value);
+            // $key = date/game
+            // $value = game details
             $now = date('Ymd');
-            $gameDate = substr($score->eid,0,8);
+            $gameDate = substr($key,0,8);
             $doSomething = ($gameDate == $now) ? TRUE : FALSE;
-            $gameDetails = $this->findFFPGameDetails($nflScores->w, $score->vnn, $score->hnn);
+            $week = $this->getWeekFromGameDate($gameDate);
+exit();
+            $gameDetails = $this->findFFPGameDetails($week, $score->vnn, $score->hnn);
             if ($gameDetails) {
                 array_push($games,(object) array(
                     'home_team' => $score->hnn,
@@ -200,6 +203,20 @@ dd($value);
                 ->get();
         if (count($result) == 0) { return FALSE; }
         return $result[0];
+    }
+
+    function getWeekFromGameDate($gameDate) {
+        $year = left($gameDate,4);
+        $month = substr($gameDate,5,2);
+        $day = substr($gameDate,7,2);
+        $gameDate = $year.'-'.$month.'-'.$day;
+dd($gameDate);
+        $result = DB::table('games')
+            ->where([
+                ])
+            ->select('week_id')
+            ->first();
+        return $result;
     }
 
     function insertOrUpdate($gameDetails, $game) {
