@@ -133,8 +133,27 @@ class ScoringController extends Controller
         $output = curl_exec($ch); 
         curl_close($ch);      
         $nflScores = json_decode($output);
-dd($nflScores);
         $games = array();
+        foreach ($nflScores as $score) {
+dd($score);
+            $now = date('Ymd');
+            $gameDate = substr($score->eid,0,8);
+            $doSomething = ($gameDate == $now) ? TRUE : FALSE;
+            $gameDetails = $this->findFFPGameDetails($nflScores->w, $score->vnn, $score->hnn);
+            if ($gameDetails) {
+                array_push($games,(object) array(
+                    'home_team' => $score->hnn,
+                    'visitor_team' => $score->vnn,
+                    'home_score' => $score->hs,
+                    'visitor_score' => $score->vs,
+                    'status' => $this->getGameInProgressDesc($score->q),
+                    'game_id' => $gameDetails->id,
+                    'day_of_week' => $gameDetails->day_of_week,
+                    'game_datetime' => $gameDetails->game_datetime
+                ));
+                $dbResult = $this->insertOrUpdate($gameDetails, $score);
+            }
+        }
 
     }        
 
