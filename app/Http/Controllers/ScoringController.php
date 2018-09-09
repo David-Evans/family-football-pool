@@ -143,6 +143,7 @@ class ScoringController extends Controller
             $week = $this->getWeekFromGameDate($gameDate);
             $visitor = $this->getTeamName($value->away->abbr);
             $home = $this->getTeamName($value->home->abbr);
+            $status = $this->getGameInProgressDesc($value->qtr);
             $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
             if ($gameDetails) {
                 array_push($games,(object) array(
@@ -150,12 +151,21 @@ class ScoringController extends Controller
                     'visitor_team' => $visitor,
                     'home_score' => $value->home->score->T,
                     'visitor_score' => $value->away->score->T,
-                    'status' => $this->getGameInProgressDesc($value->qtr),
+                    'status' => $status,
                     'game_id' => $gameDetails->id,
                     'day_of_week' => $gameDetails->day_of_week,
                     'game_datetime' => $gameDetails->game_datetime
                 ));
-                $dbResult = $this->insertOrUpdate($gameDetails, $score);
+                $score = (object) array(
+                    'vnn'=>$visitor,
+                    'hnn'=>$home,
+                    'vs'=>$value->away->score->T,
+                    'hs'=>$value->home->score->T,
+                    'status'=>$status,
+                    'q'=>$value->qtr
+                    );
+dd($score);
+//                $dbResult = $this->insertOrUpdate($gameDetails, $score);
             }
         }
 
