@@ -141,8 +141,10 @@ class ScoringController extends Controller
             $gameDate = substr($key,0,8);
             $doSomething = ($gameDate == $now) ? TRUE : FALSE;
             $week = $this->getWeekFromGameDate($gameDate);
-exit();
-            $gameDetails = $this->findFFPGameDetails($week, $score->vnn, $score->hnn);
+            $visitorScore = $value->away->score->T;
+            $homeScore = $value->home->score->T;
+            $gameDetails = $this->findFFPGameDetails($week, $visitorScore, $homeScore);
+dd($gameDetails);
             if ($gameDetails) {
                 array_push($games,(object) array(
                     'home_team' => $score->hnn,
@@ -214,8 +216,7 @@ exit();
             ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
             ->select('week_id')
             ->first();
-dd($result->week_id);
-        return $result;
+        return $result->week_id;
     }
 
     function insertOrUpdate($gameDetails, $game) {
