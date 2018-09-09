@@ -211,9 +211,7 @@ exit();
         $day = substr($gameDate,6,2);
         $gameDate = $year.'-'.$month.'-'.$day;
         $result = DB::table('games')
-            ->where([
-                    ['game_datetime','=',$gameDate]
-                ])
+            ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
             ->select('week_id')
             ->first();
 dd($result);
