@@ -167,7 +167,7 @@ class ScoringController extends Controller
             case "P":
                 $result = "Pregame";
                 break;
-            case "Pregame"
+            case "Pregame":
                 $result = "Pregame";
                 break;
             case "F":
