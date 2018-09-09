@@ -143,7 +143,7 @@ class ScoringController extends Controller
             $week = $this->getWeekFromGameDate($gameDate);
             $visitor = $this->getTeamName($value->away->abbr);
             $home = $this->getTeamName($value->home->abbr);
-            $gameDetails = $this->findFFPGameDetails($week, $visitorScore, $homeScore);
+            $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
 dd($gameDetails);
             if ($gameDetails) {
                 array_push($games,(object) array(
