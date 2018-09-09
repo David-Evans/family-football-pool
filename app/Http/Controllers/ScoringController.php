@@ -210,12 +210,13 @@ exit();
         $month = substr($gameDate,4,2);
         $day = substr($gameDate,6,2);
         $gameDate = $year.'-'.$month.'-'.$day;
-dd($gameDate);
         $result = DB::table('games')
             ->where([
+                    ['game_datetime','=',$gameDate]
                 ])
             ->select('week_id')
             ->first();
+dd($result);
         return $result;
     }
 
