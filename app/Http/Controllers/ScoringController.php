@@ -206,7 +206,7 @@ exit();
     }
 
     function getWeekFromGameDate($gameDate) {
-        $year = left($gameDate,4);
+        $year = substr($gameDate,0,4);
         $month = substr($gameDate,5,2);
         $day = substr($gameDate,7,2);
         $gameDate = $year.'-'.$month.'-'.$day;
