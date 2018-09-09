@@ -65,7 +65,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/chat/new', 'ChatsController@store');
 
 	Route::get('/scoring/live', 'ScoringController@updatescoring');
-	Route::get('/scoring/update', 'ScoringController@updategamedetails');
+	// Route::get('/scoring/update', 'ScoringController@updategamedetails');
+	Route::get('/scoring/update', 'ScoringController@updategamedetails2018');
 
 	Route::get('/send-reminders', 'RemindersController@sendreminders');
 

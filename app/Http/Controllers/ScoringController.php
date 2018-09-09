@@ -94,6 +94,50 @@ class ScoringController extends Controller
             ]);
     }
 
+    public function updateGameDetails2018() {
+/*
+{
+    "2018090900":{
+        "home":{
+            "score":{"1":0,"2":0,"3":0,"4":0,"5":0,"T":0},
+            "abbr":"BAL",
+            "to":3},
+        "away":{
+            "score":{"1":0,"2":0,"3":0,"4":0,"5":0,"T":0},
+            "abbr":"BUF",
+            "to":3},
+        "bp":0,
+        "down":0,
+        "togo":0,
+        "clock":"15:00",
+        "posteam":"BUF",
+        "note":null,
+        "redzone":false,
+        "stadium":"M&T Bank Stadium",
+        "media":{
+            "radio":{"home":null,"away":null},
+            "tv":"CBS",
+            "sat":null,
+            "sathd":null},
+        "yl":"",
+        "qtr":"Pregame"
+    }        
+}
+*/
+        date_default_timezone_set('America/New_York');
+        $url = "http://www.nfl.com/liveupdate/scores/scores.json";
+
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        $output = curl_exec($ch); 
+        curl_close($ch);      
+        $nflScores = json_decode($output);
+dd($nflScores);
+        $games = array();
+
+    }        
+
     function getGameInProgressDesc($gameStatus) {
         $result = FALSE;
         switch ($gameStatus) {
