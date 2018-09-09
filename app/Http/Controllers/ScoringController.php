@@ -145,8 +145,8 @@ class ScoringController extends Controller
             $home = $this->getTeamName($value->home->abbr);
             $visitorScore = 0;
             $homeScore = 0;
-            if ($value->away->score->T !== 'null') { $visitorScore = $value->away->score->T; }
-            if ($value->home->score->T !== 'null') { $homeScore = $value->home->score->T; }
+            // if ($value->away->score->T !== 'null') { $visitorScore = $value->away->score->T; }
+            // if ($value->home->score->T !== 'null') { $homeScore = $value->home->score->T; }
             $status = $this->getGameInProgressDesc($value->qtr);
             $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
             if ($gameDetails) {
