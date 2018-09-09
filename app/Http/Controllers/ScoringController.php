@@ -211,8 +211,8 @@ dd($gameDetails);
         $result = DB::table('teams')
             ->where('team_name_short','=',$abbr)
             ->select('team_name')
-            ->get();
-dd($result);
+            ->first();
+dd($result->team_name);
         return $result[0];
     }
 
