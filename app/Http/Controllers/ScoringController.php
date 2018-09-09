@@ -164,8 +164,7 @@ class ScoringController extends Controller
                     'status'=>$status,
                     'q'=>$value->qtr
                     );
-dd($score);
-//                $dbResult = $this->insertOrUpdate($gameDetails, $score);
+               $dbResult = $this->insertOrUpdate($gameDetails, $score);
             }
         }
 
