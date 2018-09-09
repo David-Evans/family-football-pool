@@ -212,8 +212,7 @@ dd($gameDetails);
             ->where('team_name_short','=',$abbr)
             ->select('team_name')
             ->first();
-dd($result->team_name);
-        return $result[0];
+        return $result->team_name;
     }
 
     function getWeekFromGameDate($gameDate) {
