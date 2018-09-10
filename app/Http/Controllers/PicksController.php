@@ -96,6 +96,12 @@ class PicksController extends Controller
         $leaders = $game->getLeaders($week);
         $gamesInProgress = $game->getGamesInProgress($week);
 
+        $result = array();
+        foreach ($leaders as $leader) {
+            array_push($result, $leader->wins);
+        }
+        $winCounts = array_unique($result);
+
 //dd($users);
         return view('pages.view-picks')->with([
             'user' => $user,
@@ -104,6 +110,7 @@ class PicksController extends Controller
             'picks' => $picks,
             'games' => $games,
             'gameCount' => $gameCount,
+            'winCounts' => $winCounts,
             'leaders' => $leaders,
             'gamesInProgress' => $gamesInProgress
         ]);
