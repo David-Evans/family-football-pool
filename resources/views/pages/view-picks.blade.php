@@ -25,13 +25,11 @@
 @foreach ($winCounts as $winCount)
     <tr>
         <td class="wins">{{ $winCount }}</td>
-        <td>
 @foreach ($leaders as $leader)
     <?php if($leader->wins == $winCount) { ?>
-        <img src="/images/avatars/{{ strtolower($leader->avatar) }}" class="avatar" />
+        <td><img src="/images/avatars/{{ strtolower($leader->avatar) }}" class="avatar" /></td>
     <?php } ?>
 @endforeach
-        </td>
     </tr>
 @endforeach
 <?php
