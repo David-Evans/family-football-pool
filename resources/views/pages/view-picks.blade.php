@@ -21,11 +21,15 @@
 ?>
 <h5>With {{ $openGameCount }} games remaining, here is the current leaderboard for week {{ $week }}</h5>
 <table class="leaderboard"><tbody>
-<tr><th>Player</th><th>Wins</th></tr>
-@foreach ($leaders as $leader)
+<tr><th>Wins</th><th>Players</th></tr>
+@foreach ($winCounts as $winCount)
     <tr>
+        <td class="wins">{{ $winCount }}</td>
+@foreach ($leaders as $leader)
+    <?php if($leader->wins == $winCount) { ?>
         <td><img src="/images/avatars/{{ strtolower($leader->avatar) }}" class="avatar" /></td>
-        <td class="wins">{{ $leader->wins }}</td>
+    <?php } ?>
+@endforeach
     </tr>
 @endforeach
 <?php

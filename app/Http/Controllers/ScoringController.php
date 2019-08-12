@@ -21,7 +21,7 @@ class ScoringController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -94,17 +94,117 @@ class ScoringController extends Controller
             ]);
     }
 
+    public function updateGameDetails2018() {
+/*
+{
+    "2018090900":{
+        "home":{
+            "score":{"1":0,"2":0,"3":0,"4":0,"5":0,"T":0},
+            "abbr":"BAL",
+            "to":3},
+        "away":{
+            "score":{"1":0,"2":0,"3":0,"4":0,"5":0,"T":0},
+            "abbr":"BUF",
+            "to":3},
+        "bp":0,
+        "down":0,
+        "togo":0,
+        "clock":"15:00",
+        "posteam":"BUF",
+        "note":null,
+        "redzone":false,
+        "stadium":"M&T Bank Stadium",
+        "media":{
+            "radio":{"home":null,"away":null},
+            "tv":"CBS",
+            "sat":null,
+            "sathd":null},
+        "yl":"",
+        "qtr":"Pregame"
+    }        
+}
+*/
+        date_default_timezone_set('America/New_York');
+        $url = "http://www.nfl.com/liveupdate/scores/scores.json";
+
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        $output = curl_exec($ch); 
+        curl_close($ch);      
+        $nflScores = json_decode($output);
+        $games = array();
+        foreach ($nflScores as $key=>$value) {
+            // $key = date/game
+            // $value = game details
+            $now = date('Ymd');
+            $gameDate = substr($key,0,8);
+            $doSomething = ($gameDate == $now) ? TRUE : FALSE;
+            $week = $this->getWeekFromGameDate($gameDate);
+            $visitor = $this->getTeamName($value->away->abbr);
+            $home = $this->getTeamName($value->home->abbr);
+            $visitorScore = 0;
+            $homeScore = 0;
+            if ($value->away->score->T !== NULL) { $visitorScore = $value->away->score->T; }
+            if ($value->home->score->T !== NULL) { $homeScore = $value->home->score->T; }
+            $status = $this->getGameInProgressDesc($value->qtr);
+            $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
+            if ($gameDetails) {
+                array_push($games,(object) array(
+                    'home_team' => $home,
+                    'visitor_team' => $visitor,
+                    'home_score' => $homeScore,
+                    'visitor_score' => $visitorScore,
+                    'status' => $status,
+                    'game_id' => $gameDetails->id,
+                    'day_of_week' => $gameDetails->day_of_week,
+                    'game_datetime' => $gameDetails->game_datetime
+                ));
+                $score = (object) array(
+                    'vnn'=>$visitor,
+                    'hnn'=>$home,
+                    'vs'=>$visitorScore,
+                    'hs'=>$homeScore,
+                    'status'=>$status,
+                    'q'=>$value->qtr
+                    );
+               $dbResult = $this->insertOrUpdate($gameDetails, $score);
+            }
+        }
+
+        // Record any wins
+        $wins = $this->recordWins();
+
+        return view('pages.update-scores')->with([
+            'games' => $games,
+            'week' => $week,
+            'wins' => $wins
+            ]);
+    }        
+
     function getGameInProgressDesc($gameStatus) {
         $result = FALSE;
         switch ($gameStatus) {
             case "P":
                 $result = "Pregame";
                 break;
+            case "Pregame":
+                $result = "Pregame";
+                break;
             case "F":
+                $result = "Final";
+                break;
+            case "Final":
                 $result = "Final";
                 break;
             case "FO":
                 $result = "Final OT";
+                break;
+            case "final overtime":
+                $result = "Final OT";
+                break;  
+            case "Overtime":
+                $result = "Overtime";
                 break;
             case "1":
                 $result = "1st Qtr";
@@ -121,7 +221,14 @@ class ScoringController extends Controller
             case "H":
                 $result = "Halftime";
                 break;
+            case "Halftime":
+                $result = "Halftime";
+                break;
+            case "Suspended":
+                $result = "Suspended";
+                break;
             default:
+                $result = "Pregame";
         }
         return $result;
     }
@@ -137,6 +244,26 @@ class ScoringController extends Controller
                 ->get();
         if (count($result) == 0) { return FALSE; }
         return $result[0];
+    }
+
+    function getTeamName($abbr) {
+        $result = DB::table('teams')
+            ->where('team_name_short','=',$abbr)
+            ->select('team_name')
+            ->first();
+        return $result->team_name;
+    }
+
+    function getWeekFromGameDate($gameDate) {
+        $year = substr($gameDate,0,4);
+        $month = substr($gameDate,4,2);
+        $day = substr($gameDate,6,2);
+        $gameDate = $year.'-'.$month.'-'.$day;
+        $result = DB::table('games')
+            ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
+            ->select('week_id')
+            ->first();
+        return $result->week_id;
     }
 
     function insertOrUpdate($gameDetails, $game) {
