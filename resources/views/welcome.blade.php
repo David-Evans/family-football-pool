@@ -10,7 +10,7 @@
                     <img src="/images/ffp-banner.png" style="width:80%"><br />
                 </div>
                 <div class="col-md-12" style="text-align:center">
-                    <h2 style="color:#fff;text-shadow:2px 2px 5px #000">Private pick 'em style football competition for the 2018 NFL season</h2>                
+                    <h2 style="color:#fff;text-shadow:2px 2px 5px #000">Private pick 'em style football competition for the 2019 NFL season</h2>                
                 </div>
                 <div class="col-md-12" style="text-align:center;margin-top:2em">
                     <p><a href="/login" class="btn btn-primary btn-lg" role="button">Login to play</a></p>
