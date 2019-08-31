@@ -62,7 +62,6 @@ class NexmoController extends Controller
         $result = Array();
 
         // Validate required parameters are available
-        if ($token == '' || is_null($token)) { $validRequest = FALSE; }
         if ($request->input('msg') == '') { $validRequest = FALSE; }
         if ($request->input('numbertodial') == '') { $validRequest = FALSE; }
 
