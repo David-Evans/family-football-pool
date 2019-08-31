@@ -74,7 +74,8 @@ Route::group(['middleware' => ['web']], function () {
 
 //	Route::get('/tropo/sendmsg', 'TropoController@sendmessage');
 	Route::get('/tropo/sendmsg', 'NexmoController@sendmessage');
-	Route::get('/tropo/sendgroupmsg', 'TropoController@sendgroupmessage');
+	// Route::get('/tropo/sendgroupmsg', 'TropoController@sendgroupmessage');
+	Route::get('/tropo/sendgroupmsg', 'NexmoController@sendgroupmessage');
 
 	Route::get('/account', 'AccountController@index');
 
