@@ -64,7 +64,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::post('/chat/new', 'ChatsController@store');
 
-	Route::get('/scoring/live', 'ScoringController@updatescoring');
+	Route::get('/scoring/live', 'ScoringController@livescoring');
 	// Route::get('/scoring/update', 'ScoringController@updategamedetails');
 	Route::get('/scoring/update', 'ScoringController@updategamedetails2018');
 
@@ -72,7 +72,8 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/admin', 'AdminController@index');
 
-	Route::get('/tropo/sendmsg', 'TropoController@sendmessage');
+//	Route::get('/tropo/sendmsg', 'TropoController@sendmessage');
+	Route::get('/tropo/sendmsg', 'NexmoController@sendmessage');
 	Route::get('/tropo/sendgroupmsg', 'TropoController@sendgroupmessage');
 
 	Route::get('/account', 'AccountController@index');
