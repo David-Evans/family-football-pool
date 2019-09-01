@@ -84,7 +84,7 @@ class NexmoController extends Controller
                 $url = 'https://rest.nexmo.com/sms/json';
                 try {
                   $smsNumber = $numbertodial;
-if($smsNumber == '4802053477' || $smsNumber == '4802038364') {
+if($smsNumber == '4802053478' || $smsNumber == '4802038364') {
                   $fields = array(
                     'api_key' => $nexmo_key,
                     'api_secret' => $nexmo_secret,
@@ -96,7 +96,6 @@ if($smsNumber == '4802053477' || $smsNumber == '4802038364') {
                   $fields_string = '';
                   foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
                   rtrim($fields_string, '&');
-dd($fields);
                   $ch = curl_init();
                   curl_setopt($ch,CURLOPT_URL, $url);
                   curl_setopt($ch,CURLOPT_POST, count($fields));
