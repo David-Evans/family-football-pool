@@ -41,7 +41,7 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
             <div class="panel panel-default">
                 <div class="panel-heading">Send a single text message</div>
                 <div class="panel-body">
-                    {!! Form::open(['url' => 'tropo/sendmsg', 'method' => 'get']) !!}
+                    {!! Form::open(['url' => 'nexmo/sendmsg', 'method' => 'get']) !!}
                     <p>Text Number:<br />
                     <select name="numbertodial" class="form-control input-sm">
                         <option value="">Pick a user...</option>
@@ -60,7 +60,7 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
             <div class="panel panel-default">
                 <div class="panel-heading">Send a text to the entire group</div>
                 <div class="panel-body">
-                    {!! Form::open(['url' => 'tropo/sendgroupmsg', 'method' => 'get']) !!}
+                    {!! Form::open(['url' => 'nexmo/sendgroupmsg', 'method' => 'get']) !!}
                     <p>Message:<br />
                     {{ Form::text('msg', null, array('class'=>'form-control input-sm', 'placeholder'=>'Enter text message here...','required' => 'required')) }}</p>
                     <p>{{ Form::submit('Send SMS', array('class' => 'btn btn-primary btn-sm', 'style' => '')) }}</p>

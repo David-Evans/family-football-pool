@@ -3,7 +3,6 @@
 @section("content")        
 
 <?php
-//$tropo->sendSMS();
 ?><section id="pickform">
 
 <?php /**

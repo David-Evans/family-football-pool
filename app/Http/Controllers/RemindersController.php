@@ -15,7 +15,6 @@ class RemindersController extends Controller
     public function sendReminders() {
         $game = new Game();
         $week = $game->getCurrentWeek();
-        $week = 3;
         $users = DB::table('users')->get();
         $games = array();
         $games = $game->getGames($week);
@@ -35,8 +34,9 @@ class RemindersController extends Controller
 			$result = ($rightNow < strtotime($gameDateTime)) ? "unlocked" : "locked";
 			$hour = date('H',strtotime($game->game_datetime));
 			$day = date('D',strtotime($game->game_datetime));
+            $location = $game->alt_location;
 			if ($day == $dayOfWeek) { $isGameDay = TRUE; }
-			if ($hour == '09') { $londonGame = TRUE; }
+            if (strtolower($location) == 'london') { $londonGame = TRUE; }
 
         }
 
@@ -66,7 +66,7 @@ class RemindersController extends Controller
         	// Send reminders
         	$copy = "There's a London game tomorrow morning, make sure you made your pick!";
         	$this->sendSMSReminders($copy);
-        } elseif ($week == 12) {
+        } elseif ($week == 13) {
         	// Thanksgiving
         	if ($dayOfWeek == "Wed") {
         		// Send reminders
@@ -93,25 +93,37 @@ class RemindersController extends Controller
     }
 
     function sendSMSReminders($copy) {
-        $token = env("TROPO_KEY", "NULL");
-        $token = "062c2492bf2ce44c88dc558bc892824725712a4dceaf8228aceea3c2ee6d889d042e63b95b64629eeb706c8b";
+        $nexmo_key=env("NEXMO_KEY","NULL");
+        $nexmo_secret=env("NEXMO_SECRET","NULL");
+        $nexmo_shortcode=env("NEXMO_SHORTCODE","NULL");
+        $nexmo_number=env("NEXMO_NUMBER","NULL");
+        $url = 'https://rest.nexmo.com/sms/json';
+
+        $result = Array();
+        $result['msg'] = rawurlencode($copy." https://football.jalapenodave.com");
 
         $users = DB::table('users')->where('sms_number','!=','')->get();
-        $result = Array();
-        $result['token'] = $token;
-        $result['msg'] = $copy." http://football.jalapenodave.com";
 
         foreach ($users as $user) {
-            $numbertodial = $user->sms_number;
+            $smsNumber = $user->sms_number;
             try {
-                $url = 'https://api.tropo.com/1.0/sessions?action=create&token='.$result['token'].'&numbertodial='.$numbertodial.'&msg='.rawurlencode($result['msg']);
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL,$url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)');
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-                $result['curl-response'] = curl_exec($ch);
-                curl_close($ch);
+              $fields = array(
+                'api_key' => $nexmo_key,
+                'api_secret' => $nexmo_secret,
+                'to' => '1'.$smsNumber,
+                'from' => $nexmo_number,
+                'text' => $message
+              );
+
+              $fields_string = '';
+              foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+              rtrim($fields_string, '&');
+              $ch = curl_init();
+              curl_setopt($ch,CURLOPT_URL, $url);
+              curl_setopt($ch,CURLOPT_POST, count($fields));
+              curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+              $result['curl-response'] = curl_exec($ch);
+              curl_close($ch);
             } catch (Exception $e) {
                 $result['success'] = 'false';
                 $result['error'] = $e->getMessage();
