@@ -14,7 +14,7 @@ $rightNow = getRightNow($user);
 				<div class="row" style="padding:0 2em">
 					<div class="col-lg-10 offset-lg-2">
 					<h1 style="color:#fff">Boom!</h1>
-					<p style="color:#fff;text-shadow:2px 2px #000">Welcome {{ $user->nickname }}! The Family Football Pool is new and improved for the 2018 season.  I've optimized the website to work best on your mobile phone, so enjoy!  Make sure to check out what's new by clicking the "What's New?" button.</p>
+					<p style="color:#fff;text-shadow:2px 2px #000">Welcome {{ $user->nickname }}! The Family Football Pool is new and improved for the 2019 season.  I've optimized the website to work best on your mobile phone, so enjoy!  Make sure to check out what's new by clicking the "What's New?" button.</p>
 					<p><a href="/whats-new" class="btn btn-primary btn-lg" role="button">What's New?</a>
 					</p>
 					</div>
@@ -30,7 +30,7 @@ $rightNow = getRightNow($user);
                 <div class="panel-heading">May I Have Your Attention Please?</div>
                 <div class="panel-body">
 				<ul>
-					<li>Last year's champion was Susan (SusieSue), so you have to do better this year if you want to win!</li>
+					<li>Last year's champion was Nick (Bee-otch), so you have to do better this year if you want to win!</li>
 					<li>There's an interest in "making it interesting" this year.  Care to <a href="https://www.paypal.me/jalapenodave/20">throw in $20 to the pot?</a></li>
 					<li>The site is often getting some improvements, but should always be functional.  If you find any bugs, <a href="/chat">lay down some smack</a>
 					<li>Reminder: Games will automatically lock right about the time they start, so be vigilant</li>
