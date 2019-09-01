@@ -79,7 +79,7 @@ class NexmoController extends Controller
             $result['msg'] = rawurlencode($request->input('msg'));
 
             $users = DB::table('users')->where('sms_number','!=','')->get();
-dd($users);
+
             foreach ($users as $user) {
                 $numbertodial = $user->sms_number;
                 $url = 'https://rest.nexmo.com/sms/json';
