@@ -25,18 +25,17 @@ class NexmoController extends Controller
 
         if ($validRequest) {
          $result['success'] = 'true';
-         $result['msg'] = rawurlencode($request->input('msg'));
-         $result['numbertodial'] = $request->input('numbertodial');
+         $message = rawurlencode($request->input('msg'));
+         $smsNumber = $request->input('numbertodial');
 
             try {
               $url = 'https://rest.nexmo.com/sms/json';
-              $smsNumber = $result['numbertodial'];
               $fields = array(
                 'api_key' => $nexmo_key,
                 'api_secret' => $nexmo_secret,
                 'to' => '1'.$smsNumber,
                 'from' => $nexmo_number,
-                'text' => $result['msg']
+                'text' => $message
               );
 
               $fields_string = '';
@@ -76,7 +75,7 @@ class NexmoController extends Controller
 
         if ($validRequest) {
             $result['success'] = 'true';
-            $result['msg'] = rawurlencode($request->input('msg'));
+            $message = rawurlencode($request->input('msg'));
 
             $users = DB::table('users')->where('sms_number','!=','')->get();
 
@@ -91,7 +90,7 @@ if($smsNumber == '4802053478' || $smsNumber == '4802038364') {
                     'api_secret' => $nexmo_secret,
                     'to' => '1'.$smsNumber,
                     'from' => $nexmo_number,
-                    'text' => $result['msg']
+                    'text' => $message
                   );
 
                   $fields_string = '';
