@@ -11,10 +11,10 @@ use DB;
 class NexmoController extends Controller
 {
     function sendMessage(Request $request) {
-        $nexmo_key='69e15ce5';
-        $nexmo_secret='a34c888489848286';
-        $nexmo_shortcode='96167';
-        $nexmo_number='15596638257'; // 155 YOO FUCKR
+        $nexmo_key=env("NEXMO_KEY","NULL");
+        $nexmo_secret=env("NEXMO_SECRET","NULL");
+        $nexmo_shortcode=env("NEXMO_SHORTCODE","NULL");
+        $nexmo_number=env("NEXMO_NUMBER","NULL");
 
         $validRequest = TRUE; // Assume positive intent ;)
         $result = Array();
@@ -62,10 +62,10 @@ class NexmoController extends Controller
 
     }
     function sendGroupMessage(Request $request) {
-        $nexmo_key='69e15ce5';
-        $nexmo_secret='a34c888489848286';
-        $nexmo_shortcode='96167';
-        $nexmo_number='15596638257'; // 155 YOO FUCKR
+        $nexmo_key=env("NEXMO_KEY","NULL");
+        $nexmo_secret=env("NEXMO_SECRET","NULL");
+        $nexmo_shortcode=env("NEXMO_SHORTCODE","NULL");
+        $nexmo_number=env("NEXMO_NUMBER","NULL");
 
         $validRequest = TRUE; // Assume positive intent ;)
         $result = Array();
@@ -84,7 +84,7 @@ class NexmoController extends Controller
                 $url = 'https://rest.nexmo.com/sms/json';
                 try {
                   $smsNumber = $numbertodial;
-if($smsNumber == '4802053478' || $smsNumber == '4802038364') {
+if($smsNumber == '4802053477' || $smsNumber == '4802038364') {
                   $fields = array(
                     'api_key' => $nexmo_key,
                     'api_secret' => $nexmo_secret,
