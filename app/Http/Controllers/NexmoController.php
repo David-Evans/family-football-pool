@@ -16,13 +16,6 @@ class NexmoController extends Controller
         $nexmo_shortcode=env('NEXMO_SHORTCODE','NULL');
         $nexmo_number=env('NEXMO_NUMBER','NULL');
 
-$debug = array(
-  'nexmo_key'=>$nexmo_key,
-  'nexmo_secret'=>$nexmo_secret,
-  'nexmo_shortcode'=>$nexmo_shortcode,
-  'nexmo_number'=>$nexmo_number
-);
-dd($debug);
         $validRequest = TRUE; // Assume positive intent ;)
         $result = Array();
 
