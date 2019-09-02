@@ -99,7 +99,7 @@ class NexmoController extends Controller
                   curl_setopt($ch,CURLOPT_URL, $url);
                   curl_setopt($ch,CURLOPT_POST, count($fields));
                   curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-                  $result = curl_exec($ch);
+                  $result['curl_response'] = curl_exec($ch);
                   curl_close($ch);
                 } catch (Exception $e) {
                     $result['success'] = 'false';
