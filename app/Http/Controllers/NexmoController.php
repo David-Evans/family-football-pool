@@ -80,6 +80,7 @@ class NexmoController extends Controller
             $users = DB::table('users')->where('sms_number','!=','')->get();
 
             foreach ($users as $user) {
+                sleep(2);
                 $numbertodial = $user->sms_number;
                 $url = 'https://rest.nexmo.com/sms/json';
                 try {
