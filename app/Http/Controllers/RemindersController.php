@@ -105,6 +105,7 @@ class RemindersController extends Controller
         $users = DB::table('users')->where('sms_number','!=','')->get();
 
         foreach ($users as $user) {
+            sleep(2); // Nexmo only allows one SMS per second
             $smsNumber = $user->sms_number;
             try {
               $fields = array(
