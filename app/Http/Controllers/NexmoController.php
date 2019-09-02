@@ -16,6 +16,13 @@ class NexmoController extends Controller
         $nexmo_shortcode=env("NEXMO_SHORTCODE","NULL");
         $nexmo_number=env("NEXMO_NUMBER","NULL");
 
+$debug = array(
+  'nexmo_key'=>$nexmo_key,
+  'nexmo_secret'=>$nexmo_secret,
+  'nexmo_shortcode'=>$nexmo_shortcode,
+  'nexmo_number'=>$nexmo_number
+);
+dd($debug);
         $validRequest = TRUE; // Assume positive intent ;)
         $result = Array();
 
@@ -84,7 +91,6 @@ class NexmoController extends Controller
                 $url = 'https://rest.nexmo.com/sms/json';
                 try {
                   $smsNumber = $numbertodial;
-if($smsNumber == '4802053478' || $smsNumber == '4802038364') {
                   $fields = array(
                     'api_key' => $nexmo_key,
                     'api_secret' => $nexmo_secret,
@@ -102,7 +108,6 @@ if($smsNumber == '4802053478' || $smsNumber == '4802038364') {
                   curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
                   $result = curl_exec($ch);
                   curl_close($ch);
-}
                 } catch (Exception $e) {
                     $result['success'] = 'false';
                     $result['error'] = $e->getMessage();
