@@ -11,10 +11,10 @@ use DB;
 class NexmoController extends Controller
 {
     function sendMessage(Request $request) {
-        $nexmo_key=env("NEXMO_KEY","NULL");
-        $nexmo_secret=env("NEXMO_SECRET","NULL");
-        $nexmo_shortcode=env("NEXMO_SHORTCODE","NULL");
-        $nexmo_number=env("NEXMO_NUMBER","NULL");
+        $nexmo_key=env('NEXMO_KEY','NULL');
+        $nexmo_secret=env('NEXMO_SECRET','NULL');
+        $nexmo_shortcode=env('NEXMO_SHORTCODE','NULL');
+        $nexmo_number=env('NEXMO_NUMBER','NULL');
 
 $debug = array(
   'nexmo_key'=>$nexmo_key,
