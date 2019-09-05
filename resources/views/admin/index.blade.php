@@ -70,6 +70,38 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Users</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nickname</th>
+                                <th>Display Name</th>
+                                <th>SMS Number</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $user)
+                            <tr>
+                                <td>{{$user->id}}</td>
+                                <td>{{$user->nickname}}</td>
+                                <td>{{$user->display_name}}</td>
+                                <td>{{$user->sms_number}}</td>
+                                <td>{{$user->email}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section("scripts")
