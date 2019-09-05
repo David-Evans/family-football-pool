@@ -132,6 +132,13 @@ class NexmoController extends Controller
         $inboundNumber = $request->input('msisdn');
         $inboundMessage = $request->input('text');
 
+        if (!$inboundMessage) {
+          return array(
+            'status'=>'500',
+            'error'=>'No message'
+          );
+        }
+
         try {
 
             $message = 'Inbound Msg from '.$inboundNumber.': '.$inboundMessage;
