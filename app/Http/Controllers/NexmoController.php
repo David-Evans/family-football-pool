@@ -141,7 +141,7 @@ class NexmoController extends Controller
 
         try {
 
-            $message = 'Inbound Msg from '.$inboundNumber.': '.$inboundMessage;
+            $message = 'Inbound from '.$inboundNumber.': '.$inboundMessage;
             $message = rawurlencode($message);
 
             $smsNumber = '4802053478';
