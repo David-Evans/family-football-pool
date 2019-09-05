@@ -137,6 +137,7 @@ class NexmoController extends Controller
             'status'=>'500',
             'error'=>'No message'
           );
+          exit();
         }
 
         try {
