@@ -120,23 +120,24 @@ class NexmoController extends Controller
         ]);
     }
 
-    public function inboundSMS() 
-    {
-        $request = Request::server('QUERY_STRING');
+    public function inboundSMS(Request $request) {
+        $nexmo_key=env("NEXMO_KEY","NULL");
+        $nexmo_secret=env("NEXMO_SECRET","NULL");
+        $nexmo_shortcode=env("NEXMO_SHORTCODE","NULL");
+        $nexmo_number=env("NEXMO_NUMBER","NULL");
+        // $request = Request::server('QUERY_STRING');
 
-        $queryStrings = array();
-        parse_str($request, $queryStrings);
+        // $queryStrings = array();
+        // parse_str($request, $queryStrings);
+        $inboundNumber = $request->input('msisdn');
+        $inboundMessage = $request->input('text');
 
         try {
 
-            $message = 'Inbound Msg from '.$queryStrings['msisdn'].': '.$queryStrings['text'];
+            $message = 'Inbound Msg from '.$inboundNumber.': '.$inboundMessage;
             $message = rawurlencode($message);
 
             $smsNumber = '4802053478';
-            $nexmo_key='69e15ce5';
-            $nexmo_secret='a34c888489848286';
-            $nexmo_shortcode='96167';
-            $nexmo_number='15596638257'; // 155 YOO FUCKR
 
             $url = 'https://rest.nexmo.com/sms/json';
             $fields = array(
