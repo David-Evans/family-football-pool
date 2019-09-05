@@ -145,6 +145,7 @@ class NexmoController extends Controller
             $message = 'Inbound from '.$inboundNumber.': '.$inboundMessage;
             $message = rawurlencode($message);
 
+            $fields = array();
             $smsNumber = '4802053478';
 
             $url = 'https://rest.nexmo.com/sms/json';
