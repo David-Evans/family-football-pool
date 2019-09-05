@@ -74,6 +74,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/nexmo/sendmsg', 'NexmoController@sendmessage');
 	Route::get('/nexmo/sendgroupmsg', 'NexmoController@sendgroupmessage');
+	Route::get('/inboundSMS', 'NexmoController@inboundSMS');
 
 	Route::get('/account', 'AccountController@index');
 

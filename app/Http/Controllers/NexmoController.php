@@ -61,6 +61,7 @@ class NexmoController extends Controller
         ]);
 
     }
+
     function sendGroupMessage(Request $request) {
         $nexmo_key=env("NEXMO_KEY","NULL");
         $nexmo_secret=env("NEXMO_SECRET","NULL");
@@ -118,4 +119,78 @@ class NexmoController extends Controller
             'result' => $result
         ]);
     }
+
+    public function inboundSMS() 
+    {
+        $request = Request::server('QUERY_STRING');
+
+        $queryStrings = array();
+        parse_str($request, $queryStrings);
+
+        try {
+
+            $message = 'Inbound Msg from '.$queryStrings['msisdn'].': '.$queryStrings['text'];
+            $message = rawurlencode($message);
+
+            $smsNumber = '4802053478';
+            $nexmo_key='69e15ce5';
+            $nexmo_secret='a34c888489848286';
+            $nexmo_shortcode='96167';
+            $nexmo_number='15596638257'; // 155 YOO FUCKR
+
+            $url = 'https://rest.nexmo.com/sms/json';
+            $fields = array(
+              'api_key' => $nexmo_key,
+              'api_secret' => $nexmo_secret,
+              'to' => '1'.$smsNumber,
+              'from' => $nexmo_number,
+              'text' => $message
+            );
+
+            $fields_string = '';
+            foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+            rtrim($fields_string, '&');
+
+            $ch = curl_init();
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch,CURLOPT_POST, count($fields));
+            curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+            $result = curl_exec($ch);
+            curl_close($ch);
+
+        } catch (Exception $e) {
+
+        }
+
+
+        $statusCode = 200;
+        $contents = $request;
+        $response = Response::make($queryStrings, $statusCode);
+
+/*
+{
+  "msisdn": "447700900001",
+  "to": "447700900000",
+  "messageId": "0A0000000123ABCD1",
+  "text": "Hello world",
+  "type": "text",
+  "keyword": "Hello",
+  "message-timestamp": "2020-01-01T12:00:00.000+00:00",
+  "timestamp": "1578787200",
+  "nonce": "aaaaaaaa-bbbb-cccc-dddd-0123456789ab",
+  "concat": "true",
+  "concat-ref": "1",
+  "concat-total": "3",
+  "concat-part": "2",
+  "data": "abc123",
+  "udh": "abc123"
+}
+*/
+
+
+
+        return $response;
+    }
+
 }
