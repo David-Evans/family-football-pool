@@ -44,12 +44,6 @@ class Game extends Model
 	}
 
 	public function showMissingPicks($week) {
-		$result = DB::table('users')
-				->leftJoin('picks','users.id', '=', 'picks.user_id')
-				->where('week_id','=',$week)
-				->orderBy('users.id')
-				->orderBy('game_id')
-				->get();
 		$result = DB::select("
 			SELECT U.name, COUNT(P.id) picks
 			FROM users U
