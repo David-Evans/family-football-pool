@@ -10,6 +10,8 @@ use DB;
 
 use Auth;
 
+use App\Game;
+
 class AdminController extends Controller
 {
     /**
@@ -31,9 +33,14 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $users = DB::table('users')->orderBy('nickname')->get();
+        $game = new Game();
+        $week = $game->getCurrentWeek();
+        $picks = $game->showMissingPicks($week);
+
         return view('admin.index')->with([
             'user' => $user,
-            'users' => $users
+            'users' => $users,
+            'picks' => $picks
         ]);
 
     }

@@ -43,6 +43,27 @@ class Game extends Model
 		return $result;
 	}
 
+	public function showMissingPicks($week) {
+		$result = DB::table('users')
+				->leftJoin('picks','users.id', '=', 'picks.user_id')
+				->where('week_id','=',$week)
+				->orderBy('users.id')
+				->orderBy('game_id')
+				->get();
+		$result = DB::select("
+			SELECT U.name, COUNT(P.id) picks
+			FROM users U
+			LEFT JOIN 
+			(SELECT P.id, P.user_id
+				FROM picks P 
+				INNER JOIN games G ON (G.id = P.game_id)
+				WHERE G.week_id = ".$week.") P
+			    ON (P.user_id = U.id)
+			GROUP BY U.name
+		");
+		return $result;
+	}
+
 	public function showPicksReverse($week) {
 		$result = DB::table('v$_games')
 				->where('week_id','=',$week)

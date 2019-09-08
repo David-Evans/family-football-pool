@@ -79,6 +79,7 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Avatar</th>
                                 <th>Nickname</th>
                                 <th>Display Name</th>
                                 <th>SMS Number</th>
@@ -89,6 +90,7 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
                             @foreach ($users as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
+                                <td><img src="/images/avatars/{{ strtolower($user->avatar) }}" class="avatar" /></td>
                                 <td>{{$user->nickname}}</td>
                                 <td>{{$user->display_name}}</td>
                                 <td>{{$user->sms_number}}</td>
@@ -97,6 +99,19 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Users</div>
+                <div class="panel-body">
+@foreach ($picks as $pick)
+{{ $pick->name }} | {{ $pick->picks }}<br />
+@endforeach    
                 </div>
             </div>
         </div>
