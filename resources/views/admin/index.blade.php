@@ -111,7 +111,6 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
             <div class="panel panel-default">
                 <div class="panel-heading">Users</div>
                 <div class="panel-body table-responsive">
-                    @foreach ($picks as $pick)
                     <table class="table">
                         <thead>
                             <tr>
@@ -120,13 +119,14 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($picks as $pick)
                             <tr>
                                 <td>{{ $pick->name }}</td>
                                 <td>{{ $pick->picks }}</td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
-                    @endforeach    
                 </div>
             </div>
         </div>
