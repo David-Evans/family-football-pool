@@ -109,7 +109,7 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Users</div>
+                <div class="panel-heading">User Picks for Current Week</div>
                 <div class="panel-body table-responsive">
                     <table class="table">
                         <thead>
