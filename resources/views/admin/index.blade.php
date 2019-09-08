@@ -1,5 +1,7 @@
 @extends("layouts.master")
-
+<style>
+    img.avatar { width: 75% }
+</style>
 @section("content")        
 
 <div class="row">
@@ -74,7 +76,7 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Users</div>
-                <div class="panel-body">
+                <div class="panel-body table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
@@ -108,10 +110,25 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Users</div>
-                <div class="panel-body">
-@foreach ($picks as $pick)
-{{ $pick->name }} | {{ $pick->picks }}<br />
-@endforeach    
+                <div class="panel-body table-responsive">
+                    @foreach ($picks as $pick)
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Display Name</th>
+                                <th>Picks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $user)
+                            <tr>
+                                <td>{{ $pick->name }}</td>
+                                <td>{{ $pick->picks }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @endforeach    
                 </div>
             </div>
         </div>
