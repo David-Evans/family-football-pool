@@ -120,12 +120,10 @@ $password = isset($_GET['password']) ? Hash::make($_GET['password']) : FALSE;
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $user)
                             <tr>
                                 <td>{{ $pick->name }}</td>
                                 <td>{{ $pick->picks }}</td>
                             </tr>
-                            @endforeach
                         </tbody>
                     </table>
                     @endforeach    
