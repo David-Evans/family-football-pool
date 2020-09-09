@@ -16,6 +16,19 @@ class NexmoController extends Controller
         $nexmo_shortcode=env('NEXMO_SHORTCODE','NULL');
         $nexmo_number=env('NEXMO_NUMBER','NULL');
 
+$basic  = new \Nexmo\Client\Credentials\Basic($nexmo_key, $nexmo_secret);
+$client = new \Nexmo\Client($basic);
+$message = rawurlencode($request->input('msg'));
+$smsNumber = $request->input('numbertodial');
+
+$message = $client->message()->send([
+    'to' => $smsNumber,
+    'from' => $nexmo_number,
+    'text' => $message
+]);
+
+dd($message);
+
         $validRequest = TRUE; // Assume positive intent ;)
         $result = Array();
 
