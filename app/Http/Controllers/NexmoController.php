@@ -22,7 +22,7 @@ $message = rawurlencode($request->input('msg'));
 $smsNumber = $request->input('numbertodial');
 
 $message = $client->message()->send([
-    'to' => $smsNumber,
+    'to' => '1'.$smsNumber,
     'from' => $nexmo_number,
     'text' => $message
 ]);
