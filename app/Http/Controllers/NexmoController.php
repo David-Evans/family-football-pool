@@ -16,19 +16,6 @@ class NexmoController extends Controller
         $nexmo_shortcode=env('NEXMO_SHORTCODE','NULL');
         $nexmo_number=env('NEXMO_NUMBER','NULL');
 
-$basic  = new \Nexmo\Client\Credentials\Basic($nexmo_key, $nexmo_secret);
-$client = new \Nexmo\Client($basic);
-$message = rawurlencode($request->input('msg'));
-$smsNumber = $request->input('numbertodial');
-
-$message = $client->message()->send([
-    'to' => '1'.$smsNumber,
-    'from' => $nexmo_number,
-    'text' => $message
-]);
-
-dd($message);
-
         $validRequest = TRUE; // Assume positive intent ;)
         $result = Array();
 
@@ -42,25 +29,17 @@ dd($message);
          $smsNumber = $request->input('numbertodial');
 
             try {
-              $url = 'https://rest.nexmo.com/sms/json';
-              $fields = array(
-                'api_key' => $nexmo_key,
-                'api_secret' => $nexmo_secret,
-                'to' => '1'.$smsNumber,
-                'from' => $nexmo_number,
-                'text' => $message
-              );
+              $basic  = new \Nexmo\Client\Credentials\Basic($nexmo_key, $nexmo_secret);
+              $client = new \Nexmo\Client($basic);
+              $message = rawurlencode($request->input('msg'));
+              $smsNumber = $request->input('numbertodial');
 
-              $fields_string = '';
-              foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-              rtrim($fields_string, '&');
-
-              $ch = curl_init();
-              curl_setopt($ch,CURLOPT_URL, $url);
-              curl_setopt($ch,CURLOPT_POST, count($fields));
-              curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-              $result = curl_exec($ch);
-              curl_close($ch);
+              $response = $client->message()->send([
+                  'to' => '1'.$smsNumber,
+                  'from' => $nexmo_number,
+                  'text' => $message
+              ]);
+              $result['response'] = $response;
             } catch (Exception $e) {
                 $result['success'] = 'false';
                 $result['error'] = $e->getMessage();
@@ -93,29 +72,41 @@ dd($message);
 
             $users = DB::table('users')->where('sms_number','!=','')->get();
 
+            $basic  = new \Nexmo\Client\Credentials\Basic($nexmo_key, $nexmo_secret);
+            $client = new \Nexmo\Client($basic);
+
             foreach ($users as $user) {
                 sleep(2);
                 $numbertodial = $user->sms_number;
                 $url = 'https://rest.nexmo.com/sms/json';
                 try {
                   $smsNumber = $numbertodial;
-                  $fields = array(
-                    'api_key' => $nexmo_key,
-                    'api_secret' => $nexmo_secret,
-                    'to' => '1'.$smsNumber,
-                    'from' => $nexmo_number,
-                    'text' => $message
-                  );
+                  $smsNumber = $request->input('numbertodial');
 
-                  $fields_string = '';
-                  foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-                  rtrim($fields_string, '&');
-                  $ch = curl_init();
-                  curl_setopt($ch,CURLOPT_URL, $url);
-                  curl_setopt($ch,CURLOPT_POST, count($fields));
-                  curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-                  $result['curl_response'] = curl_exec($ch);
-                  curl_close($ch);
+                  $response = $client->message()->send([
+                      'to' => '1'.$smsNumber,
+                      'from' => $nexmo_number,
+                      'text' => $message
+                  ]);
+
+                  // $fields = array(
+                  //   'api_key' => $nexmo_key,
+                  //   'api_secret' => $nexmo_secret,
+                  //   'to' => '1'.$smsNumber,
+                  //   'from' => $nexmo_number,
+                  //   'text' => $message
+                  // );
+
+                  // $fields_string = '';
+                  // foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+                  // rtrim($fields_string, '&');
+                  // $ch = curl_init();
+                  // curl_setopt($ch,CURLOPT_URL, $url);
+                  // curl_setopt($ch,CURLOPT_POST, count($fields));
+                  // curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+                  // $result['curl_response'] = curl_exec($ch);
+                  // curl_close($ch);
+                  $result['response'][] = $response;
                 } catch (Exception $e) {
                     $result['success'] = 'false';
                     $result['error'] = $e->getMessage();
@@ -155,32 +146,41 @@ dd($message);
 
         try {
 
+            $basic  = new \Nexmo\Client\Credentials\Basic($nexmo_key, $nexmo_secret);
+            $client = new \Nexmo\Client($basic);
+
             $message = 'Inbound from '.$inboundNumber.': '.$inboundMessage;
             $message = rawurlencode($message);
 
-            $fields = array();
+            // $fields = array();
             $smsNumber = '4802053478';
 
-            $url = 'https://rest.nexmo.com/sms/json';
-            $fields = array(
-              'api_key' => $nexmo_key,
-              'api_secret' => $nexmo_secret,
-              'to' => '1'.$smsNumber,
-              'from' => $nexmo_number,
-              'text' => $message
-            );
+            $response = $client->message()->send([
+                'to' => '1'.$smsNumber,
+                'from' => $nexmo_number,
+                'text' => $message
+            ]);
 
-            $fields_string = '';
-            foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-            rtrim($fields_string, '&');
+            // $url = 'https://rest.nexmo.com/sms/json';
+            // $fields = array(
+            //   'api_key' => $nexmo_key,
+            //   'api_secret' => $nexmo_secret,
+            //   'to' => '1'.$smsNumber,
+            //   'from' => $nexmo_number,
+            //   'text' => $message
+            // );
 
-            $ch = curl_init();
-            curl_setopt($ch,CURLOPT_URL, $url);
-            curl_setopt($ch,CURLOPT_POST, count($fields));
-            curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-            $result = curl_exec($ch);
-            curl_close($ch);
+            // $fields_string = '';
+            // foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+            // rtrim($fields_string, '&');
+
+            // $ch = curl_init();
+            // curl_setopt($ch,CURLOPT_URL, $url);
+            // curl_setopt($ch,CURLOPT_POST, count($fields));
+            // curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+            // curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+            // $result = curl_exec($ch);
+            // curl_close($ch);
 
         } catch (Exception $e) {
 
