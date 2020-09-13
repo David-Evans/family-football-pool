@@ -125,7 +125,7 @@ class ScoringController extends Controller
 }
 */
         date_default_timezone_set('America/New_York');
-        $url = "http://www.nfl.com/liveupdate/scores/scores.json";
+        $url = env("NFL_URL",FALSE);
 
         $ch = curl_init(); 
         curl_setopt($ch, CURLOPT_URL, $url); 
