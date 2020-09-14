@@ -24,6 +24,14 @@
             background-color:#000;
             color:#fff;
         }
+        .game-detail {
+            padding: .5em;
+            border: 1px solid #555;
+        }
+        .game-detail h4 {
+            font-size: 50%;
+            text-align: center;
+        }
     </style>
 
 </head>

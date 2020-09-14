@@ -420,7 +420,9 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
 */
         $games = DB::table('live_scores')
             ->join('games','live_scores.game_id','=','games.id')
-            ->select(DB::raw('live_scores.game_id, games.day_of_week, live_scores.visitor_team, live_scores.home_team, live_scores.visitor_score, live_scores.home_score, live_scores.game_status, live_scores.game_date, live_scores.winner, live_scores.down, live_scores.togo, live_scores.yardline, live_scores.clock, live_scores.pos_team, live_scores.redzone, live_scores.stadium, live_scores.last_updated'))
+            ->join('teams AS TV','games.visitor_name','=','TV.team_name')
+            ->join('teams AS TH','games.home_name','=','TH.team_name')
+            ->select(DB::raw('live_scores.game_id, games.day_of_week, live_scores.visitor_team, TV.team_name_short AS visitor_team_short, live_scores.home_team, TH.team_name_short AS home_team_short, live_scores.visitor_score, live_scores.home_score, live_scores.game_status, live_scores.game_date, live_scores.winner, live_scores.down, live_scores.togo, live_scores.yardline, live_scores.clock, live_scores.pos_team, live_scores.redzone, live_scores.stadium, live_scores.last_updated'))
             ->where('games.week_id','=',$week)
             ->get();
 
