@@ -7,7 +7,8 @@
 @foreach ($games as $game)
 	<div class="col-xs-6 col-md-3">
 		<div class="game-detail">
-			<h4>$game->day_of_week</h4>
+			<?php $gameTime = date('g:iA', strtotime($game->game_date)); ?>
+			<h4>{{$game->day_of_week}} - {{$gameTime}} (ET)</h4>
 			<div class="row visitor">
 				<?php $img = strtolower($game->visitor_team).".png"; ?>
 				<div class="logo col-xs-4"><img src="/images/logos/{{$img}}" /></div>
