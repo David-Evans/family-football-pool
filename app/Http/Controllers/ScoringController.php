@@ -426,7 +426,7 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
 
         return view('pages.live-scoreboard')->with([
             'week' => $week,
-            'games' => $wins
+            'games' => $games
             ]);
 
     }
