@@ -322,6 +322,13 @@ class ScoringController extends Controller
                     'home_score' => $game->hs,
                     'game_status' => $this->getGameInProgressDesc($game->q),
                     'winner' => $winner,
+                    'down'=>$game->down,
+                    'togo'=>$game->togo,
+                    'yardline'=>$game->yardline,
+                    'clock'=>$game->clock,
+                    'pos_team'=>$game->posteam,
+                    'redzone'=>$game->redzone,
+                    'stadium'=>$game->stadium,
                     'last_updated' => $now
                 ]);
             return "update";
