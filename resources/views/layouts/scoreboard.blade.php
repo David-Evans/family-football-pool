@@ -32,6 +32,14 @@
             font-size: 50%;
             text-align: center;
         }
+        .game-detail .logo img {
+            width: 90%;
+            padding: .25em;
+        }
+        .game-detail .team-name, .game-detail .score {
+            font-size: 150%;
+            display:inline-block;
+        }
     </style>
 
 </head>
