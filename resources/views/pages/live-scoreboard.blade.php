@@ -4,8 +4,14 @@
 <p>&nbsp;</p>
 <div class="row">
 
+<?php $i=0; ?>
 @foreach ($games as $game)
-	<div class="col-xs-6 col-md-3" id="game-{{$loop->iteration}}">
+	<?php $i++; ?>
+	@if($i==12)
+	</div>
+	<div class="row">
+	@endif
+	<div class="col-xs-6 col-md-3" id="game-{{$i}}">
 		<div class="game-detail">
 			<?php $gameTime = date('g:iA', strtotime($game->game_date)); ?>
 			<h4>{{$game->day_of_week}} - {{$gameTime}} (ET)</h4>
