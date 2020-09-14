@@ -145,13 +145,13 @@ class ScoringController extends Controller
             $home = $this->getTeamName($value->home->abbr);
             $visitorScore = 0;
             $homeScore = 0;
-            $down = 1;
-            $togo = 10;
-            $yardline = '';
-            $clock = '00:00';
+            $down = $value->down;
+            $togo = $value->togo;
+            $yardline = $value->yl;
+            $clock = $value->clock;
             $posteam = $home;
-            $redzone = FALSE;
-            $stadium = FALSE;
+            $redzone = $value->redzone;
+            $stadium = $value->stadium;
             if ($value->away->score->T !== NULL) { $visitorScore = $value->away->score->T; }
             if ($value->home->score->T !== NULL) { $homeScore = $value->home->score->T; }
             $status = $this->getGameInProgressDesc($value->qtr);
@@ -173,7 +173,14 @@ class ScoringController extends Controller
                     'vs'=>$visitorScore,
                     'hs'=>$homeScore,
                     'status'=>$status,
-                    'q'=>$value->qtr
+                    'q'=>$value->qtr,
+                    'down'=>$down,
+                    'togo'=>$togo,
+                    'yardline'=>$yardline,
+                    'clock'=>$clock,
+                    'pos_team'=>$posteam,
+                    'redzone'=>$redzone,
+                    'stadium'=>$stadium
                     );
                $dbResult = $this->insertOrUpdate($gameDetails, $score);
             }
@@ -296,6 +303,13 @@ class ScoringController extends Controller
                     'game_status' => $this->getGameInProgressDesc($game->q),
                     'game_date' => $gameDetails->game_datetime,
                     'winner' => $winner,
+                    'down'=>$game->down,
+                    'togo'=>$game->togo,
+                    'yardline'=>$game->yardline,
+                    'clock'=>$game->clock,
+                    'pos_team'=>$game->posteam,
+                    'redzone'=>$game->redzone,
+                    'stadium'=>$game->stadium,
                     'last_updated' => $now
                 ]);
             return "insert";
