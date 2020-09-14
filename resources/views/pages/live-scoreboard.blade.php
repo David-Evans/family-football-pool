@@ -7,7 +7,7 @@
 <?php $i=0; ?>
 @foreach ($games as $game)
 	<?php $i++; ?>
-	@if($i==12)
+	@if($i>12)
 	</div>
 	<div class="row">
 	@endif
