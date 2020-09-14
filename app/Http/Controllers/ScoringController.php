@@ -145,6 +145,13 @@ class ScoringController extends Controller
             $home = $this->getTeamName($value->home->abbr);
             $visitorScore = 0;
             $homeScore = 0;
+            $down = 1;
+            $togo = 10;
+            $yardline = '';
+            $clock = '00:00';
+            $posteam = $home;
+            $redzone = FALSE;
+            $stadium = FALSE;
             if ($value->away->score->T !== NULL) { $visitorScore = $value->away->score->T; }
             if ($value->home->score->T !== NULL) { $homeScore = $value->home->score->T; }
             $status = $this->getGameInProgressDesc($value->qtr);
@@ -375,5 +382,14 @@ WHERE p.user_id = 1 AND game_status IN ('Final','Final OT');
                     'updated_at' => $now
                 ]);
         }
+    }
+
+    public function liveScoreboard() {
+
+        $var = 'Hello World';
+        return view('pages.live-scoreboard')->with([
+            'var' => $var
+            ]);
+
     }
 }
