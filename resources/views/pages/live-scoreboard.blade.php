@@ -15,7 +15,7 @@
 				<div class="score col-xs-4">{{$game->visitor_score}}</div>
 			</div>
 			<div class="row home">
-				<?php $img = strtolower($game->visitor_team).".png"; ?>
+				<?php $img = strtolower($game->home_team).".png"; ?>
 				<div class="logo col-xs-4"><img src="/images/logos/{{$img}}" /></div>
 				<div class="team-name col-xs-4">{{$game->home_team_short}}</div>
 				<div class="score col-xs-4">{{$game->home_score}}</div>
