@@ -40,6 +40,12 @@
             font-size: 150%;
             display:inline-block;
         }
+        @media only screen and (max-width:640px) {
+            .game-detail .logo img {
+                width: 200%;
+                padding: .25em;
+            }
+        }
     </style>
 
 </head>
