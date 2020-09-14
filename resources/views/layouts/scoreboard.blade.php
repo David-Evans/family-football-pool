@@ -31,7 +31,7 @@
 <body id="scoreboard" class="index">
     <div id="wrapper" class="container-fluid">
         @yield('content')
-        @include('layouts.partials._footer')
+        @include('layouts.partials._scoreboard-footer')
     </div> <!-- /#wrapper -->
 </body>
 
