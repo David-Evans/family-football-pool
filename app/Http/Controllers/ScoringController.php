@@ -178,7 +178,7 @@ class ScoringController extends Controller
                     'togo'=>$togo,
                     'yardline'=>$yardline,
                     'clock'=>$clock,
-                    'pos_team'=>$posteam,
+                    'posteam'=>$posteam,
                     'redzone'=>$redzone,
                     'stadium'=>$stadium
                     );
