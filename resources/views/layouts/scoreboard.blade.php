@@ -19,6 +19,12 @@
 
     <!-- Custom Fonts -->
     <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            background-color:#000;
+            color:#fff;
+        }
+    </style>
 
 </head>
 
