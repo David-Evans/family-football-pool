@@ -29,7 +29,7 @@
 </head>
 
 <body id="scoreboard" class="index">
-    <div id="wrapper">
+    <div id="wrapper" class="container-fluid">
         @yield('content')
         @include('layouts.partials._footer')
     </div> <!-- /#wrapper -->

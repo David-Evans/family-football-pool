@@ -10,6 +10,8 @@ use Auth;
 
 use App\LiveScore;
 
+use App\Game;
+
 use DB;
 
 class ScoringController extends Controller
@@ -407,9 +409,24 @@ WHERE p.user_id = 1 AND game_status IN ('Final','Final OT');
 
     public function liveScoreboard() {
 
-        $var = 'Hello World';
+        $game = new Game();
+        $currDate = FALSE;
+        $week = $game->getCurrentWeek();
+
+        // Get current live scores for current week
+/*
+SELECT live_scores.game_id, games.day_of_week, live_scores.visitor_team, live_scores.home_team, live_scores.visitor_score, live_scores.home_score, live_scores.game_status, live_scores.game_date, live_scores.winner, live_scores.down, live_scores.togo, live_scores.yardline, live_scores.clock, live_scores.pos_team, live_scores.redzone, live_scores.stadium, live_scores.last_updated
+FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
+*/
+        $games = DB::table('live_scores')
+            ->join('games','live_scores.game_id','=','games.id')
+            ->select(DB::raw('live_scores.game_id, games.day_of_week, live_scores.visitor_team, live_scores.home_team, live_scores.visitor_score, live_scores.home_score, live_scores.game_status, live_scores.game_date, live_scores.winner, live_scores.down, live_scores.togo, live_scores.yardline, live_scores.clock, live_scores.pos_team, live_scores.redzone, live_scores.stadium, live_scores.last_updated'))
+            ->where('games.week_id','=',$week)
+            ->get();
+
         return view('pages.live-scoreboard')->with([
-            'var' => $var
+            'week' => $week,
+            'games' => $wins
             ]);
 
     }
