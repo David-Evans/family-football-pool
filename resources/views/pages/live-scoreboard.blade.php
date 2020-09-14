@@ -10,6 +10,7 @@
 	@if($i>12)
 	</div>
 	<div class="row">
+		<?php $i=0; ?>
 	@endif
 	<div class="col-xs-6 col-md-3" id="game-{{$i}}">
 		<div class="game-detail">
