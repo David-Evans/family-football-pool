@@ -65,6 +65,9 @@
             text-transform: uppercase;
             color:#666;
         }
+        @media (min-width: 600px) {
+        }
+
         @media (min-width: 768px) {
             .game-detail .logo img { width: 120%; }
             .game-detail h4 { font-size: 140%; }

@@ -12,7 +12,7 @@
 	<div class="container">
 		<?php $i=0; ?>
 	@endif
-	<div class="col-xs-6 col-md-3" id="game-{{$i}}">
+	<div class="col-xs-12 sm-6 col-md-3" id="game-{{$i}}">
 		<div class="game-detail">
 			<?php $gameTime = date('g:iA', strtotime($game->game_date)); ?>
 			<h4 class="text-center">{{$game->day_of_week}} - {{$gameTime}} (ET)</h4>
