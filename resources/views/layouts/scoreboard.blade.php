@@ -25,12 +25,16 @@
             color:#fff;
         }
         .game-detail {
+            margin-top: 1em;
             padding: .5em;
             border: 1px solid #555;
         }
         .game-detail h4 {
-            font-size: 50%;
+            font-size: 100%;
             text-align: center;
+            height: 2em;
+            border-bottom: 1px solid #555;
+            text-transform: uppercase;
         }
         .game-detail .logo img {
             width: 90%;
@@ -40,11 +44,21 @@
             font-size: 150%;
             display:inline-block;
         }
-        @media only screen and (max-width:640px) {
+        .game-detail .team-name .record, .game-detail .status {
+            font-size: 80%;
+            color:#666;         
+        }
+        @media (min-width: 768px) {
             .game-detail .logo img {
                 width: 200%;
                 padding: .25em;
             }
+        }
+        @media (min-width: 992px) {
+            
+        }
+        @media (min-width: 1200px) {
+            
         }
     </style>
 
