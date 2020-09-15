@@ -3,7 +3,7 @@
 @section("content")        
 <p>&nbsp;</p>
 <div class="container">
-
+<h1>NFL Scores for Week {{$week}}</h1>
 <?php $i=0; ?>
 @foreach ($games as $game)
 	<?php $i++; ?>
