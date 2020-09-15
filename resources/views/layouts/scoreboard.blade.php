@@ -30,7 +30,6 @@
             border: 1px solid #555;
         }
         .game-detail h4 {
-            font-size: 100%;
             height: 2em;
             border-bottom: 1px solid #555;
             text-transform: uppercase;
@@ -75,11 +74,13 @@
             }
         }
         @media (min-width: 992px) {
+            .game-detail h4 { font-size: 100%; }
             .game-detail .logo img { width: 120%; }
             .game-detail .team-name { font-size: 140%; }
-            .game-detail .score { font-size: 200%; }
+            .game-detail .score { font-size: 300%; }
         }
         @media (min-width: 1200px) {
+            .game-detail h4 { font-size: 100%; }
             .game-detail .logo img {
                 width: 120%;
                 padding: .25em;
