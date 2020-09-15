@@ -15,7 +15,7 @@
 	<div class="col-xs-6 col-md-3" id="game-{{$i}}">
 		<div class="game-detail">
 			<?php $gameTime = date('g:iA', strtotime($game->game_date)); ?>
-			<h4>{{$game->day_of_week}} - {{$gameTime}} (ET)</h4>
+			<h4 class="text-center">{{$game->day_of_week}} - {{$gameTime}} (ET)</h4>
 			<div class="row visitor">
 				<?php $img = strtolower($game->visitor_team).".png"; ?>
 				<div class="logo col-xs-4">
@@ -33,7 +33,7 @@
 			<div class="row game-status">
 				<div class="col-xs-4"></div>
 				<div class="col-xs-4"></div>
-				<div class="status col-xs-4 text-right">{{$game->game_status}}</div>
+				<div class="status col-xs-4 text-center">{{$game->game_status}}</div>
 			</div>
 			<div class="row home">
 				<?php $img = strtolower($game->home_team).".png"; ?>

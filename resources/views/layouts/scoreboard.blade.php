@@ -31,7 +31,6 @@
         }
         .game-detail h4 {
             font-size: 100%;
-            text-align: center;
             height: 2em;
             border-bottom: 1px solid #555;
             text-transform: uppercase;
@@ -40,25 +39,39 @@
             width: 90%;
             padding: .25em;
         }
-        .game-detail .team-name, .game-detail .score {
+        .game-detail .team-name {
             font-size: 150%;
-            display:inline-block;
+            line-height: 80%;
         }
-        .game-detail .team-name .record, .game-detail .status {
-            font-size: 80%;
+        .game-detail .score {
+            font-size: 200%;
+        }
+        .game-detail .team-name .record {
+            font-size: 60%;
+            color:#666;         
+        }
+        .game-detail .status {
+            font-size: 100%;
+            text-transform: uppercase;
             color:#666;         
         }
         @media (min-width: 768px) {
             .game-detail .logo img {
-                width: 200%;
+                width: 120%;
                 padding: .25em;
             }
         }
         @media (min-width: 992px) {
-            
+            .game-detail .logo img {
+                width: 120%;
+                padding: .25em;
+            }
         }
         @media (min-width: 1200px) {
-            
+            .game-detail .logo img {
+                width: 120%;
+                padding: .25em;
+            }
         }
     </style>
 
