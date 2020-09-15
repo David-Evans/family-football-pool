@@ -72,19 +72,14 @@
                 font-size: 200%;
                 padding: .5em;
             }
+            .game-detail .score { font-size: 300%; }
         }
         @media (min-width: 992px) {
             .game-detail h4 { font-size: 100%; }
-            .game-detail .logo img { width: 120%; }
             .game-detail .team-name { font-size: 140%; }
-            .game-detail .score { font-size: 300%; }
         }
         @media (min-width: 1200px) {
             .game-detail h4 { font-size: 100%; }
-            .game-detail .logo img {
-                width: 120%;
-                padding: .25em;
-            }
         }
     </style>
 
