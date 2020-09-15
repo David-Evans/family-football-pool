@@ -45,8 +45,8 @@
             padding: .25em;
         }
         .game-detail .score {
-            font-size: 200%;
-            padding: .25em;
+            font-size: 250%;
+            font-weight: bold;
             background: -webkit-linear-gradient(#fff, #333);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;

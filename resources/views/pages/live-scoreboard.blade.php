@@ -49,8 +49,8 @@
 				</div>
 				<div class="score col-xs-4 text-center">{{$game->home_score}}</div>
 			</div>
-			<div class="row stadium">
-				{{$game->stadium}}
+			<div class="row stadium text-center">
+				<div class="col-md-12">{{$game->stadium}}</div>
 			</div>
 		</div>
 	</div>
