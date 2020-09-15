@@ -412,7 +412,7 @@ WHERE p.user_id = 1 AND game_status IN ('Final','Final OT');
         $game = new Game();
         $currDate = FALSE;
         $week = $game->getCurrentWeek();
-
+$week = 1;
         // Get current live scores for current week
 /*
 SELECT live_scores.game_id, games.day_of_week, live_scores.visitor_team, live_scores.home_team, live_scores.visitor_score, live_scores.home_score, live_scores.game_status, live_scores.game_date, live_scores.winner, live_scores.down, live_scores.togo, live_scores.yardline, live_scores.clock, live_scores.pos_team, live_scores.redzone, live_scores.stadium, live_scores.last_updated

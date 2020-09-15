@@ -16,7 +16,7 @@
 		<div class="game-detail">
 			<?php $gameTime = date('g:iA', strtotime($game->game_date)); ?>
 			<h4>{{$game->day_of_week}} - {{$gameTime}} (ET)</h4>
-<!-- 			<div class="row visitor">
+			<div class="row visitor">
 				<?php $img = strtolower($game->visitor_team).".png"; ?>
 				<div class="logo col-xs-4">
 					@if($game->pos_team == $game->visitor_team_short)
@@ -37,11 +37,18 @@
 			</div>
 			<div class="row home">
 				<?php $img = strtolower($game->home_team).".png"; ?>
-				<div class="logo col-xs-4"><img src="/images/logos/{{$img}}" /></div>
-				<div class="team-name col-xs-4">{{$game->home_team_short}}</div>
+				<div class="logo col-xs-4">
+					@if($game->pos_team == $game->home_team_short)
+					<i class="fa fa-play"></i>
+					@endif					
+				</div>
+				<div class="team-name col-xs-4">
+					{{$game->home_team_short}}<br>
+					<span class="record">(1-0-0)</span>
+				</div>
 				<div class="score col-xs-4 text-center">{{$game->home_score}}</div>
 			</div>
- -->		</div>
+		</div>
 	</div>
 @endforeach
 
