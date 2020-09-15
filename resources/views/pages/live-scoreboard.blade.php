@@ -40,13 +40,17 @@
 				<div class="logo col-xs-4">
 					@if($game->pos_team == $game->home_team_short)
 					<i class="fa fa-play"></i>
-					@endif					
+					@endif
+					<img src="/images/logos/{{$img}}" />					
 				</div>
 				<div class="team-name col-xs-4">
 					{{$game->home_team_short}}<br>
 					<span class="record">(1-0-0)</span>
 				</div>
 				<div class="score col-xs-4 text-center">{{$game->home_score}}</div>
+			</div>
+			<div class="row stadium">
+				{{$game->stadium}}
 			</div>
 		</div>
 	</div>

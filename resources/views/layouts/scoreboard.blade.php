@@ -42,9 +42,14 @@
         .game-detail .team-name {
             font-size: 150%;
             line-height: 80%;
+            padding: .25em;
         }
         .game-detail .score {
             font-size: 200%;
+            padding: .25em;
+            background: -webkit-linear-gradient(#fff, #333);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
         }
         .game-detail .team-name .record {
             font-size: 60%;
@@ -54,6 +59,11 @@
             font-size: 100%;
             text-transform: uppercase;
             color:#666;         
+        }
+        .game-detail .stadium {
+            font-size: 80%;
+            text-transform: uppercase;
+            color:#666;
         }
         @media (min-width: 768px) {
             .game-detail .logo img {
