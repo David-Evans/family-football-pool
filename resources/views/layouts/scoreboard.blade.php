@@ -47,6 +47,7 @@
         .game-detail .score {
             font-size: 250%;
             font-weight: bold;
+            line-height: 2em;
             background: -webkit-linear-gradient(#fff, #333);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
@@ -66,16 +67,17 @@
             color:#666;
         }
         @media (min-width: 768px) {
-            .game-detail .logo img {
-                width: 120%;
-                padding: .25em;
+            .game-detail .logo img { width: 120%; }
+            .game-detail h4 { font-size: 140%; }
+            .game-detail .team-name {
+                font-size: 200%;
+                padding: .5em;
             }
         }
         @media (min-width: 992px) {
-            .game-detail .logo img {
-                width: 120%;
-                padding: .25em;
-            }
+            .game-detail .logo img { width: 120%; }
+            .game-detail .team-name { font-size: 140%; }
+            .game-detail .score { font-size: 200%; }
         }
         @media (min-width: 1200px) {
             .game-detail .logo img {

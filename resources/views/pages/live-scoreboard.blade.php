@@ -19,7 +19,7 @@
 			<div class="row visitor">
 				<?php $img = strtolower($game->visitor_team).".png"; ?>
 				<div class="logo col-xs-4">
-					@if($game->pos_team == $game->visitor_team_short)
+					@if($game->winner == $game->visitor_team)
 					<i class="fa fa-play"></i>
 					@endif
 					<img src="/images/logos/{{$img}}" />
@@ -38,7 +38,7 @@
 			<div class="row home">
 				<?php $img = strtolower($game->home_team).".png"; ?>
 				<div class="logo col-xs-4">
-					@if($game->pos_team == $game->home_team_short)
+					@if($game->winner == $game->home_team)
 					<i class="fa fa-play"></i>
 					@endif
 					<img src="/images/logos/{{$img}}" />					
