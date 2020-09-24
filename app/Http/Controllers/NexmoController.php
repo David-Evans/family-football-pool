@@ -25,7 +25,7 @@ class NexmoController extends Controller
 
         if ($validRequest) {
          $result['success'] = 'true';
-         $message = rawurlencode($request->input('msg'));
+         $message = $request->input('msg');
          $smsNumber = $request->input('numbertodial');
 
             try {
