@@ -82,6 +82,7 @@
             .game-detail .team-name { font-size: 140%; }
         }
         @media (min-width: 1200px) {
+            .container { width: 80%; }
             .game-detail h4 { font-size: 100%; }
         }
     </style>

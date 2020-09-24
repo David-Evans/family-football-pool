@@ -31,7 +31,6 @@ class NexmoController extends Controller
             try {
               $basic  = new \Nexmo\Client\Credentials\Basic($nexmo_key, $nexmo_secret);
               $client = new \Nexmo\Client($basic);
-              $message = rawurlencode($request->input('msg'));
               $smsNumber = $request->input('numbertodial');
 
               $response = $client->message()->send([
