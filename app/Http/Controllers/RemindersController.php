@@ -98,7 +98,7 @@ class RemindersController extends Controller
         $nexmo_shortcode=env("NEXMO_SHORTCODE","NULL");
         $nexmo_number=env("NEXMO_NUMBER","NULL");
         // $url = 'https://rest.nexmo.com/sms/json';
-        $message = rawurlencode($copy." https://football.jalapenodave.com");
+        $message = $copy." https://football.jalapenodave.com";
 
         $basic  = new \Nexmo\Client\Credentials\Basic($nexmo_key, $nexmo_secret);
         $client = new \Nexmo\Client($basic);
@@ -118,23 +118,6 @@ class RemindersController extends Controller
                     'text' => $message
                 ]);
 
-              // $fields = array(
-              //   'api_key' => $nexmo_key,
-              //   'api_secret' => $nexmo_secret,
-              //   'to' => '1'.$smsNumber,
-              //   'from' => $nexmo_number,
-              //   'text' => $message
-              // );
-
-              // $fields_string = '';
-              // foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-              // rtrim($fields_string, '&');
-              // $ch = curl_init();
-              // curl_setopt($ch,CURLOPT_URL, $url);
-              // curl_setopt($ch,CURLOPT_POST, count($fields));
-              // curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-              // $result['curl-response'] = curl_exec($ch);
-              // curl_close($ch);
             } catch (Exception $e) {
                 $result['success'] = 'false';
                 $result['error'] = $e->getMessage();

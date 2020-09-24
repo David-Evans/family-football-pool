@@ -67,7 +67,7 @@ class NexmoController extends Controller
 
         if ($validRequest) {
             $result['success'] = 'true';
-            $message = rawurlencode($request->input('msg'));
+            $message = $request->input('msg');
 
             $users = DB::table('users')->where('sms_number','!=','')->get();
 
@@ -88,23 +88,6 @@ class NexmoController extends Controller
                       'text' => $message
                   ]);
 
-                  // $fields = array(
-                  //   'api_key' => $nexmo_key,
-                  //   'api_secret' => $nexmo_secret,
-                  //   'to' => '1'.$smsNumber,
-                  //   'from' => $nexmo_number,
-                  //   'text' => $message
-                  // );
-
-                  // $fields_string = '';
-                  // foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-                  // rtrim($fields_string, '&');
-                  // $ch = curl_init();
-                  // curl_setopt($ch,CURLOPT_URL, $url);
-                  // curl_setopt($ch,CURLOPT_POST, count($fields));
-                  // curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-                  // $result['curl_response'] = curl_exec($ch);
-                  // curl_close($ch);
                   $result['response'][] = $response;
                 } catch (Exception $e) {
                     $result['success'] = 'false';
@@ -149,7 +132,7 @@ class NexmoController extends Controller
             $client = new \Nexmo\Client($basic);
 
             $message = 'Inbound from '.$inboundNumber.': '.$inboundMessage;
-            $message = rawurlencode($message);
+            $message = $message;
 
             // $fields = array();
             $smsNumber = '4802053478';
@@ -159,27 +142,6 @@ class NexmoController extends Controller
                 'from' => $nexmo_number,
                 'text' => $message
             ]);
-
-            // $url = 'https://rest.nexmo.com/sms/json';
-            // $fields = array(
-            //   'api_key' => $nexmo_key,
-            //   'api_secret' => $nexmo_secret,
-            //   'to' => '1'.$smsNumber,
-            //   'from' => $nexmo_number,
-            //   'text' => $message
-            // );
-
-            // $fields_string = '';
-            // foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-            // rtrim($fields_string, '&');
-
-            // $ch = curl_init();
-            // curl_setopt($ch,CURLOPT_URL, $url);
-            // curl_setopt($ch,CURLOPT_POST, count($fields));
-            // curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-            // curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-            // $result = curl_exec($ch);
-            // curl_close($ch);
 
         } catch (Exception $e) {
 
