@@ -16,6 +16,7 @@ return [
     'env' => env('APP_ENV', 'production'),
     'name' => env('APP_NAME', 'product name'),
     'end_dst' => env('END_DST', NULL),
+    'season' => env('SEASON','1900'),
 
     /*
     |--------------------------------------------------------------------------
