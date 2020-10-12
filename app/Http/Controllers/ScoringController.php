@@ -143,8 +143,6 @@ class ScoringController extends Controller
             $gameDate = substr($key,0,8);
             $doSomething = ($gameDate == $now) ? TRUE : FALSE;
             $week = $this->getWeekFromGameDate($gameDate);
-dd($week);
-
             $visitor = $this->getTeamName($value->away->abbr);
             $home = $this->getTeamName($value->home->abbr);
             $visitorScore = 0;
