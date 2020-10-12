@@ -100,7 +100,7 @@ class Game extends Model
 	public function getGames($week) {
 		$result = DB::table('games')
 				->where('week_id','=',$week)
-				->orderBy('id')
+				->orderBy('game_datetime')
 				->get();
 		return $result;
 	}
