@@ -271,15 +271,19 @@ class ScoringController extends Controller
     }
 
     function getWeekFromGameDate($gameDate) {
-        $year = substr($gameDate,0,4);
-        $month = substr($gameDate,4,2);
-        $day = substr($gameDate,6,2);
-        $gameDate = $year.'-'.$month.'-'.$day;
-        $result = DB::table('games')
-            ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
-            ->select('week_id')
-            ->first();
-        return $result->week_id;
+        try {
+            $year = substr($gameDate,0,4);
+            $month = substr($gameDate,4,2);
+            $day = substr($gameDate,6,2);
+            $gameDate = $year.'-'.$month.'-'.$day;
+            $result = DB::table('games')
+                ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
+                ->select('week_id')
+                ->first();
+            return $result->week_id;
+        } catch (Exception $e) {
+            return FALSE;
+        }
     }
 
     function insertOrUpdate($gameDetails, $game) {
