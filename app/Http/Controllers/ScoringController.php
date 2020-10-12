@@ -136,12 +136,12 @@ class ScoringController extends Controller
         curl_close($ch);      
         $nflScores = json_decode($output);
         $games = array();
-dd($nflScores);
         foreach ($nflScores as $key=>$value) {
             // $key = date/game
             // $value = game details
             $now = date('Ymd');
             $gameDate = substr($key,0,8);
+dd($gameDate);
             $doSomething = ($gameDate == $now) ? TRUE : FALSE;
             $week = $this->getWeekFromGameDate($gameDate);
             $visitor = $this->getTeamName($value->away->abbr);
