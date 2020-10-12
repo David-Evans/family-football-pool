@@ -83,7 +83,7 @@ class Game extends Model
 				->select(DB::raw('picks.game_id, picks.user_id, users.nickname, users.display_name, users.avatar, picks.pick, games.winner'))
 				->where('games.week_id','=',$week)
 				->orderBy('picks.user_id')
-				->orderBy('game_id')
+				->orderBy('games.game_datetime')
 				->get();
 		return $result;
 	}
