@@ -280,6 +280,7 @@ class ScoringController extends Controller
                 ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
                 ->select('week_id')
                 ->first();
+            if (count($result) == 0) { return FALSE; }
             return $result->week_id;
         } catch (Exception $e) {
             return FALSE;
