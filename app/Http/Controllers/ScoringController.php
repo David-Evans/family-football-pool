@@ -143,6 +143,8 @@ class ScoringController extends Controller
             $gameDate = substr($key,0,8);
             $doSomething = ($gameDate == $now) ? TRUE : FALSE;
             $week = $this->getWeekFromGameDate($gameDate);
+dd($week);
+
             $visitor = $this->getTeamName($value->away->abbr);
             $home = $this->getTeamName($value->home->abbr);
             $visitorScore = 0;
@@ -279,7 +281,6 @@ class ScoringController extends Controller
             ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
             ->select('week_id')
             ->first();
-dd($result);
         return $result->week_id;
     }
 
