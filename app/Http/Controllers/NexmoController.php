@@ -67,6 +67,7 @@ class NexmoController extends Controller
 
         if ($validRequest) {
             $result = Array();
+            $message = $request->input('msg');
             $result['msg'] = $message;
 
             $users = DB::table('users')->where('sms_number','!=','')->get();
