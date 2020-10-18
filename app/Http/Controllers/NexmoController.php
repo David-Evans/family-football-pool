@@ -66,29 +66,21 @@ class NexmoController extends Controller
         if ($request->input('msg') == '') { $validRequest = FALSE; }
 
         if ($validRequest) {
-            $result['success'] = 'true';
-            $message = $request->input('msg');
+            $result = Array();
+            $result['msg'] = $message;
 
             $users = DB::table('users')->where('sms_number','!=','')->get();
 
-            $basic  = new \Nexmo\Client\Credentials\Basic($nexmo_key, $nexmo_secret);
-            $client = new \Nexmo\Client($basic);
-
             foreach ($users as $user) {
-                sleep(2);
-                $numbertodial = $user->sms_number;
-                $url = 'https://rest.nexmo.com/sms/json';
+                sleep(2); // Nexmo only allows one SMS per second
+                $smsNumber = $user->sms_number;
                 try {
-                  $smsNumber = $numbertodial;
-                  $smsNumber = $request->input('numbertodial');
+                    $response = $client->message()->send([
+                        'to' => '1'.$smsNumber,
+                        'from' => $nexmo_number,
+                        'text' => $message
+                    ]);
 
-                  $response = $client->message()->send([
-                      'to' => '1'.$smsNumber,
-                      'from' => $nexmo_number,
-                      'text' => $message
-                  ]);
-
-                  $result['response'][] = $response;
                 } catch (Exception $e) {
                     $result['success'] = 'false';
                     $result['error'] = $e->getMessage();
