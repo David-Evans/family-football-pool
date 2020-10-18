@@ -70,6 +70,9 @@ class NexmoController extends Controller
             $message = $request->input('msg');
             $result['msg'] = $message;
 
+            $basic  = new \Nexmo\Client\Credentials\Basic($nexmo_key, $nexmo_secret);
+            $client = new \Nexmo\Client($basic);
+
             $users = DB::table('users')->where('sms_number','!=','')->get();
 
             foreach ($users as $user) {
