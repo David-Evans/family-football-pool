@@ -198,7 +198,7 @@ class ScoringController extends Controller
             ]);
     }        
 
-    function updateGameDetails2021() {
+    function updateGameDetails2021(Request $request) {
 /*
     {
         "GameKey": "202110133",
@@ -247,21 +247,71 @@ class ScoringController extends Controller
         }
     }
 */
+
         date_default_timezone_set('America/New_York');
+        $date = ($request->input('date') == '') ? date('Y-m-d') : $request->input('date');
         $url = env("SPORTS_DATA_IO_URL",FALSE);
         $key = env("SPORTS_DATA_IO_KEY",FALSE);
 
-        $url = $url.'/2021-SEP-12?key='.$key;
+        $url = $url.'/2021-SEP-13?key='.$key;
 
-        $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, $url); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-        $output = curl_exec($ch); 
-        curl_close($ch);      
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
         $nflScores = json_decode($output);
         $games = array();
 
-dd($output);
+        foreach ($nflScores as $game=>$detail) {
+            $now = date('Y-m-d');
+            $gameDate = substr($detail->Date,0,10);
+            $doSomething = ($gameDate == $now) ? TRUE : FALSE;
+            $week = $this->getWeekFromGameDate($gameDate);
+            $visitor = $this->getTeamName($detail->AwayTeam);
+            $home = $this->getTeamName($detail->HomeTeam);
+            $visitorScore = 0;
+            $homeScore = 0;
+            $down = $detail->Down;
+            $togo = null;
+            $yardline = $detail->YardLine;
+            $clock = $detail->TimeRemaining;
+            $posteam = $detail->Possession;
+            $redzone = $detail->RedZone;
+            $stadium = $detail->StadiumDetails->Name;
+            if ($detail->AwayScore !== NULL) { $visitorScore = $detail->AwayScore; }
+            if ($detail->HomeScore !== NULL) { $homeScore = $detail->HomeScore; }
+            $status = $this->getGameInProgressDesc($detail->Quarter);
+            $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
+            if ($gameDetails) {
+                array_push($games,(object) array(
+                    'home_team' => $home,
+                    'visitor_team' => $visitor,
+                    'home_score' => $homeScore,
+                    'visitor_score' => $visitorScore,
+                    'status' => $status,
+                    'game_id' => $gameDetails->id,
+                    'day_of_week' => $gameDetails->day_of_week,
+                    'game_datetime' => $gameDetails->game_datetime
+                ));
+                $score = (object) array(
+                    'vnn'=>$visitor,
+                    'hnn'=>$home,
+                    'vs'=>$visitorScore,
+                    'hs'=>$homeScore,
+                    'status'=>$status,
+                    'q'=>$detail->Quarter,
+                    'down'=>$down,
+                    'togo'=>$togo,
+                    'yardline'=>$yardline,
+                    'clock'=>$clock,
+                    'posteam'=>$posteam,
+                    'redzone'=>$redzone,
+                    'stadium'=>$stadium
+                    );
+                $dbResult = $this->insertOrUpdate($gameDetails, $score);
+            }
+        }
     }
 
     function getGameInProgressDesc($gameStatus) {
@@ -286,6 +336,7 @@ dd($output);
                 $result = "Final OT";
                 break;  
             case "Overtime":
+            case "OT":
                 $result = "Overtime";
                 break;
             case "1":
@@ -338,9 +389,12 @@ dd($output);
 
     function getWeekFromGameDate($gameDate) {
         try {
+            // $year = substr($gameDate,0,4);
+            // $month = substr($gameDate,4,2);
+            // $day = substr($gameDate,6,2);
             $year = substr($gameDate,0,4);
-            $month = substr($gameDate,4,2);
-            $day = substr($gameDate,6,2);
+            $month = substr($gameDate,6,2);
+            $day = substr($gameDate,8,2);
             $gameDate = $year.'-'.$month.'-'.$day;
             $result = DB::table('games')
                 ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
