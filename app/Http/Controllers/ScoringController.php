@@ -264,9 +264,9 @@ class ScoringController extends Controller
         $games = array();
 
         foreach ($nflScores as $game=>$detail) {
-            $now = date('Y-m-d');
+            //$now = date('Y-m-d');
             $gameDate = substr($detail->Date,0,10);
-            $doSomething = ($gameDate == $now) ? TRUE : FALSE;
+            $doSomething = ($gameDate == $date) ? TRUE : FALSE;
             $week = $this->getWeekFromGameDate($gameDate);
             $visitor = $this->getTeamName($detail->AwayTeam);
             $home = $this->getTeamName($detail->HomeTeam);
