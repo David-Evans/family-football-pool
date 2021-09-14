@@ -251,7 +251,7 @@ class ScoringController extends Controller
         $url = env("SPORTS_DATA_IO_URL",FALSE);
         $key = env("SPORTS_DATA_IO_KEY",FALSE);
 
-        $url = $url.'/2021-SEP-12?key'.$key;
+        $url = $url.'/2021-SEP-12?key='.$key;
 
         $ch = curl_init(); 
         curl_setopt($ch, CURLOPT_URL, $url); 
