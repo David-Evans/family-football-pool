@@ -198,6 +198,72 @@ class ScoringController extends Controller
             ]);
     }        
 
+    function updateGameDetails2021() {
+/*
+    {
+        "GameKey": "202110133",
+        "SeasonType": 1,
+        "Season": 2021,
+        "Week": 1,
+        "Date": "2021-09-09T20:20:00",
+        "AwayTeam": "DAL",
+        "HomeTeam": "TB",
+        "AwayScore": 34,
+        "HomeScore": 36,
+        "Quarter": "F",
+        "TimeRemaining": null,
+        "Possession": null,
+        "Down": null,
+        "Distance": "Scrambled",
+        "YardLine": null,
+        "YardLineTerritory": null,
+        "RedZone": null,
+        "HasStarted": true,
+        "IsInProgress": false,
+        "IsOver": true,
+        "IsOvertime": false,
+        "DownAndDistance": null,
+        "QuarterDescription": "Final",
+        "LastUpdated": "2021-09-13T17:37:07",
+        "Canceled": false,
+        "Closed": true,
+        "Day": "2021-09-09T00:00:00",
+        "DateTime": "2021-09-09T20:20:00",
+        "Status": "Final",
+        "GameEndDateTime": "2021-09-09T23:57:06",
+        "HomeTimeouts": null,
+        "AwayTimeouts": null,
+        "StadiumDetails": {
+            "StadiumID": 24,
+            "Name": "Raymond James Stadium",
+            "City": "Tampa Bay",
+            "State": "FL",
+            "Country": "USA",
+            "Capacity": 65618,
+            "PlayingSurface": "Grass",
+            "GeoLat": 27.975833,
+            "GeoLong": -82.503333,
+            "Type": "Outdoor"
+        }
+    }
+*/
+        date_default_timezone_set('America/New_York');
+        $url = env("SPORTS_DATA_IO_URL",FALSE);
+        $key = env("SPORTS_DATA_IO_KEY",FALSE);
+
+        $url = $url.'/2021-SEP-12?key'.$key;
+
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        $output = curl_exec($ch); 
+        curl_close($ch);      
+        $nflScores = json_decode($output);
+        $games = array();
+
+dd($output);
+    }
+
     function getGameInProgressDesc($gameStatus) {
         $result = FALSE;
         switch ($gameStatus) {
