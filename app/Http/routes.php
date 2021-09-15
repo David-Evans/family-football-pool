@@ -66,7 +66,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/scoring/live', 'ScoringController@livescoring');
 	// Route::get('/scoring/update', 'ScoringController@updategamedetails');
-	Route::get('/scoring/update', 'ScoringController@updategamedetails2021');
+	Route::get('/scoring/update', 'ScoringController@updategamedetails2021a');
 	Route::get('/scoreboard', 'ScoringController@livescoreboard');
 
 	Route::get('/send-reminders', 'RemindersController@sendreminders');

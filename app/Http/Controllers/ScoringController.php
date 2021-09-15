@@ -253,7 +253,7 @@ class ScoringController extends Controller
         $url = env("SPORTS_DATA_IO_URL",FALSE);
         $key = env("SPORTS_DATA_IO_KEY",FALSE);
 
-        $url = $url.'/2021-SEP-13?key='.$key;
+        $url = $url.'/'.$date.'?key='.$key;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -312,6 +312,205 @@ class ScoringController extends Controller
                 $dbResult = $this->insertOrUpdate($gameDetails, $score);
             }
         }
+        dd($nflScores);
+    }
+
+    function updateGameDetails2021a(Request $request) {
+/*
+{
+    "status": 200,
+    "time": "2021-09-14T15:34:43.738Z",
+    "games": 1,
+    "skip": 0,
+    "results": [
+        {
+            "schedule": {
+                "date": "2021-09-14T00:15:00.000Z",
+                "tbaTime": false
+            },
+            "summary": "Baltimore Ravens @ Las Vegas Raiders",
+            "details": {
+                "league": "NFL",
+                "seasonType": "regular",
+                "season": 2021,
+                "conferenceGame": true,
+                "divisionGame": false
+            },
+            "status": "final",
+            "teams": {
+                "away": {
+                    "team": "Baltimore Ravens",
+                    "location": "Baltimore",
+                    "mascot": "Ravens",
+                    "abbreviation": "BAL",
+                    "conference": "AFC",
+                    "division": "North"
+                },
+                "home": {
+                    "team": "Las Vegas Raiders",
+                    "location": "Las Vegas",
+                    "mascot": "Raiders",
+                    "abbreviation": "LV",
+                    "conference": "AFC",
+                    "division": "West"
+                }
+            },
+            "lastUpdated": "2021-09-14T03:58:26.485Z",
+            "gameId": 264301,
+            "venue": {
+                "name": "Allegiant Stadium",
+                "city": "Las Vegas",
+                "state": "NV",
+                "neutralSite": false
+            },
+            "odds": [
+                {
+                    "spread": {
+                        "open": {
+                            "away": -4.5,
+                            "home": 4.5,
+                            "awayOdds": -115,
+                            "homeOdds": -110
+                        },
+                        "current": {
+                            "away": -3.5,
+                            "home": 3.5,
+                            "awayOdds": -105,
+                            "homeOdds": -115
+                        }
+                    },
+                    "moneyline": {
+                        "open": {
+                            "awayOdds": -215,
+                            "homeOdds": 185
+                        },
+                        "current": {
+                            "awayOdds": -173,
+                            "homeOdds": 151
+                        }
+                    },
+                    "total": {
+                        "open": {
+                            "total": 51,
+                            "overOdds": -110,
+                            "underOdds": -110
+                        },
+                        "current": {
+                            "total": 50.5,
+                            "overOdds": -110,
+                            "underOdds": -110
+                        }
+                    },
+                    "openDate": "2021-07-28T12:43:50.857Z",
+                    "lastUpdated": "2021-09-14T00:13:25.465Z"
+                }
+            ],
+            "scoreboard": {
+                "score": {
+                    "away": 27,
+                    "home": 33,
+                    "awayPeriods": [
+                        7,
+                        7,
+                        3,
+                        10,
+                        0
+                    ],
+                    "homePeriods": [
+                        0,
+                        10,
+                        0,
+                        17,
+                        6
+                    ]
+                },
+                "currentPeriod": 5,
+                "periodTimeRemaining": "0:00"
+            }
+        }
+    ]
+}
+*/
+
+        date_default_timezone_set('America/New_York');
+        $date = ($request->input('date') == '') ? date('Y-m-d') : $request->input('date');
+        $url = env("SPORTS_DATA_IO_URL",FALSE);
+
+$url = 'https://sportspage-feeds.p.rapidapi.com/games?league=NFL';
+
+        $url = $url.'&date='.$date;
+
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: sportspage-feeds.p.rapidapi.com",
+                "x-rapidapi-key: 09f6f137bdmshda90cdd47ba3fb0p140727jsn0b519f86bfec"
+            ],
+        ]); 
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $nflScores = json_decode($output);
+        $games = array();
+
+dd($nflScores);
+        foreach ($nflScores as $game=>$detail) {
+            //$now = date('Y-m-d');
+            $gameDate = substr($detail->Date,0,10);
+            $doSomething = ($gameDate == $date) ? TRUE : FALSE;
+            $week = $this->getWeekFromGameDate($gameDate);
+            $visitor = $this->getTeamName($detail->AwayTeam);
+            $home = $this->getTeamName($detail->HomeTeam);
+            $visitorScore = 0;
+            $homeScore = 0;
+            $down = $detail->Down;
+            $togo = null;
+            $yardline = $detail->YardLine;
+            $clock = $detail->TimeRemaining;
+            $posteam = $detail->Possession;
+            $redzone = $detail->RedZone;
+            $stadium = $detail->StadiumDetails->Name;
+            if ($detail->AwayScore !== NULL) { $visitorScore = $detail->AwayScore; }
+            if ($detail->HomeScore !== NULL) { $homeScore = $detail->HomeScore; }
+            $status = $this->getGameInProgressDesc($detail->Quarter);
+            $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
+            if ($gameDetails) {
+                array_push($games,(object) array(
+                    'home_team' => $home,
+                    'visitor_team' => $visitor,
+                    'home_score' => $homeScore,
+                    'visitor_score' => $visitorScore,
+                    'status' => $status,
+                    'game_id' => $gameDetails->id,
+                    'day_of_week' => $gameDetails->day_of_week,
+                    'game_datetime' => $gameDetails->game_datetime
+                ));
+                $score = (object) array(
+                    'vnn'=>$visitor,
+                    'hnn'=>$home,
+                    'vs'=>$visitorScore,
+                    'hs'=>$homeScore,
+                    'status'=>$status,
+                    'q'=>$detail->Quarter,
+                    'down'=>$down,
+                    'togo'=>$togo,
+                    'yardline'=>$yardline,
+                    'clock'=>$clock,
+                    'posteam'=>$posteam,
+                    'redzone'=>$redzone,
+                    'stadium'=>$stadium
+                    );
+                $dbResult = $this->insertOrUpdate($gameDetails, $score);
+            }
+        }
+        dd($nflScores);
     }
 
     function getGameInProgressDesc($gameStatus) {
@@ -330,8 +529,7 @@ class ScoringController extends Controller
                 $result = "Final";
                 break;
             case "FO":
-                $result = "Final OT";
-                break;
+            case "F/OT":
             case "final overtime":
                 $result = "Final OT";
                 break;  
