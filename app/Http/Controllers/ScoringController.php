@@ -434,9 +434,8 @@ class ScoringController extends Controller
 
         date_default_timezone_set('America/New_York');
         $date = ($request->input('date') == '') ? date('Y-m-d') : $request->input('date');
-        $url = env("SPORTS_DATA_IO_URL",FALSE);
-
-$url = 'https://sportspage-feeds.p.rapidapi.com/games?league=NFL';
+        $url = env("SPORTSPAGE_API_URL",FALSE);
+        $key = env("SPORTSPAGE_API_KEY",FALSE);
 
         $url = $url.'&date='.$date;
 
@@ -452,7 +451,7 @@ $url = 'https://sportspage-feeds.p.rapidapi.com/games?league=NFL';
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => [
                 "x-rapidapi-host: sportspage-feeds.p.rapidapi.com",
-                "x-rapidapi-key: 09f6f137bdmshda90cdd47ba3fb0p140727jsn0b519f86bfec"
+                "x-rapidapi-key: ".$key
             ],
         ]); 
         $output = curl_exec($ch);
@@ -461,11 +460,7 @@ $url = 'https://sportspage-feeds.p.rapidapi.com/games?league=NFL';
         $games = array();
 
         foreach ($nflScores->results as $game=>$detail) {
-            //$now = date('Y-m-d');
-            $gameDate = substr($detail->schedule->date,0,10);
-            //$doSomething = ($gameDate == $now) ? TRUE : FALSE;
-            $doSomething = ($gameDate == $date) ? TRUE : FALSE;
-            $week = $this->getWeekFromGameDate($gameDate);
+            $week = $this->getWeekFromGameDate($date);
             $visitor = $this->getTeamName($detail->teams->away->abbreviation);
             $home = $this->getTeamName($detail->teams->home->abbreviation);
             $visitorScore = 0;
@@ -484,7 +479,7 @@ $url = 'https://sportspage-feeds.p.rapidapi.com/games?league=NFL';
                 if ($detail->scoreboard->score->away !== NULL) { $visitorScore = $detail->scoreboard->score->away; }
                 if ($detail->scoreboard->score->home !== NULL) { $homeScore = $detail->scoreboard->score->home; }
                 $status = $this->getGameInProgressDesc($detail->status);
-                if ($detail->status == 'in progress') { $status = $this->getGameInProgressDesc($detail->scoreboard->currentPeriod); $status = $this->getGameInProgressDesc($detail->status); }
+                if ($detail->status == 'in progress') { $status = $this->getGameInProgressDesc($detail->scoreboard->currentPeriod); }
             }
             $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
             if ($gameDetails) {
@@ -597,13 +592,6 @@ $url = 'https://sportspage-feeds.p.rapidapi.com/games?league=NFL';
 
     function getWeekFromGameDate($gameDate) {
         try {
-            // $year = substr($gameDate,0,4);
-            // $month = substr($gameDate,4,2);
-            // $day = substr($gameDate,6,2);
-            $year = substr($gameDate,0,4);
-            $month = substr($gameDate,6,2);
-            $day = substr($gameDate,8,2);
-            $gameDate = $year.'-'.$month.'-'.$day;
             $result = DB::table('games')
                 ->whereBetween('game_datetime', [$gameDate.' 00:00:00', $gameDate.' 23:59:59'])
                 ->select('week_id')
