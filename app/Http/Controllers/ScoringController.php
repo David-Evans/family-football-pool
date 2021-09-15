@@ -460,26 +460,32 @@ $url = 'https://sportspage-feeds.p.rapidapi.com/games?league=NFL';
         $nflScores = json_decode($output);
         $games = array();
 
-dd($nflScores);
-        foreach ($nflScores as $game=>$detail) {
+        foreach ($nflScores->results as $game=>$detail) {
             //$now = date('Y-m-d');
-            $gameDate = substr($detail->Date,0,10);
+            $gameDate = substr($detail->schedule->date,0,10);
+            //$doSomething = ($gameDate == $now) ? TRUE : FALSE;
             $doSomething = ($gameDate == $date) ? TRUE : FALSE;
             $week = $this->getWeekFromGameDate($gameDate);
-            $visitor = $this->getTeamName($detail->AwayTeam);
-            $home = $this->getTeamName($detail->HomeTeam);
+            $visitor = $this->getTeamName($detail->teams->away->abbreviation);
+            $home = $this->getTeamName($detail->teams->home->abbreviation);
             $visitorScore = 0;
             $homeScore = 0;
-            $down = $detail->Down;
+            $qtr = null;
+            $clock=null;
+            $down = null;
             $togo = null;
-            $yardline = $detail->YardLine;
-            $clock = $detail->TimeRemaining;
-            $posteam = $detail->Possession;
-            $redzone = $detail->RedZone;
-            $stadium = $detail->StadiumDetails->Name;
-            if ($detail->AwayScore !== NULL) { $visitorScore = $detail->AwayScore; }
-            if ($detail->HomeScore !== NULL) { $homeScore = $detail->HomeScore; }
-            $status = $this->getGameInProgressDesc($detail->Quarter);
+            $yardline = null;
+            $posteam = null;
+            $redzone = null;
+            $stadium = $detail->venue->name;
+
+            if ($detail->status == 'in progress' || $detail->status == 'final') {
+                $clock = $detail->scoreboard->periodTimeRemaining;
+                if ($detail->scoreboard->score->away !== NULL) { $visitorScore = $detail->scoreboard->score->away; }
+                if ($detail->scoreboard->score->home !== NULL) { $homeScore = $detail->scoreboard->score->home; }
+                $status = $this->getGameInProgressDesc($detail->status);
+                if ($detail->status == 'in progress') { $status = $this->getGameInProgressDesc($detail->scoreboard->currentPeriod); $status = $this->getGameInProgressDesc($detail->status); }
+            }
             $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
             if ($gameDetails) {
                 array_push($games,(object) array(
@@ -498,7 +504,7 @@ dd($nflScores);
                     'vs'=>$visitorScore,
                     'hs'=>$homeScore,
                     'status'=>$status,
-                    'q'=>$detail->Quarter,
+                    'q'=>$qtr,
                     'down'=>$down,
                     'togo'=>$togo,
                     'yardline'=>$yardline,
@@ -520,11 +526,13 @@ dd($nflScores);
                 $result = "Pregame";
                 break;
             case "Pregame":
+            case "scheduled":
                 $result = "Pregame";
                 break;
             case "F":
                 $result = "Final";
                 break;
+            case "final":
             case "Final":
                 $result = "Final";
                 break;
@@ -556,6 +564,8 @@ dd($nflScores);
                 $result = "Halftime";
                 break;
             case "Suspended":
+            case "delayed":
+            case "canceled":
                 $result = "Suspended";
                 break;
             default:
