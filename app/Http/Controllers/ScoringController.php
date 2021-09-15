@@ -669,7 +669,7 @@ class ScoringController extends Controller
     }
 
     function determineWinner($game) {
-        $gameStatus = $this->getGameInProgressDesc($game->q);
+        $gameStatus = $this->getGameInProgressDesc($game->status);
         if ($gameStatus == "Final" || $gameStatus == "Final OT") {
             // Game is over, declare a winner!
             if (intval($game->vs) > intval($game->hs)) {
