@@ -792,7 +792,7 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
         $nflScores = json_decode($output);
         $games = array();
 
-  dd($nflScores);
+  //dd($nflScores);
         foreach ($nflScores->results as $game=>$detail) {
             $week = $this->getWeekFromGameDate($date);
             $visitor = $this->getTeamName($detail->teams->away->abbreviation);
@@ -816,6 +816,7 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
                 if ($detail->status == 'in progress') { $status = $this->getGameInProgressDesc($detail->scoreboard->currentPeriod); }
             }
             $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
+dd($gameDetails);
             if ($gameDetails) {
                 array_push($games,(object) array(
                     'home_team' => $home,
