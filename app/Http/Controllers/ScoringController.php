@@ -780,6 +780,7 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
         $nflScores = json_decode($output);
         $games = array();
 
+dd($nflScores);
 
         foreach ($nflScores->results as $game=>$detail) {
             $week = $this->getWeekFromGameDate($date);
