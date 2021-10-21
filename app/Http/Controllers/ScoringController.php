@@ -463,6 +463,7 @@ class ScoringController extends Controller
             $week = $this->getWeekFromGameDate($date);
             $visitor = $this->getTeamName($detail->teams->away->abbreviation);
             $home = $this->getTeamName($detail->teams->home->abbreviation);
+            $status = 'scheduled';
             $visitorScore = 0;
             $homeScore = 0;
             $qtr = null;
@@ -792,7 +793,7 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
         $nflScores = json_decode($output);
         $games = array();
 
-  //dd($nflScores);
+  dd($nflScores);
         foreach ($nflScores->results as $game=>$detail) {
             $week = $this->getWeekFromGameDate($date);
             $visitor = $this->getTeamName($detail->teams->away->abbreviation);
@@ -848,10 +849,10 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
             }
         }
 
-$debugOutput = array(
-'games'=>$games,
-'score'=>$score);
-dd($debugOutput);
+// $debugOutput = array(
+// 'games'=>$games,
+// 'score'=>$score);
+// dd($debugOutput);
         // Record any wins
         // $wins = $this->recordWins();
 
