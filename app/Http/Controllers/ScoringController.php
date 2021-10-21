@@ -767,21 +767,32 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
     function testScoring(Request $request) {
         date_default_timezone_set('America/New_York');
         $date = ($request->input('date') == '') ? date('Y-m-d') : $request->input('date');
-        $url = env("SPORTS_DATA_IO_URL",FALSE);
-        $key = env("SPORTS_DATA_IO_KEY",FALSE);
+        $url = env("SPORTSPAGE_API_URL",FALSE);
+        $key = env("SPORTSPAGE_API_KEY",FALSE);
 
-        $url = $url.'/'.$date.'?key='.$key;
+        $url = $url.'&date='.$date;
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: sportspage-feeds.p.rapidapi.com",
+                "x-rapidapi-key: ".$key
+            ],
+        ]); 
         $output = curl_exec($ch);
         curl_close($ch);
         $nflScores = json_decode($output);
         $games = array();
 
-dd($output);
-
+  dd($nflScores);
         foreach ($nflScores->results as $game=>$detail) {
             $week = $this->getWeekFromGameDate($date);
             $visitor = $this->getTeamName($detail->teams->away->abbreviation);
@@ -835,15 +846,14 @@ dd($output);
             }
         }
 
-dd($games);
-
         // Record any wins
-//        $wins = $this->recordWins();
+        // $wins = $this->recordWins();
 
         // return view('pages.update-scores')->with([
         //     'games' => $games,
         //     'week' => $week,
         //     'wins' => $wins
         //     ]);
+
     }
 }
