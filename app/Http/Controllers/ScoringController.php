@@ -763,4 +763,86 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
             ]);
 
     }
+
+    function testScoring(Request $request) {
+        date_default_timezone_set('America/New_York');
+        $date = ($request->input('date') == '') ? date('Y-m-d') : $request->input('date');
+        $url = env("SPORTS_DATA_IO_URL",FALSE);
+        $key = env("SPORTS_DATA_IO_KEY",FALSE);
+
+        $url = $url.'/'.$date.'?key='.$key;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $nflScores = json_decode($output);
+        $games = array();
+
+
+        foreach ($nflScores->results as $game=>$detail) {
+            $week = $this->getWeekFromGameDate($date);
+            $visitor = $this->getTeamName($detail->teams->away->abbreviation);
+            $home = $this->getTeamName($detail->teams->home->abbreviation);
+            $visitorScore = 0;
+            $homeScore = 0;
+            $qtr = null;
+            $clock=null;
+            $down = null;
+            $togo = null;
+            $yardline = null;
+            $posteam = null;
+            $redzone = null;
+            $stadium = $detail->venue->name;
+
+            if ($detail->status == 'in progress' || $detail->status == 'final') {
+                $clock = $detail->scoreboard->periodTimeRemaining;
+                if ($detail->scoreboard->score->away !== NULL) { $visitorScore = $detail->scoreboard->score->away; }
+                if ($detail->scoreboard->score->home !== NULL) { $homeScore = $detail->scoreboard->score->home; }
+                $status = $this->getGameInProgressDesc($detail->status);
+                if ($detail->status == 'in progress') { $status = $this->getGameInProgressDesc($detail->scoreboard->currentPeriod); }
+            }
+            $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
+            if ($gameDetails) {
+                array_push($games,(object) array(
+                    'home_team' => $home,
+                    'visitor_team' => $visitor,
+                    'home_score' => $homeScore,
+                    'visitor_score' => $visitorScore,
+                    'status' => $status,
+                    'game_id' => $gameDetails->id,
+                    'day_of_week' => $gameDetails->day_of_week,
+                    'game_datetime' => $gameDetails->game_datetime
+                ));
+                $score = (object) array(
+                    'vnn'=>$visitor,
+                    'hnn'=>$home,
+                    'vs'=>$visitorScore,
+                    'hs'=>$homeScore,
+                    'status'=>$status,
+                    'q'=>$qtr,
+                    'down'=>$down,
+                    'togo'=>$togo,
+                    'yardline'=>$yardline,
+                    'clock'=>$clock,
+                    'posteam'=>$posteam,
+                    'redzone'=>$redzone,
+                    'stadium'=>$stadium
+                    );
+//                $dbResult = $this->insertOrUpdate($gameDetails, $score);
+            }
+        }
+
+dd($games);
+
+        // Record any wins
+//        $wins = $this->recordWins();
+
+        // return view('pages.update-scores')->with([
+        //     'games' => $games,
+        //     'week' => $week,
+        //     'wins' => $wins
+        //     ]);
+    }
 }
