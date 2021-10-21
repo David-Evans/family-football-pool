@@ -797,6 +797,7 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
             $week = $this->getWeekFromGameDate($date);
             $visitor = $this->getTeamName($detail->teams->away->abbreviation);
             $home = $this->getTeamName($detail->teams->home->abbreviation);
+            $status = 'scheduled';
             $visitorScore = 0;
             $homeScore = 0;
             $qtr = null;
