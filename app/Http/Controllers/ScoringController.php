@@ -816,7 +816,7 @@ FROM live_scores S INNER JOIN games G ON (S.game_id = G.id)
                 if ($detail->status == 'in progress') { $status = $this->getGameInProgressDesc($detail->scoreboard->currentPeriod); }
             }
             $gameDetails = $this->findFFPGameDetails($week, $visitor, $home);
-dd($gameDetails);
+
             if ($gameDetails) {
                 array_push($games,(object) array(
                     'home_team' => $home,
@@ -847,6 +847,10 @@ dd($gameDetails);
             }
         }
 
+$debugOutput = array(
+'games'=>$games,
+'score'=>$score);
+dd($debugOutput);
         // Record any wins
         // $wins = $this->recordWins();
 
